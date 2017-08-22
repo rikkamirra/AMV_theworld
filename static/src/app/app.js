@@ -10,13 +10,15 @@ import RootController from './shared/RootController';
 import HomeApp from './home/home';
 import CommonApp from './common/common';
 import AccountApp from './account/account';
+import ConstructorApp from './constructor/constructor';
 
 angular.module('TWApp', [
   'ui.router',
   'ngCookies',
   HomeApp,
   CommonApp,
-  AccountApp
+  AccountApp,
+  ConstructorApp
 ])
 .config(AppConfig)
 .run(AppRun)

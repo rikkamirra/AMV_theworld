@@ -15,7 +15,7 @@ function RootController(UserService, $state) {
   };
 
   this.logout = () => {
-    UserService.logout();
+    UserService.logout().then(() => $state.go('root'));
   };
 }
 

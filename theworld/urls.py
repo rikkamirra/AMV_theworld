@@ -16,11 +16,19 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 import user.views as userapp
+import construct.views as world
 
 urlpatterns = [
     url(r'^registration/', userapp.create_user),
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
+
+    url(r'^world/', world.world),
+    # url(r'^world/(?P<tag_id>\d+)', world.get_world)
+    # url(r'^world/category/', world.category),
+    # url(r'^world/category/(?P<tag_id>\d+)', world.get_category),
+    # url(r'^world/article/', world.article),
+    # url(r'^world/article/(?P<tag_id>\d+)', world.get_article),
 
     url(r'^admin/', admin.site.urls),
 

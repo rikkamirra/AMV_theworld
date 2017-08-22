@@ -6,11 +6,7 @@ const userAccount = {
 
 function UserAccountController(UserService, $state) {
   this.$onInit = () => {
-    if (UserService.user) {
-      this.user = UserService.user;
-    } else {
-      $state.go('root');
-    }
+    this.user = UserService.user;
   }
 }
 

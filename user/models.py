@@ -20,16 +20,17 @@ class AccountManager(BaseUserManager):
         )
 
         role = kwargs.get('role')
-        if role:
-            if role == 'is_constructor':
-                account.is_constructor = True
-            elif role == 'is_author':
-                account.is_author = True
+        setattr(account, role, True)
 
         account.set_password(kwargs.get('password'))
         account.save()
 
         return account
+
+    def get_role(self, user_id, role):
+        account = self.get(pk=user_id)
+        setattr(account, 'is_'+role, True)
+        account.save()
 
     def create_superuser(self, email, password, **kwargs):
         account = self.create_user(email, password, **kwargs)

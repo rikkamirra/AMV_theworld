@@ -1,8 +1,18 @@
-function AppRun($state, $cookies, UserService) {
-  //UserService.createUser({ email: "test@tset.com", password: "1234", username: 'test' });
+function AppRun($rootScope, $state, $cookies, UserService, ConstructService) {
   UserService.getCurrentUser();
+
+  if (UserService.user) {
+    ConstructService.createWorld("Test");
+  }
+
+  $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
+    if (toState.module === 'private' && !UserService.user) {
+      e.preventDefault();
+      $state.go('login');
+    }
+  });
 }
 
-AppRun.$inject = ['$state', '$cookies', 'UserService'];
+AppRun.$inject = ['$rootScope', '$state', '$cookies', 'UserService', 'ConstructService'];
 
 export default AppRun;

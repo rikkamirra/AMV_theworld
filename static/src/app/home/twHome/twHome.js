@@ -7,8 +7,11 @@ const twHome = {
 
 function TwHomeController(UserService, $state) {
   this.begin = () => {
+    console.log('lol');
     if (!UserService.user) {
-      $state.go('login', {nextState: 'account'});
+      $state.go('login', {nextState: 'construct'});
+    } else {
+      $state.go('construct');
     }
   };
 }
