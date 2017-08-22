@@ -1,7 +1,17 @@
 function homeConfig($stateProvider) {
   $stateProvider.state('login', {
     url: '/login',
-    template: '<tw-login-form></tw-login-form>'
+    params: { nextState: 'root', nextStateParams: {} },
+    template: '<tw-login-form next-state="ctrl.nextState" next-state-params="ctrl.nextStateParams"></tw-login-form>',
+    resolve: {
+      nextState: ['$stateParams', function($stateParams) {
+        return $stateParams.nextState;
+      }],
+      nextStateParams: ['$stateParams', function($stateParams) {
+        return $stateParams.nextStateParams;
+      }]
+    },
+    controller: 'LoginController as ctrl'
   })
   .state('registration', {
     url: '/registration',

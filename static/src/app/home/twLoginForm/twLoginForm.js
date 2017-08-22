@@ -2,7 +2,7 @@ const twLoginForm = {
   restrict: 'E',
   template: require('./twLoginForm.html'),
   bindings: {
-    nextState: '@',
+    nextState: '<',
     nextStateParams: '<'
   },
   controller: TwLoginFormController
@@ -12,7 +12,7 @@ function TwLoginFormController(UserService, $state) {
   this.submit = () => {
     UserService.login(this.user).then(() => {
       if (this.nextState) {
-        $state.go(nextState, nextStateParams);
+        $state.go(this.nextState, this.nextStateParams);
       } else {
         $state.go('root');
       }

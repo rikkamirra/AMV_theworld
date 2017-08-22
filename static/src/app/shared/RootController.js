@@ -7,10 +7,15 @@ function RootController(UserService, $state) {
     return this.user;
   };
 
-  this.logout = () => {
-    UserService.logout().then(() => {
-      $state.go('root');
+  this.login = () => {
+    $state.go('login', {
+      nextState: $state.current.name,
+      nextStateParams: $state.current.params
     });
+  };
+
+  this.logout = () => {
+    UserService.logout();
   };
 }
 

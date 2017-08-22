@@ -5,10 +5,14 @@ const twHome = {
   controller: TwHomeController
 };
 
-function TwHomeController() {
-
+function TwHomeController(UserService, $state) {
+  this.begin = () => {
+    if (!UserService.user) {
+      $state.go('login', {nextState: 'account'});
+    }
+  };
 }
 
-TwHomeController.$inject = [];
+TwHomeController.$inject = ['UserService', '$state'];
 
 export default twHome;

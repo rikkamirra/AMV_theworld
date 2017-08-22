@@ -1,7 +1,7 @@
 {
-  "name": "dog",
+  "name": "TheWorld",
   "version": "0.1.0",
-  "description": "Dog app",
+  "description": "Project to create ideas",
   "dependencies": {
     "angular": "^1.6.4",
     "angular-cookies": "^1.6.4",
