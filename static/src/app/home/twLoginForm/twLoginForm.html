@@ -1,0 +1,9 @@
+<form class="tw-login-form form-group" name="loginForm">
+  <label for="login-email">Email</label>
+  <input id="login-email" class="form-control" type="email" ng-model="$ctrl.user.email" required>
+  <label for="login-pass">Password</label>
+  <input id="login-pass" class="form-control" type="password" ng-model="$ctrl.user.password" required>
+  <p class="error" ng-repeat="error in $ctrl.errors">[[ error ]]</p>
+  <button class="btn btn-right btn-primary" ng-disabled="loginForm.$invalid" ng-click="$ctrl.submit()">Войти</button>
+  <div class="text-center"><a ui-sref="registration">Создать свой аккаунт</a></div>
+</form>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html ng-app="TWApp">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static "node_modules/bootstrap/dist/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "src/css/forms.css" %}">
+    <link rel="stylesheet" href="{% static "src/css/show.css" %}">
+    <title>TheWorld</title>
+    <base href="/">
+  </head>
+  <body ng-controller="RootController as $ctrl">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">TW</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Разделы</a></li>
+          <li class="active"><a href="#">Миры</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-show="$ctrl.getUser()"><a href="#"><span class="glyphicon glyphicon-user">[[ $ctrl.user.fields.username ]]</a></li>
+          <li ng-show="!$ctrl.getUser()"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"> Войти</a></li>
+          <li ng-show="$ctrl.getUser()"><a href="#" ng-click="$ctrl.logout()"><span class="glyphicon glyphicon-log-out"> Выйти</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ui-view></ui-view>
+
+    <script src="{% static "dist/app.bundle.js" %}"></script>
+
+  </body>
+</html>

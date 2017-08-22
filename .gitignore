@@ -1,0 +1,4 @@
+manage.py
+__pycache__/
+static/node_modules/
+static/dist/

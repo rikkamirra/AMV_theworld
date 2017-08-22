@@ -1,0 +1,34 @@
+body, html {
+  overflow-x: hidden;
+  font-size: 20px;
+}
+
+a {
+  font-size: 0.8rem;
+}
+
+/* .tw-welcome */
+.tw-welcome-div {
+  margin: 1em;
+  padding: 1em;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.tw-welcome-div h3 {
+  display: inline-block;
+  margin: 0.2em 1em;
+}
+
+
+
+/* common */
+.text-center {
+  text-align: center;
+}
+
+.error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: red;
+}
