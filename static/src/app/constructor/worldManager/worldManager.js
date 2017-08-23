@@ -10,7 +10,6 @@ const worldManager = {
 function WorldManagerController(ConstructService, UserService, $state) {
   this.$onInit = () => {
     this.user = UserService.user;
-    console.log(this);
     if (this.world) {
       this.isCreated = true;
     }

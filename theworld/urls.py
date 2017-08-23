@@ -24,9 +24,14 @@ urlpatterns = [
     url(r'^logout/', userapp.logout_user),
     url(r'^account/worlds', userapp.get_worlds),
 
-    url(r'^worlds/$', world.world),
+    url(r'^worlds/new', world.create_world),
+    url(r'^worlds/(?P<world_id>\d+)/delete', world.delete_world),
     url(r'^worlds/(?P<world_id>\d+)', world.get_world),
-    url(r'^worlds/categories', world.category),
+
+    url(r'^categories/new', world.create_category),
+    url(r'^categories/(?P<category_id>\d+)/delete', world.delete_category),
+    url(r'^categories/(?P<parent_id>\d+)/children', world.get_children),
+
     # url(r'^world/category/(?P<tag_id>\d+)', world.get_category),
     # url(r'^world/article/', world.article),
     # url(r'^world/article/(?P<tag_id>\d+)', world.get_article),

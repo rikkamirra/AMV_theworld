@@ -5,7 +5,7 @@ function ConstructService($http, UserService) {
     createWorld(title) {
       return $http({
         method: 'POST',
-        url: 'worlds/',
+        url: 'worlds/new',
         data: $.param({ title })
       });
     },
@@ -13,8 +13,16 @@ function ConstructService($http, UserService) {
     createCategory(params) {
       return $http({
         method: 'POST',
-        url: 'worlds/categories/',
+        url: 'categories/new',
         data: $.param(params)
+      });
+    },
+
+    deleteCategory(categoryId) {
+      return $http({
+        method: 'DELETE',
+        url: `categories/${categoryId}/delete`,
+        data: { categoryId }
       });
     },
 
@@ -22,6 +30,13 @@ function ConstructService($http, UserService) {
       return $http({
         method: 'GET',
         url: `worlds/${world_id}`
+      });
+    },
+
+    getChildren(parentId) {
+      return $http({
+        method: 'GET',
+        url: `categories/${parentId}/children`
       });
     }
   }

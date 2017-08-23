@@ -47,7 +47,7 @@ def add_article_to_category(article_id, category_id):
 
 def get_world(world_id):
     world = get_object(World.objects.get(pk=world_id))
-    categories = get_object_from_set(Category.objects.filter(world=world_id))
+    categories = get_object_from_set(Category.objects.filter(world=world_id, parent_id=0))
     world['categories'] = categories
     return world
 
@@ -66,4 +66,11 @@ def get_worlds_by_user(user):
 
 
 def get_child_categories(category_id):
-    return Category.objects.filter(parent_id=category_id)
+    return get_object_from_set(Category.objects.filter(parent_id=category_id))
+
+
+def delete_category(category_id):
+    category = Category.objects.get(pk=category_id).delete()
+    children = Category.objects.filter(parent_id=category_id);
+    for child in children:
+        delete_category(child.pk)

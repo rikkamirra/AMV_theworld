@@ -19,6 +19,18 @@ a {
   display: flex;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
+.font-sm {
+  font-size: 0.7rem;
+}
+
+.short-input {
+  width: 15rem;
+}
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;

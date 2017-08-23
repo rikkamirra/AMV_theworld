@@ -20,8 +20,8 @@
     </div>
 
     <div ng-show="$ctrl.isCreated">
-      <p ng-repeat="category in $ctrl.world.categories">[[ category.fields.name ]]</p>
-      <div class="input-group">
+      <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
+      <div class="input-group short-input">
         <input type="text"
           class="form-control"
           ng-model="$ctrl.newCategory.name"
