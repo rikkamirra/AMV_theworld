@@ -32,9 +32,10 @@ urlpatterns = [
     url(r'^categories/(?P<category_id>\d+)/delete', world.delete_category),
     url(r'^categories/(?P<parent_id>\d+)/children', world.get_children),
 
-    # url(r'^world/category/(?P<tag_id>\d+)', world.get_category),
-    # url(r'^world/article/', world.article),
-    # url(r'^world/article/(?P<tag_id>\d+)', world.get_article),
+    url(r'^articles/new', world.create_article),
+    # url(r'^artickes/(?P<article_id>\d+)', world.get_article),
+    # url(r'^articles/(?P<article_id>\d+)/edit', world.edit_article),
+    # url(r'^articles/(?P<article_id>\d+)/delete', world.delete_article),
 
     url(r'^admin/', admin.site.urls),
 

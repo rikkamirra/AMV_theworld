@@ -37,7 +37,11 @@ function CategoryItemController(ConstructService, UserService, $state) {
     ConstructService.deleteCategory(this.root.pk).then(res => {
       this.isDeleted = true;
     });
-  }
+  };
+
+  this.createArticle = () => {
+    ConstructService.createArticle(this.newArticle, root.pk);
+  };
 }
 
 CategoryItemController.$inject = ['ConstructService', 'UserService', '$state'];

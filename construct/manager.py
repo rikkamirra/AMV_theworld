@@ -23,21 +23,18 @@ def create_world(user_id, world_title):
     world.save()
     return world
 
-
 def create_category(category_name, world_id, parent_id=None):
     world = World.objects.get(pk=world_id)
     category = Category(name=category_name, world=world, parent_id=parent_id)
     category.save()
     return category
 
-
 def create_article(title, body, category_id):
     article = Article(title=title, body=body)
     article.save()
     category = Category.objects.get(pk=category_id)
     category.articles.add(article)
-    return article
-
+    return get_object(article)
 
 def add_article_to_category(article_id, category_id):
     article = Article.objects.get(pk=article_id)
