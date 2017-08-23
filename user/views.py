@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Account
 from theworld.settings import STATIC_URL
-
+import construct.manager as construct
 from django.contrib.auth import authenticate, login, logout
 import json
 
@@ -52,6 +52,10 @@ def login_user(request):
         return JsonResponse(user.get_json(), safe=False)
     else:
         return JsonResponse(['Invalid credentiald'], status=409, safe=False)
+
+
+def get_worlds(request):
+    return JsonResponse(construct.get_worlds_by_user(request.user), safe=False)
 
 
 def logout_user(request):

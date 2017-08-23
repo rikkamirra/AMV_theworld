@@ -11,7 +11,7 @@ function TwHomeController(UserService, $state) {
     if (!UserService.user) {
       $state.go('login', {nextState: 'construct'});
     } else {
-      $state.go('construct');
+      $state.go('newConstruct');
     }
   };
 }

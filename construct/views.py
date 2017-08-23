@@ -16,3 +16,22 @@ def world(request):
         return JsonResponse(manager.get_object(world), safe=False)
     else:
         return JsonResponse({})
+
+
+def get_world(request, world_id):
+    return JsonResponse(manager.get_world(world_id), safe=False)
+
+
+def category(request):
+    if request.method == 'POST':
+        errors = []
+        if not request.POST.get('name', False):
+            errors.append('No name')
+        if not request.POST.get('world_id', False):
+            errors.append('No world id')
+        if errors:
+            return JsonResponse(errors, safe=False)
+        world = World.objects.get(pk=request.POST['world_id'])
+        manager.create_category(request.POST['name'], request.POST['world_id'], parent_id=request.POST.get('parent_id', 0))
+        categories = Category.objects.filter(world=world)
+        return JsonResponse(manager.get_object_from_set(categories), safe=False)

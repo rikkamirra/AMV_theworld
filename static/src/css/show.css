@@ -7,6 +7,18 @@ a {
   font-size: 0.8rem;
 }
 
+.pointer:hover {
+  cursor: pointer;
+}
+
+.circle {
+  border-radius: 40%;
+}
+
+.flex-container {
+  display: flex;
+}
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;

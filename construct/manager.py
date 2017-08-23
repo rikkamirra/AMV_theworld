@@ -8,6 +8,10 @@ DEFAULT_CATEGORIES = []
 def get_object(query_object):
     return json.loads(serializers.serialize('json', [query_object,]))[0]
 
+def get_object_from_set(query_set):
+    return json.loads(serializers.serialize('json', query_set))
+
+
 def create_world(user_id, world_title):
     if Account.objects.filter(pk=user_id).count() == 0:
         return None
@@ -42,12 +46,23 @@ def add_article_to_category(article_id, category_id):
 
 
 def get_world(world_id):
-    res = {}
-    world = World.objects.get(pk=world_id)
-    res['world'] = world
-    res['author'] = world.author
-    res['root_categories'] = Category.objects.filter(world=world, parent_id=None)
-    return res
+    world = get_object(World.objects.get(pk=world_id))
+    categories = get_object_from_set(Category.objects.filter(world=world_id))
+    world['categories'] = categories
+    return world
+
+
+def get_all_worlds():
+    _worlds = get_object_from_set(World.objects.all())
+    worlds = []
+    for _w in _worlds:
+        worlds.append(get_object_from_set(_w.pk))
+    return worlds
+
+
+def get_worlds_by_user(user):
+    return get_object_from_set(World.objects.filter(author=user))
+
 
 
 def get_child_categories(category_id):

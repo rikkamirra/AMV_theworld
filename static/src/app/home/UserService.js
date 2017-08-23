@@ -24,6 +24,13 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
+    getWorlds() {
+      return $http({
+        method: 'GET',
+        url: 'account/worlds'
+      })
+    },
+
     logout() {
       return $http({
         method: 'GET',

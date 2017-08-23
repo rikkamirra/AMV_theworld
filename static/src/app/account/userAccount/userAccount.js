@@ -7,6 +7,9 @@ const userAccount = {
 function UserAccountController(UserService, $state) {
   this.$onInit = () => {
     this.user = UserService.user;
+    UserService.getWorlds().then(res => {
+      this.user.worlds = res.data;
+    });
   }
 }
 

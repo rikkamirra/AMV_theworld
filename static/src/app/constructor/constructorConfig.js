@@ -1,9 +1,24 @@
 function constructorConfig($stateProvider) {
-  $stateProvider.state('construct', {
-    url: '/constructor',
+  $stateProvider.state('newConstruct', {
+    url: '/constructor/',
     module: 'private',
-    template: '<p>Constructor</p>',
-  });
+    template: '<world-manager></world-manager>'
+  })
+  .state('construct', {
+    url: '/constructor/:worldId',
+    module: 'private',
+    template: '<world-manager world="ctrl.world"></world-manager>',
+    resolve: {
+      world: ['ConstructService', '$stateParams', function(ConstructService, $stateParams) {
+        if ($stateParams.worldId) {
+          return ConstructService.getWorld($stateParams.worldId).then(res => res.data);
+        } else {
+          return null;
+        }
+      }]
+    },
+    controller: 'ConstructController as ctrl'
+  })
 };
 
 constructorConfig.$inject = ['$stateProvider'];

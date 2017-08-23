@@ -22,10 +22,11 @@ urlpatterns = [
     url(r'^registration/', userapp.create_user),
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
+    url(r'^account/worlds', userapp.get_worlds),
 
-    url(r'^world/', world.world),
-    # url(r'^world/(?P<tag_id>\d+)', world.get_world)
-    # url(r'^world/category/', world.category),
+    url(r'^worlds/$', world.world),
+    url(r'^worlds/(?P<world_id>\d+)', world.get_world),
+    url(r'^worlds/categories', world.category),
     # url(r'^world/category/(?P<tag_id>\d+)', world.get_category),
     # url(r'^world/article/', world.article),
     # url(r'^world/article/(?P<tag_id>\d+)', world.get_article),

@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-2"></div>
+
+  <div class="col-md-9">
+    <div class="row">
+      <div ng-show="!$ctrl.isCreated" class="col-md-6">
+        <p>Название</p>
+        <div class="input-group">
+          <input type="text"
+            class="form-control"
+            ng-model="$ctrl.title"
+            placeholder="Название">
+          <span ng-click="$ctrl.createWorld()" class="input-group-addon pointer">Создать</span>
+        </div>
+      </div>
+      <div ng-show="$ctrl.isCreated" class="col-md-6">
+        <h3>[[ $ctrl.world.fields.name ]]</h3>
+        <hr>
+      </div>
+    </div>
+
+    <div ng-show="$ctrl.isCreated">
+      <p ng-repeat="category in $ctrl.world.categories">[[ category.fields.name ]]</p>
+      <div class="input-group">
+        <input type="text"
+          class="form-control"
+          ng-model="$ctrl.newCategory.name"
+          placeholder="Новая категория">
+        <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2"></div>
+</div>

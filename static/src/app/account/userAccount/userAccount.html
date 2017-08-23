@@ -11,7 +11,9 @@
       </div>
 
       <div class="col-md-9">
-        Other information
+        <div ng-repeat="world in $ctrl.user.worlds track by $index">
+          <a ui-sref="construct({worldId: world.pk})">[[ world.fields.name ]]</a>
+        </div>
       </div>
     </div>
   </div>
