@@ -3,7 +3,7 @@
     <span ng-click="$ctrl.showChildren()" class="pointer glyphicon glyphicon-menu-down font-sm"></span>
     <span ng-click="$ctrl.showInput()" class="pointer glyphicon glyphicon-plus font-sm"></span>
     <span ng-click="$ctrl.deleteCategory()" class="pointer glyphicon glyphicon-remove font-sm"></span>
-    <span ng-click="$ctrl.createArticle()" class="pointer glyphicon glyphicon-pencil font-sm"></span>
+    <span ng-click="$ctrl.clickArticle()" class="pointer glyphicon glyphicon-pencil font-sm"></span>
   </p>
   <div ng-show="$ctrl.isShowInput" class="input-group short-input">
     <input type="text"
@@ -14,5 +14,6 @@
   </div>
   <ul ng-show="$ctrl.isShowChildren">
     <li ng-repeat="child in $ctrl.children"><category-item root="child" world="$ctrl.world"></category-item></li>
+    <li ng-repeat="article in $ctrl.articles"><a href="#" ng-click="$ctrl.clickArticle(article)"><span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.fields.title ]]</a></li>
   </ul>
 </div>

@@ -1,4 +1,4 @@
-from construct.models import World, Article, Category
+from construct.models import World, Category
 from user.models import Account
 from django.core import serializers
 import json
@@ -29,18 +29,6 @@ def create_category(category_name, world_id, parent_id=None):
     category.save()
     return category
 
-def create_article(title, body, category_id):
-    article = Article(title=title, body=body)
-    article.save()
-    category = Category.objects.get(pk=category_id)
-    category.articles.add(article)
-    return get_object(article)
-
-def add_article_to_category(article_id, category_id):
-    article = Article.objects.get(pk=article_id)
-    category = Category.objects.get(pk=category_id)
-    category.articles.add(article)
-
 
 def get_world(world_id):
     world = get_object(World.objects.get(pk=world_id))
@@ -60,6 +48,14 @@ def get_all_worlds():
 def get_worlds_by_user(user):
     return get_object_from_set(World.objects.filter(author=user))
 
+
+def get_category_chain(category_id, chain):
+    category = Category.objects.get(pk=category_id)
+    chain.append(category)
+    if category.parent_id != 0:
+        get_category_chain(category.parent_id, chain)
+    else:
+        chain.append(category.world)
 
 
 def get_child_categories(category_id):

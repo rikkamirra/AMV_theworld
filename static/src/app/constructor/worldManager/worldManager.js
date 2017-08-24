@@ -7,12 +7,20 @@ const worldManager = {
   controller: WorldManagerController
 };
 
-function WorldManagerController(ConstructService, UserService, $state) {
+function WorldManagerController(ConstructService, UserService, $state, $rootScope) {
   this.$onInit = () => {
     this.user = UserService.user;
     if (this.world) {
       this.isCreated = true;
     }
+
+    this.showArticleListner = $rootScope.$on('showArticle', (e, data) => {
+      this.showArticle(data.article, data.category);
+    });
+  };
+
+  this.$onDestroy = () => {
+    this.showArticleListner();
   };
 
   this.createWorld = () => {
@@ -33,8 +41,18 @@ function WorldManagerController(ConstructService, UserService, $state) {
       this.world.categories = res.data;
     });
   };
+
+  this.showArticle = (article, category) => {
+    if (!article) {
+      this.articleActionMode = 'create';
+    } else {
+      this.articleActionMode = 'edit';
+    }
+    this.selectedArticle = article;
+    this.selectedCategory = category;
+  }
 }
 
-WorldManagerController.$inject = ['ConstructService', 'UserService', '$state'];
+WorldManagerController.$inject = ['ConstructService', 'UserService', '$state', '$rootScope'];
 
 export default worldManager;

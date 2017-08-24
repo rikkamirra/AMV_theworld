@@ -11,6 +11,7 @@ import HomeApp from './home/home';
 import CommonApp from './common/common';
 import AccountApp from './account/account';
 import ConstructorApp from './constructor/constructor';
+import ArticleApp from './articles/articles';
 
 angular.module('TWApp', [
   'ui.router',
@@ -18,7 +19,8 @@ angular.module('TWApp', [
   HomeApp,
   CommonApp,
   AccountApp,
-  ConstructorApp
+  ConstructorApp,
+  ArticleApp
 ])
 .config(AppConfig)
 .run(AppRun)

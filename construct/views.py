@@ -4,7 +4,7 @@ from django.core import serializers
 import json
 import construct.manager as manager
 
-from construct.models import World, Category, Article
+from construct.models import World, Category
 
 
 def create_world(request):
@@ -37,19 +37,10 @@ def delete_category(request, category_id):
     manager.delete_category(category_id)
     return JsonResponse({})
 
+def get_category(request, category_id):
+    chain = []
+    manager.get_category_chain(category_id, chain)
+    return JsonResponse(manager.get_object_from_set(chain), safe=False)
+
 def get_children(request, parent_id):
     return JsonResponse(manager.get_child_categories(parent_id), safe=False)
-
-
-def create_article(request):
-    errors = []
-    if not request.POST.get('title', False):
-        errors.append('No title')
-    if not request.POST.get('body', False):
-        errors.append('No text body')
-    if not request.POST.get('category_id', False):
-        errors.append('No category id')
-    if errors:
-        return JsonResponse(errors, status=409, safe=False)
-    article = manager.create_article(request.POST['title'], request.POST['body'], request.POST['category_id'])
-    return JsonResponse(article, safe=False)

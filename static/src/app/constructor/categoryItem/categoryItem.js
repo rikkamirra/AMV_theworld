@@ -3,18 +3,21 @@ const categoryItem = {
   template: require('./categoryItem.html'),
   bindings: {
     world: '<',
-    root: '<',
+    root: '<'
   },
   controller: CategoryItemController
 };
 
-function CategoryItemController(ConstructService, UserService, $state) {
+function CategoryItemController(ConstructService, ArticleService, UserService, $state, $rootScope) {
   this.$onInit = () => {
     this.isShowInput = false;
     this.isDeleted = false;
     this.isShowChildren = false;
     ConstructService.getChildren(this.root.pk).then(res => {
       this.children = res.data;
+    });
+    ArticleService.getArticlesByCategory(this.root.pk).then(res => {
+      this.articles = res.data;
     });
   };
 
@@ -39,11 +42,12 @@ function CategoryItemController(ConstructService, UserService, $state) {
     });
   };
 
-  this.createArticle = () => {
-    ConstructService.createArticle(this.newArticle, root.pk);
+  this.clickArticle = (article) => {
+    console.log('gikhui');
+    $rootScope.$emit('showArticle', {article, category: this.root});
   };
 }
 
-CategoryItemController.$inject = ['ConstructService', 'UserService', '$state'];
+CategoryItemController.$inject = ['ConstructService', 'ArticleService', 'UserService', '$state', '$rootScope'];
 
 export default categoryItem;

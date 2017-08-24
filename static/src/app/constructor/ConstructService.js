@@ -33,6 +33,13 @@ function ConstructService($http, UserService) {
       });
     },
 
+    getLocation(categoryId) {
+      return $http({
+        method: 'GET',
+        url: `categories/${categoryId}`
+      });
+    },
+
     getChildren(parentId) {
       return $http({
         method: 'GET',

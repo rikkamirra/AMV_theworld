@@ -31,6 +31,14 @@ a {
   width: 15rem;
 }
 
+.btn-margin {
+  margin-top: 1rem;
+}
+
+.form-control {
+  font-size: 1rem;
+}
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;

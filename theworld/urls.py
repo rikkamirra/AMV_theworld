@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 import user.views as userapp
 import construct.views as world
+import articles.views as articles
 
 urlpatterns = [
     url(r'^registration/', userapp.create_user),
@@ -31,11 +32,13 @@ urlpatterns = [
     url(r'^categories/new', world.create_category),
     url(r'^categories/(?P<category_id>\d+)/delete', world.delete_category),
     url(r'^categories/(?P<parent_id>\d+)/children', world.get_children),
+    url(r'^categories/(?P<category_id>\d+)', world.get_category),
 
-    url(r'^articles/new', world.create_article),
+    url(r'^articles/new', articles.create_article),
+    url(r'^articles/category/(?P<category_id>\d+)', articles.get_articles_by_category),
     # url(r'^artickes/(?P<article_id>\d+)', world.get_article),
-    # url(r'^articles/(?P<article_id>\d+)/edit', world.edit_article),
-    # url(r'^articles/(?P<article_id>\d+)/delete', world.delete_article),
+    url(r'^articles/(?P<article_id>\d+)/edit', articles.edit_article),
+    url(r'^articles/(?P<article_id>\d+)/delete', articles.delete_article),
 
     url(r'^admin/', admin.site.urls),
 
