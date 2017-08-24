@@ -6,26 +6,18 @@ from construct.manager import get_object, get_object_from_set
 
 
 def create_article(request):
-    errors = []
-    if not request.POST.get['title', False]:
-        errors.append('No title')
-    if not request.POST.get('body', False):
-        errors.append('No body')
-    if errors:
-        return JsonResponse(errors, status=409, safe=False)
-    article = Article(title=request.POST['title'], body=request.POST['body'])
-    article.save()
-    category = Category.objects.get(pk=request.POST['category_id'])
-    category.articles.add(article)
+    article = article = Article.objects.create_article(request.user.pk, request.POST)
+    if not article:
+        return JsonResponse({}, status=409)
     return JsonResponse(get_object(article), safe=False)
 
 
 def edit_article(request, article_id):
-    article = Article.objects.get(pk=article_id)
-    article.title = request.POST['title']
-    article.body = request.POST['body']
-    article.save()
-    return JsonResponse(get_object(article), safe=False)
+    article = Article.objects.edit_article(request.user.pk, article_id, request.POST)
+    if article:
+        return JsonResponse(get_object(article), safe=False)
+    else:
+        return JsonResponse({}, status=409)
 
 
 def delete_article(request, article_id):

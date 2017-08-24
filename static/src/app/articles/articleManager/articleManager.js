@@ -30,7 +30,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.editArticle = () => {
-    ArticleService.updateArticle(this.article.pk, this.article.fields).then(res => {
+    ArticleService.updateArticle(this.article.pk, Object.assign(this.article.fields, { category_id: this.location.pk })).then(res => {
       $state.reload();
     });
   };
