@@ -12,6 +12,7 @@ def get_object_from_set(query_set):
     return json.loads(serializers.serialize('json', query_set))
 
 
+
 def create_world(user_id, world_title):
     if Account.objects.filter(pk=user_id).count() == 0:
         return None

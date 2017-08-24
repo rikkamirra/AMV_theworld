@@ -25,10 +25,25 @@ function ArticleService($http) {
       });
     },
 
+    getAllArticles() {
+      return $http({
+        method: 'GET',
+        url: 'articles/all'
+      });
+    },
+
     getArticlesByCategory(categoryId) {
       return $http({
         method: 'GET',
         url: `articles/category/${categoryId}`
+      });
+    },
+
+    addCategoryToArticle(params) {
+      return $http({
+        method: 'POST',
+        url: 'articles/add_category',
+        data: $.param({ params })
       });
     }
   }
