@@ -52,6 +52,11 @@ a {
   background-color: #cccccc;
 }
 
+.scrollable {
+  overflow-y: scroll;
+  max-height: 45rem;
+}
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;
