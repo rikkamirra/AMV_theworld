@@ -20,7 +20,7 @@ class ArticleManager(models.Manager):
             return False # Fix me
 
         article = self.model(
-            title=fields.get('title'), body=fields.get('body')
+            title=fields.get('title'), body=fields.get('body'), world_id=fields.get('world_id')
         )
 
         article.save()
@@ -39,6 +39,7 @@ class ArticleManager(models.Manager):
 
         article.title = fields.get('title')
         article.body = fields.get('body')
+        article.world_id = fields.get('world_id')
         article.save()
 
         return article
@@ -48,5 +49,6 @@ class ArticleManager(models.Manager):
 class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
+    world_id = models.IntegerField(default=1)
 
     objects = ArticleManager()

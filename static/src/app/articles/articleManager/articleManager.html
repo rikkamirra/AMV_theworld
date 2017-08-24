@@ -1,12 +1,18 @@
-<div>
+<div ng-show="$ctrl.category">
   <form>
     <div class="form-group">
-      <p>[[ $ctrl.location.fields.name ]]</p>
+      <p>[[ $ctrl.category.fields.name ]]</p>
       <input class="form-control inline-block short-input" ng-model="$ctrl.article.fields.title" placeholder="Название">
       <hr>
-      <textarea class="form-control" ng-model="$ctrl.article.fields.body"></textarea>
+      <textarea class="form-control" ng-model="$ctrl.article.fields.body" rows="20"></textarea>
       <button class="btn btn-primary btn-margin" ng-click="$ctrl.articleAction()">Сохранить</button>
       <button class="btn btn-primary btn-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
     </div>
   </form>
+  <h3>Добавить статью к категории</h3>
+  <hr>
+  <input class="form-control short-input" ng-model="$ctrl.articleAddToCategory" placeholder="Поиск">
+  <div ng-repeat="article in $ctrl.allArticles | filter : $ctrl.articleAddToCategory">
+    <a href="#" ng-click="$ctrl.addArticleToCategory(article)" title="Добавить статью к категории">[[ article.title ]]</a>
+  </div>
 </div>

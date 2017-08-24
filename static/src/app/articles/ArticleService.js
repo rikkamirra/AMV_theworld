@@ -25,10 +25,11 @@ function ArticleService($http) {
       });
     },
 
-    getAllArticles() {
+    getAllArticles(world_id) {
       return $http({
-        method: 'GET',
-        url: 'articles/all'
+        method: 'POST',
+        url: 'articles/all',
+        data: $.param({ world_id })
       });
     },
 
@@ -39,11 +40,11 @@ function ArticleService($http) {
       });
     },
 
-    addCategoryToArticle(params) {
+    addArticleToCategory(params) {
       return $http({
         method: 'POST',
         url: 'articles/add_category',
-        data: $.param({ params })
+        data: $.param(params)
       });
     }
   }

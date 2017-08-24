@@ -31,8 +31,8 @@ def get_articles_by_category(request, category_id):
 
 
 def get_all_articles(request):
-    articles = Article.objects.all().values('pk', 'title')
-    return JsonResponse(get_object_from_set(articles))
+    articles = Article.objects.filter(world_id=request.POST.get('world_id', 1)).values('pk', 'title')
+    return JsonResponse([a for a in articles], safe=False)
 
 def add_category(request):
     _category_id = request.POST.get('category_id', 0)

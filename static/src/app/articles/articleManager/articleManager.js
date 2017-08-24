@@ -3,7 +3,8 @@ const articleManager = {
   template: require('./articleManager.html'),
   bindings: {
     article: '<',
-    location: '<',
+    category: '<',
+    world: '<',
     mode: '<'
   },
   controller: ArticleManagerController
@@ -11,6 +12,9 @@ const articleManager = {
 
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope) {
   this.$onInit = () => {
+    ArticleService.getAllArticles(this.world.pk).then(res => {
+      this.allArticles = res.data;
+    });
   };
 
   this.articleAction = () => {
@@ -23,14 +27,14 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     ArticleService.createArticle(
-      Object.assign(this.article.fields, { category_id: this.location.pk })
+      Object.assign(this.article.fields, { category_id: this.category.pk, world_id: this.world.pk })
     ).then(res => {
       $state.reload();
     });
   };
 
   this.editArticle = () => {
-    ArticleService.updateArticle(this.article.pk, Object.assign(this.article.fields, { category_id: this.location.pk })).then(res => {
+    ArticleService.updateArticle(this.article.pk, Object.assign(this.article.fields, { category_id: this.category.pk })).then(res => {
       $state.reload();
     });
   };
@@ -40,6 +44,12 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
       $state.reload();
     });
   };
+
+  this.addArticleToCategory = (article) => {
+    ArticleService.addArticleToCategory({ article_id: article.pk, category_id: this.category.pk }).then(res => {
+      $state.reload();
+    });
+  }
 }
 
 ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope'];
