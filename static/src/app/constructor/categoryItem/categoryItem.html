@@ -1,19 +1,25 @@
 <div ng-if="!$ctrl.isDeleted">
   <p>[[ $ctrl.root.fields.name ]]
-    <span ng-click="$ctrl.showChildren()" class="pointer glyphicon glyphicon-menu-down font-sm"></span>
-    <span ng-click="$ctrl.showInput()" class="pointer glyphicon glyphicon-plus font-sm"></span>
-    <span ng-click="$ctrl.deleteCategory()" class="pointer glyphicon glyphicon-remove font-sm"></span>
-    <span ng-click="$ctrl.clickArticle()" class="pointer glyphicon glyphicon-pencil font-sm"></span>
+    <span ng-click="$ctrl.showChildren()" class="clck-icon glyphicon glyphicon-menu-down font-sm"></span>
+    <span ng-click="$ctrl.showInput()" class="clck-icon glyphicon glyphicon-plus font-sm"></span>
+    <span ng-click="$ctrl.deleteCategory()" class="clck-icon glyphicon glyphicon-remove font-sm"></span>
+    <span ng-click="$ctrl.clickArticle()" class="clck-icon glyphicon glyphicon-pencil font-sm"></span>
   </p>
-  <div ng-show="$ctrl.isShowInput" class="input-group short-input">
+  <div ng-show="$ctrl.config.isShowInput" class="input-group short-input">
     <input type="text"
       class="form-control"
       ng-model="$ctrl.newCategoryName"
       placeholder="Новая категория">
     <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
   </div>
-  <ul ng-show="$ctrl.isShowChildren">
+  <ul ng-show="$ctrl.config.isShowChildren">
     <li ng-repeat="child in $ctrl.children"><category-item root="child" world="$ctrl.world"></category-item></li>
-    <li ng-repeat="article in $ctrl.articles"><a href="#" ng-click="$ctrl.clickArticle(article)"><span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.fields.title ]]</a></li>
+    <li ng-repeat="article in $ctrl.articles">
+      <a href="#" ng-click="$ctrl.clickArticle(article)">
+        <span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.fields.title ]]
+      </a>
+      <span ng-click="$ctrl.showArticleBody(article)" class="clck-icon glyphicon glyphicon-eye-open font-sm"></span>
+      <p class="font-sm" ng-show="article.isShowBody">[[ article.fields.body ]]</p>
+    </li>
   </ul>
 </div>

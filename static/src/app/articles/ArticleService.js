@@ -3,7 +3,7 @@ import $ from 'jquery';
 function ArticleService($http) {
   return {
     createArticle(params) {
-      $http({
+      return $http({
         method: 'POST',
         url: 'articles/new',
         data: $.param(params)

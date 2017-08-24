@@ -22,11 +22,9 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 
   this.saveArticle = () => {
-    ArticleService.createArticle({
-      title: this.article.fields.title,
-      body: this.article.fields.body,
-      category_id: this.location.pk
-    }).then(res => {
+    ArticleService.createArticle(
+      Object.assign(this.article.fields, { category_id: this.location.pk })
+    ).then(res => {
       $state.reload();
     });
   };

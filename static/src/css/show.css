@@ -39,6 +39,18 @@ a {
   font-size: 1rem;
 }
 
+.clck-icon {
+  color: #d0d0d0;
+  padding: 0.1rem;
+  border-radius: 5px;
+}
+
+.clck-icon:hover {
+  color: white;
+  cursor: pointer;
+  background-color: #cccccc;
+}
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;
