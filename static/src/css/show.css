@@ -12,10 +12,6 @@ a {
   cursor: pointer;
 }
 
-.circle {
-  border-radius: 40%;
-}
-
 .flex-container {
   display: flex;
 }

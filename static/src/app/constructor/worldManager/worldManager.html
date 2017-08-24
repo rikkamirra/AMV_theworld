@@ -19,15 +19,15 @@
       </div>
 
       <div ng-show="$ctrl.isCreated">
-        <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
-        <div class="input-group short-input">
+        <p class="input-group short-input">
           <input type="text"
             class="form-control"
             ng-model="$ctrl.newCategory.name"
             placeholder="Новая категория">
           <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
         </div>
-      </div>
+        <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
+      </p>
     </div>
 
     <div class="col-md-6">
