@@ -10,6 +10,13 @@ function ConstructService($http, UserService) {
       });
     },
 
+    getAllWorlds() {
+      return $http({
+        method: 'GET',
+        url: 'worlds/all'
+      });
+    },
+
     createCategory(params) {
       return $http({
         method: 'POST',

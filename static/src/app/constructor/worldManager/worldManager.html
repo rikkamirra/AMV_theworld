@@ -19,7 +19,7 @@
       </div>
 
       <div ng-show="$ctrl.isCreated">
-        <p class="input-group short-input">
+        <p ng-show="$ctrl.world.access_to_change" class="input-group short-input">
           <input type="text"
             class="form-control"
             ng-model="$ctrl.newCategory.name"

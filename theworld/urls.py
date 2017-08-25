@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^worlds/new', world.create_world),
     url(r'^worlds/(?P<world_id>\d+)/delete', world.delete_world),
     url(r'^worlds/(?P<world_id>\d+)', world.get_world),
+    url(r'^worlds/all', world.get_worlds),
 
     url(r'^categories/new', world.create_category),
     url(r'^categories/(?P<category_id>\d+)/delete', world.delete_category),

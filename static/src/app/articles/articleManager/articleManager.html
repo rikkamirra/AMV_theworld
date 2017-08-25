@@ -1,18 +1,26 @@
 <div ng-show="$ctrl.category">
-  <form name="ArticleForm">
-    <div class="form-group">
-      <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
-      <input class="form-control inline-block" ng-model="$ctrl.article.fields.title" placeholder="Название" required>
-      <hr>
-      <textarea class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
-      <button class="btn btn-primary btn-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
-      <button class="btn btn-primary btn-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
+  <div ng-show="$ctrl.world.access_to_change">
+    <form name="ArticleForm">
+      <div class="form-group">
+        <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
+        <input class="form-control inline-block" ng-model="$ctrl.article.fields.title" placeholder="Название" required>
+        <hr>
+        <textarea class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
+        <button class="btn btn-primary btn-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
+        <button class="btn btn-primary btn-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
+      </div>
+    </form>
+    <h3>Добавить статью к категории</h3>
+    <hr>
+    <input class="form-control short-input" ng-model="$ctrl.articleAddToCategory" placeholder="Поиск">
+    <div ng-repeat="article in $ctrl.allArticles | filter : $ctrl.articleAddToCategory">
+      <a href="#" ng-click="$ctrl.addArticleToCategory(article)" title="Добавить статью к категории">[[ article.title ]]</a>
     </div>
-  </form>
-  <h3>Добавить статью к категории</h3>
-  <hr>
-  <input class="form-control short-input" ng-model="$ctrl.articleAddToCategory" placeholder="Поиск">
-  <div ng-repeat="article in $ctrl.allArticles | filter : $ctrl.articleAddToCategory">
-    <a href="#" ng-click="$ctrl.addArticleToCategory(article)" title="Добавить статью к категории">[[ article.title ]]</a>
+  </div>
+  <div ng-show="!$ctrl.world.access_to_change">
+    <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
+    <p>[[ $ctrl.article.fields.title ]]</p>
+    <hr>
+    <p>[[ $ctrl.article.fields.body ]]</p>
   </div>
 </div>

@@ -53,6 +53,21 @@ a {
   max-height: 45rem;
 }
 
+.link-button {
+  display: inline-block;
+  padding: 0.1rem 1rem;
+  background-color: #48adea;
+  color: white;
+  border-radius: 20px;
+}
+
+.link-button--world {
+  background-color: #7a83ff;
+}
+
+.link-button:hover {
+  color: white;
+}
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;

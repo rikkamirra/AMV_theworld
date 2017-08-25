@@ -5,9 +5,14 @@ const twHome = {
   controller: TwHomeController
 };
 
-function TwHomeController(UserService, $state) {
+function TwHomeController(UserService, ConstructService, $state) {
+  this.$onInit = () => {
+    ConstructService.getAllWorlds().then(res => {
+      this.worlds = res.data;
+    });
+  };
+
   this.begin = () => {
-    console.log('lol');
     if (!UserService.user) {
       $state.go('login', {nextState: 'construct'});
     } else {
@@ -16,6 +21,6 @@ function TwHomeController(UserService, $state) {
   };
 }
 
-TwHomeController.$inject = ['UserService', '$state'];
+TwHomeController.$inject = ['UserService', 'ConstructService', '$state'];
 
 export default twHome;
