@@ -10,11 +10,32 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope) {
+function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload) {
   this.$onInit = () => {
     ArticleService.getAllArticles(this.world.pk).then(res => {
       this.allArticles = res.data;
     });
+  };
+
+  this.upload = function (file) {
+    Upload.upload({
+      url: 'https://api.cloudinary.com/v1_1/drjvh4g6x/image/upload/',
+      data: { file: file, upload_preset: 'zero8500zero', api_key: '467695578193825' }
+    }).then(function (resp) {
+      console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+    }, function (resp) {
+      console.log('Error status: ' + resp.status);
+    }, function (evt) {
+      var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+      console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+    });
+  };
+
+  this.submitImage = () => {
+    console.log('kiki');
+    if (this.image) {
+      this.upload(this.image);
+    }
   };
 
   this.articleAction = () => {
@@ -52,6 +73,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload'];
 
 export default articleManager;

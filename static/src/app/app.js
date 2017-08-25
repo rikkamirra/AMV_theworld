@@ -1,6 +1,8 @@
 import angular from 'angular';
 import 'angular-ui-router';
 import 'angular-cookies';
+import 'ng-file-upload';
+import 'cloudinary-angular';
 import 'jquery';
 
 import AppConfig from './shared/AppConfig';
@@ -16,6 +18,8 @@ import ArticleApp from './articles/articles';
 angular.module('TWApp', [
   'ui.router',
   'ngCookies',
+  'ngFileUpload',
+  'cloudinary',
   HomeApp,
   CommonApp,
   AccountApp,

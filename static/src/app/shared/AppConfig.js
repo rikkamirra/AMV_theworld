@@ -1,11 +1,16 @@
 import $ from 'jquery';
 
-function AppConfig($interpolateProvider, $httpProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
+function AppConfig($interpolateProvider, $httpProvider, $locationProvider, $urlRouterProvider, $stateProvider, CloudinaryProvider) {
   $interpolateProvider.startSymbol('[[');
   $interpolateProvider.endSymbol(']]');
 
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+  CloudinaryProvider.configure({
+    cloud_name: 'drjvh4g6x',
+    api_key: '467695578193825'
+  });
 
   $stateProvider
     .state('root', {
@@ -20,6 +25,6 @@ function AppConfig($interpolateProvider, $httpProvider, $locationProvider, $urlR
   $locationProvider.html5Mode(true);
 }
 
-AppConfig.$inject = ['$interpolateProvider', '$httpProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider'];
+AppConfig.$inject = ['$interpolateProvider', '$httpProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider', 'CloudinaryProvider'];
 
 export default AppConfig;
