@@ -1,7 +1,7 @@
-function ArticleController(article) {
-  this.article = article;
+function ArticleController() {
+
 }
 
-ArticleController.$inject = ['article'];
+ArticleController.$inject = [];
 
 export default ArticleController;

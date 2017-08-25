@@ -1,7 +1,6 @@
-function CreateArticleController(location) {
-  this.location = location;
+function CreateArticleController() {
 }
 
-CreateArticleController.$inject = ['location'];
+CreateArticleController.$inject = [];
 
 export default CreateArticleController;
