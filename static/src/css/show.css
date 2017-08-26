@@ -68,6 +68,17 @@ a {
 .link-button:hover {
   color: white;
 }
+
+/* file upload */
+.cloud-upload {
+  background-color: #fff5dc;
+  padding: 1rem;
+  border-style: dashed;
+  border-color: #cca84b;
+  border-radius: 10px;
+}
+
+
 /* .tw-welcome */
 .tw-welcome-div {
   margin: 1em;

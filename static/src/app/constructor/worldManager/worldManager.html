@@ -30,7 +30,7 @@
       </p>
     </div>
 
-    <div class="col-md-6">
+    <div ng-if="$ctrl.selectedCategory" class="col-md-6">
       <article-manager mode="$ctrl.articleActionMode" article="$ctrl.selectedArticle" category="$ctrl.selectedCategory" world="$ctrl.world"></article-manager>
     </div>
   </div>

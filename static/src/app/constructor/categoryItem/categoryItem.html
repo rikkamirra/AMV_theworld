@@ -19,7 +19,7 @@
         <span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.fields.title ]]
       </a>
       <span ng-click="$ctrl.showArticleBody(article)" class="clck-icon glyphicon glyphicon-eye-open font-sm"></span>
-      <p class="font-sm" ng-show="article.isShowBody">[[ article.fields.body ]]</p>
+      <div class="font-sm" ng-show="article.isShowBody" ng-bind-html="article.parsedBody"></div>
     </li>
   </ul>
 </div>

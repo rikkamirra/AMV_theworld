@@ -1,15 +1,23 @@
-<div ng-show="$ctrl.category">
+<div>
   <div ng-show="$ctrl.world.access_to_change">
     <form name="ArticleForm">
       <div class="form-group">
         <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
         <input class="form-control inline-block" ng-model="$ctrl.article.fields.title" placeholder="Название" required>
         <hr>
-        <textarea class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
+
+        <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
+
+        <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
+
         <button class="btn btn-primary btn-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
+        <button class="btn btn-primary btn-margin" ng-show="!$ctrl.showParsedBody" ng-click="$ctrl.parseBody()">Показать страницу</button>
+        <button class="btn btn-primary btn-margin" ng-show="$ctrl.showParsedBody" ng-click="$ctrl.showHtmlCode()">Показать HTML код</button>
         <button class="btn btn-primary btn-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
+
       </div>
     </form>
+    <cloud-upload></cloud-upload>
     <h3>Добавить статью к категории</h3>
     <hr>
     <input class="form-control short-input" ng-model="$ctrl.articleAddToCategory" placeholder="Поиск">
@@ -17,18 +25,11 @@
       <a href="#" ng-click="$ctrl.addArticleToCategory(article)" title="Добавить статью к категории">[[ article.title ]]</a>
     </div>
   </div>
+
   <div ng-show="!$ctrl.world.access_to_change">
     <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
     <p>[[ $ctrl.article.fields.title ]]</p>
     <hr>
-    <p>[[ $ctrl.article.fields.body ]]</p>
+    <div ng-bind-html="$ctrl.article.parsedBody"></div>
   </div>
-  <form name="imgForm">
-    <div class="btn btn-primary" ngf-select ng-model="$ctrl.image" name="file" ngf-pattern="'image/*'"
-      ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-      ngf-resize="{width: 100, height: 100}">Select</div>
-    Drop files:
-    <div ngf-drop ng-model="files" class="drop-box">Drop</div>
-    <button type="submit" ng-click="$ctrl.submitImage()">submit</button>
-  </form>
 </div>

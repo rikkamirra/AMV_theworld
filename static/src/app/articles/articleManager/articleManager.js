@@ -1,3 +1,5 @@
+import { omit } from 'underscore';
+
 const articleManager = {
   restrict: 'E',
   template: require('./articleManager.html'),
@@ -10,8 +12,10 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload) {
+function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce) {
   this.$onInit = () => {
+    // this.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+
     ArticleService.getAllArticles(this.world.pk).then(res => {
       this.allArticles = res.data;
     });
@@ -32,10 +36,18 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.submitImage = () => {
-    console.log('kiki');
     if (this.image) {
       this.upload(this.image);
     }
+  };
+
+  this.parseBody = () => {
+    this.article.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+    this.showParsedBody = true;
+  };
+
+  this.showHtmlCode = () => {
+    this.showParsedBody = false;
   };
 
   this.articleAction = () => {
@@ -73,6 +85,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce'];
 
 export default articleManager;

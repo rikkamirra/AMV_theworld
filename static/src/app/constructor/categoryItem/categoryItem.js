@@ -8,7 +8,7 @@ const categoryItem = {
   controller: CategoryItemController
 };
 
-function CategoryItemController(ConstructService, ArticleService, UserService, $state, $rootScope, $cookies) {
+function CategoryItemController(ConstructService, ArticleService, UserService, $state, $rootScope, $sce) {
   this.$onInit = () => {
     this.config = {
       isShowInput: false,
@@ -22,6 +22,9 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
     });
     ArticleService.getArticlesByCategory(this.root.pk).then(res => {
       this.articles = res.data;
+      this.articles.forEach((item) => {
+        item.parsedBody = $sce.trustAsHtml(item.fields.body);
+      });
     });
   };
 
@@ -59,6 +62,6 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
   };
 }
 
-CategoryItemController.$inject = ['ConstructService', 'ArticleService', 'UserService', '$state', '$rootScope'];
+CategoryItemController.$inject = ['ConstructService', 'ArticleService', 'UserService', '$state', '$rootScope', '$sce'];
 
 export default categoryItem;

@@ -1,0 +1,16 @@
+<form class="cloud-upload" name="imgForm" title="Загрузите изображение на облако, скопируйте пришедший адрес картинки и вставьте в статью">
+  <button
+    class="btn btn-primary"
+    ngf-select ng-model="$ctrl.image"
+    name="file"
+    ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+    ngf-resize="{width: 100, height: 100}"
+    >
+    Открыть картинку
+  </button>
+  <button class="btn btn-primary" type="submit" ng-click="$ctrl.submitImage()" ng-disable="!$ctrl.image">Загрузить на облако</button>
+  <p ng-show="$ctrl.image" class="font-sm">[[ $ctrl.image.$ngfName ]] - [[ $ctrl.image.$ngfOrigSize ]] Byte</p>
+  <input ng-show="$ctrl.imgUrl" ng-model="$ctrl.imgUrl" class="form-control" readonly>
+  <!--<div ngf-drop ng-model="files">Drop</div>-->
+</form>
