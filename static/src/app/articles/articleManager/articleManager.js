@@ -15,6 +15,10 @@ const articleManager = {
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce) {
   this.$onInit = () => {
     // this.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+    this.showParsedBody = true;
+    if (!this.article.parsedBody) {
+      this.article.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+    }
 
     ArticleService.getAllArticles(this.world.pk).then(res => {
       this.allArticles = res.data;

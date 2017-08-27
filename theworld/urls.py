@@ -37,9 +37,9 @@ urlpatterns = [
 
     url(r'^articles/new', articles.create_article),
     url(r'^articles/category/(?P<category_id>\d+)', articles.get_articles_by_category),
-    # url(r'^artickes/(?P<article_id>\d+)', world.get_article),
     url(r'^articles/(?P<article_id>\d+)/edit', articles.edit_article),
     url(r'^articles/(?P<article_id>\d+)/delete', articles.delete_article),
+    url(r'^articles/(?P<article_id>\d+)', articles.get_article),
     url(r'^articles/all', articles.get_all_articles),
     url(r'^articles/add_category', articles.add_category),
 

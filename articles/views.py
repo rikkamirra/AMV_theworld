@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Article
-from construct.models import Category
+from construct.models import Category, World
 from construct.manager import get_object, get_object_from_set
 
 
@@ -13,11 +13,25 @@ def create_article(request):
 
 
 def edit_article(request, article_id):
+    print('Loloolo')
     article = Article.objects.edit_article(request.user.pk, article_id, request.POST)
     if article:
         return JsonResponse(get_object(article), safe=False)
     else:
         return JsonResponse({}, status=409)
+
+def get_article(request, article_id):
+    if Article.objects.filter(pk=article_id).count() == 0:
+        return JsonResponse({}, status=404)
+
+    article = Article.objects.get(pk=article_id)
+    world = World.objects.get(pk=article.world_id)
+    categories = article.category_set.all()
+
+    article = get_object(article)
+    article['world'] = get_object(world)
+    article['categories'] = [get_object(category) for category in categories]
+    return JsonResponse(article, safe=False)
 
 
 def delete_article(request, article_id):

@@ -25,6 +25,13 @@ function ArticleService($http) {
       });
     },
 
+    getArticle(articleId) {
+      return $http({
+        method: 'GET',
+        url: `articles/${articleId}`
+      });
+    },
+
     getAllArticles(world_id) {
       return $http({
         method: 'POST',
