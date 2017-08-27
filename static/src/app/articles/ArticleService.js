@@ -12,16 +12,16 @@ function ArticleService($http) {
 
     updateArticle(articleId, params) {
       return $http({
-        method: 'POST',
-        url: `articles/${articleId}/edit`,
-        data: $.param(params)
+        method: 'PUT',
+        url: `articles/${articleId}/`,
+        data: params
       });
     },
 
     deleteArticle(articleId) {
       return $http({
         method: 'DELETE',
-        url: `articles/${articleId}/delete`
+        url: `articles/${articleId}/`
       });
     },
 

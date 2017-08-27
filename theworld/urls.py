@@ -22,7 +22,7 @@ import user.views as userapp
 import construct.views as world
 import articles.views as articles
 
-from articles.views import ArticleList
+from articles.views import ArticleList, ArticleItem
 
 urlpatterns = [
     url(r'^registration/', userapp.create_user),
@@ -42,11 +42,13 @@ urlpatterns = [
 
 
     url(r'^articles/$', ArticleList.as_view()),
+    url(r'^articles/(?P<article_id>\d+)/$', ArticleItem.as_view()),
+
     url(r'^articles/category/(?P<category_id>\d+)', articles.get_articles_by_category),
-    url(r'^articles/(?P<article_id>\d+)/edit', articles.edit_article),
-    url(r'^articles/(?P<article_id>\d+)/delete', articles.delete_article),
-    url(r'^articles/(?P<article_id>\d+)', articles.get_article),
-    url(r'^articles/all', articles.get_all_articles),
+    # url(r'^articles/(?P<article_id>\d+)/edit', articles.edit_article),
+    # url(r'^articles/(?P<article_id>\d+)/delete', articles.delete_article),
+    # url(r'^articles/(?P<article_id>\d+)', articles.get_article),
+    # url(r'^articles/all', articles.get_all_articles),
     url(r'^articles/add_category', articles.add_category),
 
     url(r'^admin/', admin.site.urls),
