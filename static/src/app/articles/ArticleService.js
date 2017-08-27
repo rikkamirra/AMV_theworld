@@ -5,7 +5,7 @@ function ArticleService($http) {
     createArticle(params) {
       return $http({
         method: 'POST',
-        url: 'articles/new',
+        url: 'articles/',
         data: $.param(params)
       });
     },

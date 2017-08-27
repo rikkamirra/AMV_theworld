@@ -4,9 +4,26 @@ from .models import Article
 from construct.models import Category, World
 from construct.manager import get_object, get_object_from_set
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
+class ArticleList(APIView):
+    def get(self, request, format=None):
+        articles = Article.objects.all().values('pk', 'title')
+        return Response([get_object(article) for article in articles])
+
+    def post(self, request, format=None):
+        article = Article.objects.create_article(request.user.pk, request.POST)
+        if not article:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(get_object(article), status=status.HTTP_201_CREATED)
+            
 
 def create_article(request):
-    article = article = Article.objects.create_article(request.user.pk, request.POST)
+    article = Article.objects.create_article(request.user.pk, request.POST)
     if not article:
         return JsonResponse({}, status=409)
     return JsonResponse(get_object(article), safe=False)
