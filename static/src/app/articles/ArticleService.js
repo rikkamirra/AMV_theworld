@@ -32,18 +32,17 @@ function ArticleService($http) {
       });
     },
 
-    getAllArticles(world_id) {
+    getArticlesByWorld(world_id) {
       return $http({
-        method: 'POST',
-        url: 'articles/all',
-        data: $.param({ world_id })
+        method: 'GET',
+        url: `articles_by_world/${world_id}`
       });
     },
 
     getArticlesByCategory(categoryId) {
       return $http({
         method: 'GET',
-        url: `articles/category/${categoryId}`
+        url: `articles_by_category/${categoryId}`
       });
     },
 

@@ -14,15 +14,22 @@ const articleManager = {
 
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce) {
   this.$onInit = () => {
-    // this.parsedBody = $sce.trustAsHtml(this.article.fields.body);
     this.showParsedBody = true;
-    if (!this.article.parsedBody) {
+    if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.fields.body);
     }
 
-    ArticleService.getAllArticles(this.world.pk).then(res => {
+    ArticleService.getArticlesByWorld(this.world.pk).then(res => {
       this.allArticles = res.data;
     });
+  };
+
+  this.addImage = () => {
+    this.article.fields.body += '\n<div><img height="300" src="Загрузите картинку на облако и вставьте урл сюда"></div>\n';
+  };
+
+  this.addText = () => {
+    this.article.fields.body += '\n<p>\nВставьте текст сюда\n</p>\n';
   };
 
   this.upload = function (file) {
@@ -30,12 +37,11 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
       url: 'https://api.cloudinary.com/v1_1/drjvh4g6x/image/upload/',
       data: { file: file, upload_preset: 'zero8500zero', api_key: '467695578193825' }
     }).then(function (resp) {
-      console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+
     }, function (resp) {
       console.log('Error status: ' + resp.status);
     }, function (evt) {
       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-      console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
     });
   };
 

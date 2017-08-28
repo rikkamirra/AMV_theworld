@@ -34,10 +34,9 @@ class ArticleItem(APIView):
         article = get_object(article)
         article['world'] = get_object(world)
         article['categories'] = [get_object(category) for category in categories]
-        return Response(article, safe=False)
+        return Response(article)
 
     def put(self, request, article_id, format=None):
-        print('HOHOHO')
         print(request.data)
         article = Article.objects.edit_article(request.user.pk, article_id, request.data)
         if article:
@@ -90,8 +89,8 @@ def get_articles_by_category(request, category_id):
     return JsonResponse(get_object_from_set(articles), safe=False)
 
 
-def get_all_articles(request):
-    articles = Article.objects.filter(world_id=request.POST.get('world_id', 1)).values('pk', 'title')
+def get_all_articles(request, world_id):
+    articles = Article.objects.filter(world_id=world_id).values('pk', 'title')
     return JsonResponse([a for a in articles], safe=False)
 
 def add_category(request):

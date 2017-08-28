@@ -6,6 +6,10 @@
         <input class="form-control inline-block" ng-model="$ctrl.article.fields.title" placeholder="Название" required>
         <hr>
 
+        <div ng-show="!$ctrl.showParsedBody">
+          <button class="btn btn-warning" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></button>
+          <button class="btn btn-warning" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></button>
+        </div>
         <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
 
         <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
