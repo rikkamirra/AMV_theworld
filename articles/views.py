@@ -49,22 +49,6 @@ class ArticleItem(APIView):
         return JsonResponse({})
 
 
-
-def create_article(request):
-    article = Article.objects.create_article(request.user.pk, request.POST)
-    if not article:
-        return JsonResponse({}, status=HTTP_400_BAD_REQUEST)
-    return JsonResponse(get_object(article), safe=False)
-
-
-def edit_article(request, article_id):
-    print('Loloolo')
-    article = Article.objects.edit_article(request.user.pk, article_id, request.POST)
-    if article:
-        return JsonResponse(get_object(article), safe=False)
-    else:
-        return JsonResponse({}, status=409)
-
 def get_article(request, article_id):
     if Article.objects.filter(pk=article_id).count() == 0:
         return JsonResponse({}, status=404)
@@ -78,10 +62,6 @@ def get_article(request, article_id):
     article['categories'] = [get_object(category) for category in categories]
     return JsonResponse(article, safe=False)
 
-
-def delete_article(request, article_id):
-    Article.objects.get(pk=article_id).delete()
-    return JsonResponse({})
 
 def get_articles_by_category(request, category_id):
     category = Category.objects.get(pk=category_id)

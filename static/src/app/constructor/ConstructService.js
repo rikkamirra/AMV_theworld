@@ -5,7 +5,7 @@ function ConstructService($http, UserService) {
     createWorld(title) {
       return $http({
         method: 'POST',
-        url: 'worlds/new',
+        url: 'worlds/',
         data: $.param({ title })
       });
     },
@@ -13,14 +13,14 @@ function ConstructService($http, UserService) {
     getAllWorlds() {
       return $http({
         method: 'GET',
-        url: 'worlds/all'
+        url: 'worlds/'
       });
     },
 
     createCategory(params) {
       return $http({
         method: 'POST',
-        url: 'categories/new',
+        url: 'worlds/categories/',
         data: $.param(params)
       });
     },
@@ -28,7 +28,7 @@ function ConstructService($http, UserService) {
     deleteCategory(categoryId) {
       return $http({
         method: 'DELETE',
-        url: `categories/${categoryId}/delete`,
+        url: `worlds/categories/${categoryId}`,
         data: { categoryId }
       });
     },
@@ -43,14 +43,14 @@ function ConstructService($http, UserService) {
     getLocation(categoryId) {
       return $http({
         method: 'GET',
-        url: `categories/${categoryId}`
+        url: `worlds/categories/${categoryId}`
       });
     },
 
     getChildren(parentId) {
       return $http({
         method: 'GET',
-        url: `categories/${parentId}/children`
+        url: `worlds/categories/children/${parentId}`
       });
     }
   }

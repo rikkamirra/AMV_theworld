@@ -22,7 +22,9 @@ import user.views as userapp
 import construct.views as world
 import articles.views as articles
 
+from construct.views import WorldItem, WorldList, CategoryList, CategoryItem
 from articles.views import ArticleList, ArticleItem
+
 
 urlpatterns = [
     url(r'^registration/', userapp.create_user),
@@ -30,26 +32,17 @@ urlpatterns = [
     url(r'^logout/', userapp.logout_user),
     url(r'^account/worlds', userapp.get_worlds),
 
-    url(r'^worlds/new', world.create_world),
-    url(r'^worlds/(?P<world_id>\d+)/delete', world.delete_world),
-    url(r'^worlds/(?P<world_id>\d+)', world.get_world),
-    url(r'^worlds/all', world.get_worlds),
-
-    url(r'^categories/new', world.create_category),
-    url(r'^categories/(?P<category_id>\d+)/delete', world.delete_category),
-    url(r'^categories/(?P<parent_id>\d+)/children', world.get_children),
-    url(r'^categories/(?P<category_id>\d+)', world.get_category),
-
+    url(r'^worlds/?$', world.WorldList.as_view()),
+    url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),
+    url(r'^worlds/categories/?$', CategoryList.as_view()),
+    url(r'^worlds/categories/(?P<category_id>\d+)/?$', CategoryItem.as_view()),
+    url(r'^worlds/categories/children/(?P<parent_id>\d+)/?$', world.get_children),
 
     url(r'^articles/$', ArticleList.as_view()),
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
 
     url(r'^articles_by_category/(?P<category_id>\d+)', articles.get_articles_by_category),
     url(r'^articles_by_world/(?P<world_id>\d+)', articles.get_all_articles),
-    # url(r'^articles/(?P<article_id>\d+)/edit', articles.edit_article),
-    # url(r'^articles/(?P<article_id>\d+)/delete', articles.delete_article),
-    # url(r'^articles/(?P<article_id>\d+)', articles.get_article),
-    # url(r'^articles/all', articles.get_all_articles),
     url(r'^articles/add_category', articles.add_category),
 
     url(r'^admin/', admin.site.urls),
