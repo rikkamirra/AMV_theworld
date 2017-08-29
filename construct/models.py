@@ -1,25 +1,13 @@
 from django.db import models
+
 from user.models import Account
 
-
-class WorldManager(models.Manager):
-    def create_world(self, user, fields):
-        user.is_constructor = True
-        user.save()
-
-        world = self.model(
-            name=fields.get('title'),
-            author=user
-        )
-        world.save()
-        return world
+from rest_framework.parsers import JSONParser
 
 
 class World(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey('user.Account')
-
-    objects = WorldManager()
 
 
 
@@ -46,3 +34,9 @@ class Category(models.Model):
     world = models.ForeignKey(World)
 
     objects = CategoryManager()
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    body = models.TextField()
+    world_id = models.IntegerField(default=1)

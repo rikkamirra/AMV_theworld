@@ -14,12 +14,13 @@ function CloudUploadController(Upload) {
     }, err => {
       console.log(err);
     }, avt => {
-      console.log(avt.loaded, avt.total);
+      this.progress = Math.round((avt.loaded / avt.total) * 100);
     });
   };
 
   this.submitImage = () => {
     if (this.image) {
+      this.imgUrl = "";
       this.upload(this.image);
     }
   };

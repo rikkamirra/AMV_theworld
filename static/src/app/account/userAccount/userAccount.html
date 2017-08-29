@@ -5,7 +5,7 @@
       <p class="text-muted">[[ $ctrl.user.fields.email ]]</p>
       <hr>
       <div ng-repeat="world in $ctrl.user.worlds track by $index">
-        <a class="lead link-button link-button--world" ui-sref="construct({worldId: world.pk})">[[ world.fields.name ]]</a>
+        <a class="lead link-button link-button--world" ui-sref="construct({worldId: world.id})">[[ world.fields.name ]]</a>
       </div>
     </div>
 

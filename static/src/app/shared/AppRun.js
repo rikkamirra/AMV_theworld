@@ -1,4 +1,7 @@
-function AppRun($rootScope, $state, $cookies, UserService, ConstructService) {
+import $ from 'jquery';
+
+function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService) {
+
   UserService.getCurrentUser();
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
@@ -9,6 +12,6 @@ function AppRun($rootScope, $state, $cookies, UserService, ConstructService) {
   });
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$cookies', 'UserService', 'ConstructService'];
+AppRun.$inject = ['$rootScope', '$state', '$cookies', '$http', 'UserService', 'ConstructService'];
 
 export default AppRun;

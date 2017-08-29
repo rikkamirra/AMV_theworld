@@ -2,25 +2,25 @@ import $ from 'jquery';
 
 function ConstructService($http, UserService) {
   return {
-    createWorld(title) {
+    createWorld(name) {
       return $http({
         method: 'POST',
-        url: 'worlds/new',
-        data: $.param({ title })
+        url: 'worlds/',
+        data: $.param({ name, author: UserService.getCurrentUser().id })
       });
     },
 
     getAllWorlds() {
       return $http({
         method: 'GET',
-        url: 'worlds/all'
+        url: 'worlds/'
       });
     },
 
     createCategory(params) {
       return $http({
         method: 'POST',
-        url: 'categories/new',
+        url: 'worlds/categories/',
         data: $.param(params)
       });
     },
@@ -28,7 +28,7 @@ function ConstructService($http, UserService) {
     deleteCategory(categoryId) {
       return $http({
         method: 'DELETE',
-        url: `categories/${categoryId}/delete`,
+        url: `worlds/categories/${categoryId}`,
         data: { categoryId }
       });
     },
@@ -43,14 +43,14 @@ function ConstructService($http, UserService) {
     getLocation(categoryId) {
       return $http({
         method: 'GET',
-        url: `categories/${categoryId}`
+        url: `worlds/categories/${categoryId}`
       });
     },
 
     getChildren(parentId) {
       return $http({
         method: 'GET',
-        url: `categories/${parentId}/children`
+        url: `worlds/categories/children/${parentId}`
       });
     }
   }

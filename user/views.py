@@ -1,13 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render_to_response, render
+from django.template.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
 from .models import Account
 from theworld.settings import STATIC_URL
 import construct.manager as construct
 from django.contrib.auth import authenticate, login, logout
 import json
+from django.middleware.csrf import get_token
+
 
 def index(request):
-    return render(request, 'index.html', { 'static_url': STATIC_URL })
+    csrf_token = get_token(request)
+    response = render(request, 'index.html')
+    response.set_cookie('csrftoken', csrf_token)
+    return response
 
 
 def create_user(request): #email, usrename, password
