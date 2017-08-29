@@ -49,27 +49,13 @@ class ArticleItem(APIView):
         return JsonResponse({})
 
 
-def get_article(request, article_id):
-    if Article.objects.filter(pk=article_id).count() == 0:
-        return JsonResponse({}, status=404)
-
-    article = Article.objects.get(pk=article_id)
-    world = World.objects.get(pk=article.world_id)
-    categories = article.category_set.all()
-
-    article = get_object(article)
-    article['world'] = get_object(world)
-    article['categories'] = [get_object(category) for category in categories]
-    return JsonResponse(article, safe=False)
-
-
 def get_articles_by_category(request, category_id):
     category = Category.objects.get(pk=category_id)
     articles = category.articles.all()
     return JsonResponse(get_object_from_set(articles), safe=False)
 
 
-def get_all_articles(request, world_id):
+def get_articles_by_world(request, world_id):
     articles = Article.objects.filter(world_id=world_id).values('pk', 'title')
     return JsonResponse([a for a in articles], safe=False)
 
