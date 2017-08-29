@@ -4,6 +4,8 @@ from .models import Article
 from construct.models import Category, World
 from construct.manager import get_object, get_object_from_set
 
+from .serializers import ArticleSerializer
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,25 +26,30 @@ class ArticleList(APIView):
 
 class ArticleItem(APIView):
     def get(self, request, article_id, format=None):
-        if Article.objects.filter(pk=article_id).count() == 0:
-            return Response({}, status=HTTP_404_NOT_FOUND)
+        article = None
+        try:
+            article = Article.objects.get(pk=article_id)
+        except Article.DoesNotExist:
+            return Response(status=404)
 
-        article = Article.objects.get(pk=article_id)
-        world = World.objects.get(pk=article.world_id)
-        categories = article.category_set.all()
-
-        article = get_object(article)
-        article['world'] = get_object(world)
-        article['categories'] = [get_object(category) for category in categories]
-        return Response(article)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
 
     def put(self, request, article_id, format=None):
-        print(request.data)
-        article = Article.objects.edit_article(request.user.pk, article_id, request.data)
-        if article:
-            return JsonResponse(get_object(article), safe=False)
-        else:
-            return JsonResponse({}, status=HTTP_400_BAD_REQUEST)
+        article = None
+        try:
+            article = Article.objects.get(pk=article_id)
+        except Article.DoesNotExist:
+            return Response(status=404)
+        world = World.objects.get(pk=article.world_id)
+        if request.user.pk != world.author.pk:
+            return Response(status=401)
+        serializer = ArticleSerializer(article, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
 
     def delete(self, request, article_id, format=None):
         Article.objects.get(pk=article_id).delete()
@@ -50,14 +57,22 @@ class ArticleItem(APIView):
 
 
 def get_articles_by_category(request, category_id):
-    category = Category.objects.get(pk=category_id)
+    category = None
+    try:
+        category = Category.objects.get(pk=category_id)
+    except Category.DoesNotExist:
+        return Response(status=404)
+
     articles = category.articles.all()
-    return JsonResponse(get_object_from_set(articles), safe=False)
+    serialize = ArticleSerializer(articles, many=True)
+    return JsonResponse(serialize.data, safe=False)
 
 
 def get_articles_by_world(request, world_id):
-    articles = Article.objects.filter(world_id=world_id).values('pk', 'title')
-    return JsonResponse([a for a in articles], safe=False)
+    articles = Article.objects.filter(world_id=world_id)
+    serializer = ArticleSerializer(articles, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
 
 def add_category(request):
     _category_id = request.POST.get('category_id', 0)

@@ -1,4 +1,4 @@
-import { omit } from 'underscore';
+import { pick } from 'underscore';
 
 const articleManager = {
   restrict: 'E',
@@ -16,20 +16,20 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.$onInit = () => {
     this.showParsedBody = true;
     if (this.article && !this.article.parsedBody) {
-      this.article.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+      this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
 
-    ArticleService.getArticlesByWorld(this.world.pk).then(res => {
+    ArticleService.getArticlesByWorld(this.world.id).then(res => {
       this.allArticles = res.data;
     });
   };
 
   this.addImage = () => {
-    this.article.fields.body += '\n<div><img height="300" src="Загрузите картинку на облако и вставьте урл сюда"></div>\n';
+    this.article.body += '\n<div><img height="300" src="Загрузите картинку на облако и вставьте урл сюда"></div>\n';
   };
 
   this.addText = () => {
-    this.article.fields.body += '\n<p>\nВставьте текст сюда\n</p>\n';
+    this.article.body += '\n<p>\nВставьте текст сюда\n</p>\n';
   };
 
   this.upload = function (file) {
@@ -52,7 +52,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.parseBody = () => {
-    this.article.parsedBody = $sce.trustAsHtml(this.article.fields.body);
+    this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     this.showParsedBody = true;
   };
 
@@ -61,7 +61,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.articleAction = () => {
-    if (this.article.pk) {
+    if (this.article.id) {
       this.editArticle();
     } else {
       this.saveArticle();
@@ -70,26 +70,29 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     ArticleService.createArticle(
-      Object.assign(this.article.fields, { category_id: this.category.pk, world_id: this.world.pk })
+      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id, world_id: this.world.id })
     ).then(res => {
       $state.reload();
     });
   };
 
   this.editArticle = () => {
-    ArticleService.updateArticle(this.article.pk, Object.assign(this.article.fields, { category_id: this.category.pk })).then(res => {
+    ArticleService.updateArticle(
+      this.article.id,
+      Object.assign(pick(this.article, 'title', 'body', 'world_id'), { category_id: this.category.id })
+    ).then(res => {
       $state.reload();
     });
   };
 
   this.deleteArticle = () => {
-    ArticleService.deleteArticle(this.article.pk).then(res => {
+    ArticleService.deleteArticle(this.article.id).then(res => {
       $state.reload();
     });
   };
 
   this.addArticleToCategory = (article) => {
-    ArticleService.addArticleToCategory({ article_id: article.pk, category_id: this.category.pk }).then(res => {
+    ArticleService.addArticleToCategory({ article_id: article.id, category_id: this.category.id }).then(res => {
       $state.reload();
     });
   }

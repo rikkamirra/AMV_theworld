@@ -2,15 +2,15 @@
   <div ng-show="$ctrl.world.access_to_change">
     <form name="ArticleForm">
       <div class="form-group">
-        <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
-        <input class="form-control inline-block" ng-model="$ctrl.article.fields.title" placeholder="Название" required>
+        <p><span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]</p>
+        <input class="form-control inline-block" ng-model="$ctrl.article.title" placeholder="Название" required>
         <hr>
 
         <div ng-show="!$ctrl.showParsedBody">
           <button class="btn btn-warning" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></button>
           <button class="btn btn-warning" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></button>
         </div>
-        <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.fields.body" rows="20" required></textarea>
+        <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.body" rows="20" required></textarea>
 
         <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 
@@ -31,8 +31,8 @@
   </div>
 
   <div ng-show="!$ctrl.world.access_to_change">
-    <p><span class="text-muted">Категория:</span> [[ $ctrl.category.fields.name ]]</p>
-    <p>[[ $ctrl.article.fields.title ]]</p>
+    <p><span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]</p>
+    <p>[[ $ctrl.article.title ]]</p>
     <hr>
     <div ng-bind-html="$ctrl.article.parsedBody"></div>
   </div>

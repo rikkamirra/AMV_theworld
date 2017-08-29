@@ -24,7 +24,7 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
   };
 
   this.createWorld = () => {
-    ConstructService.createWorld(this.title).then((res) => {
+    ConstructService.createWorld(this.name).then((res) => {
       this.isCreated = true;
       this.world = res.data;
     });
@@ -35,7 +35,7 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
   this.addCategory = (category) => {
     ConstructService.createCategory({
       name: category.name,
-      world_id: this.world.pk,
+      world: this.world.id,
       parent_id: 0
     }).then(res => {
       this.world.categories = res.data;

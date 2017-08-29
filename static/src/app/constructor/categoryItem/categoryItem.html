@@ -1,5 +1,5 @@
 <div ng-if="!$ctrl.isDeleted">
-  <p>[[ $ctrl.root.fields.name ]]
+  <p>[[ $ctrl.root.name ]]
     <span ng-click="$ctrl.showChildren()" class="clck-icon glyphicon glyphicon-menu-down font-sm"></span>
     <span ng-show="$ctrl.world.access_to_change" ng-click="$ctrl.showInput()" class="clck-icon glyphicon glyphicon-plus font-sm"></span>
     <span ng-show="$ctrl.world.access_to_change" ng-click="$ctrl.deleteCategory()" class="clck-icon glyphicon glyphicon-remove font-sm"></span>
@@ -16,7 +16,7 @@
     <li ng-repeat="child in $ctrl.children"><category-item root="child" world="$ctrl.world"></category-item></li>
     <li ng-repeat="article in $ctrl.articles">
       <a href="#" ng-click="$ctrl.clickArticle(article)">
-        <span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.fields.title ]]
+        <span class="glyphicon glyphicon-pencil font-sm"></span> [[ article.title ]]
       </a>
       <span ng-click="$ctrl.showArticleBody(article)" class="clck-icon glyphicon glyphicon-eye-open font-sm"></span>
       <div class="font-sm" ng-show="article.isShowBody" ng-bind-html="article.parsedBody"></div>

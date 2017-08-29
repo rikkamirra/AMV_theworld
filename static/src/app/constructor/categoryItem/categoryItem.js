@@ -17,13 +17,14 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
 
     this.isDeleted = false;
 
-    ConstructService.getChildren(this.root.pk).then(res => {
+    ConstructService.getChildren(this.root.id).then(res => {
       this.children = res.data;
     });
-    ArticleService.getArticlesByCategory(this.root.pk).then(res => {
+
+    ArticleService.getArticlesByCategory(this.root.id).then(res => {
       this.articles = res.data;
       this.articles.forEach((item) => {
-        item.parsedBody = $sce.trustAsHtml(item.fields.body);
+        item.parsedBody = $sce.trustAsHtml(item.body);
       });
     });
   };
@@ -43,8 +44,8 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
   this.addCategory = () => {
     ConstructService.createCategory({
       name: this.newCategoryName,
-      world_id: this.world.pk,
-      parent_id: this.root.pk
+      world: this.world.id,
+      parent_id: this.root.id
     }).then(res => {
       this.children = res.data;
       this.isShowInput = false;
@@ -52,7 +53,7 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
   };
 
   this.deleteCategory = () => {
-    ConstructService.deleteCategory(this.root.pk).then(res => {
+    ConstructService.deleteCategory(this.root.id).then(res => {
       this.isDeleted = true;
     });
   };
