@@ -52,7 +52,22 @@ class WorldItem(APIView):
         return Response(manager.get_object(world))
 
     def delete(self, request, world_id):
-        return Response({})
+        world = None
+        try:
+            world = World.objects.get(pk=world_id)
+        except World.DoesNotExist:
+            return Response(status=404)
+
+        if world.author.pk != request.user.pk:
+            return Response(status=403)
+
+        categories = Category.objects.filter(world=world)
+        articles = Article.objects.filter(world_id=world.pk)
+
+        world.delete()
+        categories.delete()
+        articles.delete()
+        return Response(status=200)
 
 
 class CategoryList(APIView):
@@ -98,7 +113,22 @@ class CategoryItem(APIView):
         return Response(serializer.errors, status=400)
 
     def delete(self, request, category_id):
-        manager.delete_category(category_id)
+        try:
+            category = Category.objects.get(pk=category_id)
+        except Category.DoesNotExist:
+            return Response(status=404)
+
+        if category.world.author.pk != request.user.pk:
+            return Response(status=403)
+
+        def delete_category(category_id):
+            category = Category.objects.get(pk=category_id).delete()
+            # category.articles.remove()
+            children = Category.objects.filter(parent_id=category_id);
+            for child in children:
+                delete_category(child.pk)
+
+        delete_category(category_id)
         return Response({})
 
 

@@ -27,6 +27,8 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
         item.parsedBody = $sce.trustAsHtml(item.body);
       });
     });
+
+    this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
   };
 
   this.showInput = () => this.config.isShowInput = !this.config.isShowInput;

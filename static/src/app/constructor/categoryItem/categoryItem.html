@@ -1,9 +1,9 @@
 <div ng-if="!$ctrl.isDeleted">
   <p>[[ $ctrl.root.name ]]
     <span ng-click="$ctrl.showChildren()" class="clck-icon glyphicon glyphicon-menu-down font-sm"></span>
-    <span ng-show="$ctrl.world.access_to_change" ng-click="$ctrl.showInput()" class="clck-icon glyphicon glyphicon-plus font-sm"></span>
-    <span ng-show="$ctrl.world.access_to_change" ng-click="$ctrl.deleteCategory()" class="clck-icon glyphicon glyphicon-remove font-sm"></span>
-    <span ng-show="$ctrl.world.access_to_change" ng-click="$ctrl.clickArticle()" class="clck-icon glyphicon glyphicon-pencil font-sm"></span>
+    <span ng-show="$ctrl.accessToChange" ng-click="$ctrl.showInput()" class="clck-icon glyphicon glyphicon-plus font-sm"></span>
+    <span ng-show="$ctrl.accessToChange" ng-click="$ctrl.deleteCategory()" class="clck-icon glyphicon glyphicon-remove font-sm"></span>
+    <span ng-show="$ctrl.accessToChange" ng-click="$ctrl.clickArticle()" class="clck-icon glyphicon glyphicon-pencil font-sm"></span>
   </p>
   <div ng-show="$ctrl.config.isShowInput" class="input-group short-input">
     <input type="text"

@@ -65,6 +65,7 @@ def get_child_categories(category_id):
 
 def delete_category(category_id):
     category = Category.objects.get(pk=category_id).delete()
+    # category.articles.remove()
     children = Category.objects.filter(parent_id=category_id);
     for child in children:
         delete_category(child.pk)

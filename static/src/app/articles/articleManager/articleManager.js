@@ -22,6 +22,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     ArticleService.getArticlesByWorld(this.world.id).then(res => {
       this.allArticles = res.data;
     });
+
+    this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
   };
 
   this.addImage = () => {
