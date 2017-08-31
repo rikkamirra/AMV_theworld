@@ -46,10 +46,20 @@ class WorldItem(APIView):
         return Response(serializer.data)
 
     def put(self, request, world_id):
-        world = World.objects.get(pk=world_id)
-        world.name = request.data.get('name')
-        world.save()
-        return Response(manager.get_object(world))
+        world = None
+        try:
+            world = World.objects.get(pk=world_id)
+        except World.DoesNotExist:
+            return Response(status=404)
+
+        if request.user.pk != world.author.pk:
+            return Response(status=403)
+
+        serializer = WorldSerializer(world, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
     def delete(self, request, world_id):
         world = None

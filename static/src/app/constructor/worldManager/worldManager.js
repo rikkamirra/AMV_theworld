@@ -17,6 +17,18 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
     this.showArticleListner = $rootScope.$on('showArticle', (e, data) => {
       this.showArticle(data.article, data.category);
     });
+
+    this.accessToChange = this.user.id === this.world.author;
+    this.isShowWorldPictureEditor = false;
+
+    this.style = {
+      'background-image': `url(${this.world.picture})`,
+      'background-repeat': 'no-repeat',
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'background-attachment': 'fixed'
+    };
   };
 
   this.$onDestroy = () => {
@@ -50,7 +62,19 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
     }
     this.selectedArticle = article;
     this.selectedCategory = category;
-  }
+  };
+
+  this.showWorldPictureEditor = () => {
+    this.isShowWorldPictureEditor = !this.isShowWorldPictureEditor;
+  };
+
+  this.updateWorldPicture = (src) => {
+    this.world.picture = src
+    ConstructService.updateWorld(this.world).then(res => {
+      this.world = res.data;
+      this.style['background-image'] = `url(${this.world.picture})`;
+    });
+  };
 }
 
 WorldManagerController.$inject = ['ConstructService', 'UserService', '$state', '$rootScope'];

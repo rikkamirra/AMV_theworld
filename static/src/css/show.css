@@ -8,12 +8,16 @@ a {
   font-size: 0.8rem;
 }
 
-.pointer:hover {
-  cursor: pointer;
+.navbar {
+  margin: 0;
 }
 
-.flex-container {
-  display: flex;
+.main-content {
+  margin-top: 2.5rem;
+}
+
+.pointer:hover {
+  cursor: pointer;
 }
 
 .inline-block {
@@ -28,7 +32,7 @@ a {
   width: 15rem;
 }
 
-.btn-margin {
+.top-margin {
   margin-top: 1rem;
 }
 
@@ -37,7 +41,7 @@ a {
 }
 
 .clck-icon {
-  color: #d0d0d0;
+  color: #a2a2a2;
   padding: 0.1rem;
   border-radius: 5px;
 }
@@ -76,6 +80,35 @@ a {
   border-style: dashed;
   border-color: #cca84b;
   border-radius: 10px;
+}
+
+
+/* articles */
+.world-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  min-height: 47rem;
+}
+
+
+/* Home */
+.worlds-panel {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.worlds-panel--item {
+  height: 12.5rem;
+  margin: 0.5rem;
+  box-shadow: 0 0 1rem grey;
+  text-align: center;
+}
+
+.worlds-panel--item p {
+  position: relative;
+  top: -2rem;
+  color: #def0ff;
+  font-weight: bold;
 }
 
 

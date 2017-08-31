@@ -1,4 +1,4 @@
-<div>
+<div class="top-margin">
   <div ng-show="$ctrl.accessToChange">
     <form name="ArticleForm">
       <div class="form-group">
@@ -7,17 +7,17 @@
         <hr>
 
         <div ng-show="!$ctrl.showParsedBody">
-          <button class="btn btn-warning" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></button>
-          <button class="btn btn-warning" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></button>
+          <a href="#" class="lead" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></a>
+          <a href="#" class="lead" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></a>
         </div>
         <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.body" rows="20" required></textarea>
 
         <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 
-        <button class="btn btn-primary btn-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
-        <button class="btn btn-primary btn-margin" ng-show="!$ctrl.showParsedBody" ng-click="$ctrl.parseBody()">Показать страницу</button>
-        <button class="btn btn-primary btn-margin" ng-show="$ctrl.showParsedBody" ng-click="$ctrl.showHtmlCode()">Показать HTML код</button>
-        <button class="btn btn-primary btn-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
+        <button class="btn btn-primary top-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
+        <button class="btn btn-primary top-margin" ng-show="!$ctrl.showParsedBody" ng-click="$ctrl.parseBody()">Показать страницу</button>
+        <button class="btn btn-primary top-margin" ng-show="$ctrl.showParsedBody" ng-click="$ctrl.showHtmlCode()">Показать HTML код</button>
+        <button class="btn btn-primary top-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
 
       </div>
     </form>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div ng-show="!$ctrl.world.access_to_change">
+  <div ng-show="!$ctrl.accessToChange">
     <p><span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]</p>
     <p>[[ $ctrl.article.title ]]</p>
     <hr>

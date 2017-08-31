@@ -3,6 +3,7 @@ import $ from 'jquery';
 function UserService($http, $cookies, $rootScope, $state) {
   return {
     user: null,
+    style: null,
 
     createUser(creds) {
       return $http({
@@ -56,6 +57,14 @@ function UserService($http, $cookies, $rootScope, $state) {
     clearUserData() {
       this.user = null;
       $cookies.remove('currentUser');
+    },
+
+    setStyle(style) {
+      this.style = style;
+    },
+
+    getStyle() {
+      return this.style;
     }
   }
 }

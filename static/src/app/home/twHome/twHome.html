@@ -4,8 +4,11 @@
       <h3>Опиши свой Мир</h3>
       <button class="btn btn-primary" ng-click="$ctrl.begin()">Начать</button>
     </div>
-    <div class="container" ng-repeat="world in $ctrl.worlds">
-      <a class="link-button link-button--world" ui-sref="construct({worldId: world.id})">[[ world.name ]]</a>
+    <div class="worlds-panel">
+      <a class="worlds-panel--item" ng-repeat="world in $ctrl.worlds" ui-sref="construct({worldId: world.id})">
+        <img ng-src="[[ world.picture ]]" height="250" alt="world">
+        <p>[[ world.name ]]</p>
+      </a>
     </div>
   </div>
 

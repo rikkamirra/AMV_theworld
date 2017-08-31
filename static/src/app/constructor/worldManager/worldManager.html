@@ -1,37 +1,40 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 scrollable">
-      <div class="row">
-        <div ng-show="!$ctrl.isCreated" class="col-md-6">
-          <p>Название</p>
-          <div class="input-group">
-            <input type="text"
-              class="form-control"
-              ng-model="$ctrl.name"
-              placeholder="Название">
-            <span ng-click="$ctrl.createWorld()" class="input-group-addon pointer">Создать</span>
+<div ng-style="$ctrl.style">
+  <div class="container world-container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div ng-show="!$ctrl.isCreated" class="col-md-6">
+            <p>Название</p>
+            <div class="input-group">
+              <input type="text"
+                class="form-control"
+                ng-model="$ctrl.name"
+                placeholder="Название">
+              <span ng-click="$ctrl.createWorld()" class="input-group-addon pointer">Создать</span>
+            </div>
+          </div>
+          <div ng-show="$ctrl.isCreated" class="col-md-6">
+            <h3>[[ $ctrl.world.name ]]<span ng-show="$ctrl.accessToChange" ng-click="$ctrl.showWorldPictureEditor()" class="clck-icon glyphicon glyphicon-picture"></span></h3>
+            <cloud-upload ng-show="$ctrl.isShowWorldPictureEditor" on-upload="$ctrl.updateWorldPicture(src)"></cloud-upload>
+            <hr>
           </div>
         </div>
-        <div ng-show="$ctrl.isCreated" class="col-md-6">
-          <h3>[[ $ctrl.world.name ]]</h3>
-          <hr>
-        </div>
+
+        <div ng-show="$ctrl.isCreated">
+          <p ng-show="$ctrl.accessToChange" class="input-group short-input">
+            <input type="text"
+              class="form-control"
+              ng-model="$ctrl.newCategory.name"
+              placeholder="Новая категория">
+            <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
+          </div>
+          <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
+        </p>
       </div>
 
-      <div ng-show="$ctrl.isCreated">
-        <p ng-show="$ctrl.world.access_to_change" class="input-group short-input">
-          <input type="text"
-            class="form-control"
-            ng-model="$ctrl.newCategory.name"
-            placeholder="Новая категория">
-          <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
-        </div>
-        <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
-      </p>
-    </div>
-
-    <div ng-if="$ctrl.selectedCategory" class="col-md-6">
-      <article-manager mode="$ctrl.articleActionMode" article="$ctrl.selectedArticle" category="$ctrl.selectedCategory" world="$ctrl.world"></article-manager>
+      <div ng-if="$ctrl.selectedCategory" class="col-md-6">
+        <article-manager mode="$ctrl.articleActionMode" article="$ctrl.selectedArticle" category="$ctrl.selectedCategory" world="$ctrl.world"></article-manager>
+      </div>
     </div>
   </div>
 </div>

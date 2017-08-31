@@ -8,6 +8,7 @@ from rest_framework.parsers import JSONParser
 class World(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey('user.Account')
+    picture = models.URLField(max_length=255, null=True, blank=True)
 
 
 

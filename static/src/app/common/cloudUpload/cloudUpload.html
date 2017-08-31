@@ -6,12 +6,13 @@
     ngf-pattern="'image/*'"
     ngf-accept="'image/*'" ngf-max-size="20MB"
     ngf-resize="{width: 1000, height: 1000}"
+    ngf-change="$ctrl.fileSelected()"
     >
-    Открыть картинку
+    Загрузить картинку
   </button>
-  <button class="btn btn-primary" type="submit" ng-click="$ctrl.submitImage()" ng-disable="!$ctrl.image">Загрузить на облако</button>
   <span ng-show="$ctrl.progress">[[ $ctrl.progress ]]%</span>
   <p ng-show="$ctrl.image" class="font-sm">[[ $ctrl.image.$ngfName ]] - [[ $ctrl.image.$ngfOrigSize ]] Byte</p>
+  <img height="100" ng-show="$ctrl.imgUrl" ng-src="[[$ctrl.imgUrl]]">
   <input ng-show="$ctrl.imgUrl" ng-model="$ctrl.imgUrl" class="form-control" readonly>
   <!--<div ngf-drop ng-model="files">Drop</div>-->
 </form>

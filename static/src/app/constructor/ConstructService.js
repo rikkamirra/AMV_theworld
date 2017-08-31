@@ -10,6 +10,14 @@ function ConstructService($http, UserService) {
       });
     },
 
+    updateWorld(params) {
+      return $http({
+        method: 'PUT',
+        url: `worlds/${params.id}`,
+        data: params
+      });
+    },
+
     getAllWorlds() {
       return $http({
         method: 'GET',
