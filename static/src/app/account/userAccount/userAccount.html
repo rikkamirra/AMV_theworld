@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <h2>[[ $ctrl.user.fields.username ]]</h2>
-      <p class="text-muted">[[ $ctrl.user.fields.email ]]</p>
+      <h2>[[ $ctrl.user.username ]]</h2>
+      <p class="text-muted">[[ $ctrl.user.email ]]</p>
       <hr>
       <div ng-repeat="world in $ctrl.user.worlds track by $index">
-        <a class="lead link-button link-button--world" ui-sref="construct({worldId: world.id})">[[ world.fields.name ]]</a>
+        <a class="lead link-button link-button--world" ui-sref="construct({worldId: world.id})">[[ world.name ]]</a>
       </div>
     </div>
 

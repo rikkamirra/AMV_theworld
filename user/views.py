@@ -1,12 +1,22 @@
 from django.shortcuts import render_to_response, render
 from django.template.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
+
 from .models import Account
+from construct.models import World, Category
+
+from construct.serializers import WorldSerializer, CategorySerializer
+from .serializers import AccountSerializer
+
 from theworld.settings import STATIC_URL
 import construct.manager as construct
 from django.contrib.auth import authenticate, login, logout
 import json
 from django.middleware.csrf import get_token
+
+# from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 def index(request):
@@ -40,7 +50,8 @@ def create_user(request): #email, usrename, password
             )
         user = authenticate(username=request.POST['email'], password=request.POST['password'])
         login(request, user)
-        return JsonResponse(user.get_json(), safe=False)
+        serializer = AccountSerializer(user)
+        return JsonResponse(usre.data)
 
 
 def login_user(request):
@@ -55,13 +66,16 @@ def login_user(request):
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user:
         login(request, user)
-        return JsonResponse(user.get_json(), safe=False)
+        serializer = AccountSerializer(user)
+        return JsonResponse(serializer.data)
     else:
         return JsonResponse(['Invalid credentiald'], status=409, safe=False)
 
 
 def get_worlds(request):
-    return JsonResponse(construct.get_worlds_by_user(request.user), safe=False)
+    worlds = World.objects.filter(author=request.user)
+    serializer = WorldSerializer(worlds, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 def logout_user(request):

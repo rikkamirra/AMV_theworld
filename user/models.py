@@ -27,7 +27,7 @@ class AccountManager(BaseUserManager):
 
         return account
 
-    def get_role(self, user_id, role):
+    def set_role(self, user_id, role):
         account = self.get(pk=user_id)
         setattr(account, 'is_'+role, True)
         account.save()

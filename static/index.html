@@ -20,7 +20,7 @@
           <li><a href="#">Миры</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li ng-show="$ctrl.getUser()"><a ui-sref="account"><span class="glyphicon glyphicon-user"> [[ $ctrl.user.fields.username ]]</a></li>
+          <li ng-show="$ctrl.getUser()"><a ui-sref="account"><span class="glyphicon glyphicon-user"> [[ $ctrl.user.username ]]</a></li>
           <li ng-show="!$ctrl.getUser()"><a href="#" ng-click="$ctrl.login()"><span class="glyphicon glyphicon-log-in"> Войти</a></li>
           <li ng-show="$ctrl.getUser()"><a href="#" ng-click="$ctrl.logout()"><span class="glyphicon glyphicon-log-out"> Выйти</a></li>
         </ul>
