@@ -14,7 +14,7 @@ const articleManager = {
 
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce) {
   this.$onInit = () => {
-    this.showParsedBody = true;
+    this.isEdit = false;
     if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
@@ -53,13 +53,13 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     }
   };
 
-  this.parseBody = () => {
+  this.showArticle = () => {
     this.article.parsedBody = $sce.trustAsHtml(this.article.body);
-    this.showParsedBody = true;
+    this.isEdit = false;
   };
 
-  this.showHtmlCode = () => {
-    this.showParsedBody = false;
+  this.showEditTools = () => {
+    this.isEdit = true;
   };
 
   this.articleAction = () => {

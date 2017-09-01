@@ -1,22 +1,22 @@
 <div class="top-margin">
-  <div ng-show="$ctrl.accessToChange">
+  <div ng-show="$ctrl.accessToChange && $ctrl.isEdit">
     <form name="ArticleForm">
       <div class="form-group">
-        <p><span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]</p>
+        <p>
+          <span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]
+          <span ng-click="$ctrl.showArticle()" class="glyphicon glyphicon-check clck-icon"></span>
+        </p>
         <input class="form-control inline-block" ng-model="$ctrl.article.title" placeholder="Название" required>
         <hr>
 
-        <div ng-show="!$ctrl.showParsedBody">
-          <a href="#" class="lead" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></a>
-          <a href="#" class="lead" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></a>
-        </div>
+        <span ng-click="$ctrl.addImage()" class="glyphicon glyphicon-picture clck-icon"></span>
+        <span ng-click="$ctrl.addText()" class="glyphicon glyphicon-pencil clck-icon"></span>
+
         <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.body" rows="20" required></textarea>
 
         <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 
         <button class="btn btn-primary top-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
-        <button class="btn btn-primary top-margin" ng-show="!$ctrl.showParsedBody" ng-click="$ctrl.parseBody()">Показать страницу</button>
-        <button class="btn btn-primary top-margin" ng-show="$ctrl.showParsedBody" ng-click="$ctrl.showHtmlCode()">Показать HTML код</button>
         <button class="btn btn-primary top-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>
 
       </div>
@@ -30,8 +30,11 @@
     </div>
   </div>
 
-  <div ng-show="!$ctrl.accessToChange">
-    <p><span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]</p>
+  <div ng-show="!$ctrl.accessToChange || !$ctrl.isEdit">
+    <p>
+      <span class="text-muted">Категория:</span> [[ $ctrl.category.name ]]
+      <span ng-show="$ctrl.accessToChange" ng-click="$ctrl.showEditTools()" class="glyphicon glyphicon-pencil clck-icon"></span>
+    </p>
     <p>[[ $ctrl.article.title ]]</p>
     <hr>
     <div ng-bind-html="$ctrl.article.parsedBody"></div>

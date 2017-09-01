@@ -7,7 +7,7 @@ function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructServi
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
     if (toState.module === 'private' && !UserService.user) {
       e.preventDefault();
-      $state.go('login');
+      $state.go('login', { nextState: toState, nextStateParams: toParams });
     }
   });
 }
