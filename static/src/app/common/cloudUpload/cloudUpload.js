@@ -2,12 +2,14 @@ const cloudUpload = {
   restrict: 'E',
   template: require('./cloudUpload.html'),
   bindings: {
-    onUpload: '&'
+    onUpload: '&',
+    instanceType: '@',
+    instanceId: '<'
   },
   controller: CloudUploadController
 };
 
-function CloudUploadController(Upload) {
+function CloudUploadController(Upload, UserService) {
   this.fileSelected = () => {
     this.submitImage();
   };
@@ -20,6 +22,7 @@ function CloudUploadController(Upload) {
       this.imgUrl = res.data.url;
       if (this.onUpload) {
         this.onUpload({ src: this.imgUrl });
+        UserService.saveImage({path: this.imgUrl, instance_type: this.instanceType || 'account', instance_id: this.instanceId || false});
       }
     }, err => {
       console.log(err);
@@ -36,6 +39,6 @@ function CloudUploadController(Upload) {
   };
 }
 
-CloudUploadController.$inject = ['Upload'];
+CloudUploadController.$inject = ['Upload', 'UserService'];
 
 export default cloudUpload;

@@ -4,7 +4,8 @@ from django.http import HttpResponse, JsonResponse
 # import json
 import construct.manager as manager
 
-from construct.models import World, Category, Article
+from construct.models import World, Category
+from articles.models import Article
 from .serializers import WorldSerializer, CategorySerializer
 from articles.serializers import ArticleSerializer
 
@@ -72,7 +73,7 @@ class WorldItem(APIView):
             return Response(status=403)
 
         categories = Category.objects.filter(world=world)
-        articles = Article.objects.filter(world_id=world.pk)
+        articles = Article.objects.filter(world=world)
 
         world.delete()
         categories.delete()
@@ -88,12 +89,12 @@ class CategoryList(APIView):
         serialize = CategorySerializer(data=request.POST)
         if serialize.is_valid():
             serialize.save()
-            categories = categories = Category.objects.filter(
+            categories = Category.objects.filter(
                 world=World.objects.get(pk=request.POST['world']),
-                parent_id=request.POST.get('parent_id', 0)
+                parent_id=Category.objects.get(pk=request.POST.get('parent_id'))
                 )
-            serialized_categories = CategorySerializer(data=categories, many=True)
-            return Response(serialized_categories)
+            serialized_categories = CategorySerializer(categories, many=True)
+            return Response(serialized_categories.data)
         return Response(serialize.errors, status=400)
 
 
@@ -132,8 +133,9 @@ class CategoryItem(APIView):
             return Response(status=403)
 
         def delete_category(category_id):
-            category = Category.objects.get(pk=category_id).delete()
-            # category.articles.remove()
+            category = Category.objects.get(pk=category_id)
+            category.articles.remove()
+            category.delete()
             children = Category.objects.filter(parent_id=category_id);
             for child in children:
                 delete_category(child.pk)

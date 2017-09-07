@@ -15,7 +15,7 @@
           </div>
           <div ng-show="$ctrl.isCreated" class="col-md-6">
             <h3>[[ $ctrl.world.name ]]<span ng-show="$ctrl.accessToChange" ng-click="$ctrl.showWorldPictureEditor()" class="clck-icon glyphicon glyphicon-picture"></span></h3>
-            <cloud-upload ng-show="$ctrl.isShowWorldPictureEditor" on-upload="$ctrl.updateWorldPicture(src)"></cloud-upload>
+            <cloud-upload ng-show="$ctrl.isShowWorldPictureEditor" on-upload="$ctrl.updateWorldPicture(src)" instance-type="world" instance-id="$ctrl.world.id"></cloud-upload>
             <hr>
           </div>
         </div>

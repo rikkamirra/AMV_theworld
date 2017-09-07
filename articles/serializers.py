@@ -7,13 +7,13 @@ from articles.models import Article
 
 class ArticleSerializer(serializers.ModelSerializer):
     categories = serializers.SerializerMethodField()
-    world = serializers.SerializerMethodField()
+    # world = serializers.SerializerMethodField()
     body = serializers.CharField(required=False)
 
-    def get_world(self, obj):
-        world = World.objects.get(pk=obj.world_id)
-        serializer = WorldSerializer(world)
-        return serializer.data
+    # def get_world(self, obj):
+    #     world = World.objects.get(pk=obj.world_id)
+    #     serializer = WorldSerializer(world)
+    #     return serializer.data
 
     def get_categories(self, obj):
         article = Article.objects.get(pk=obj.id)
@@ -24,4 +24,4 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'title', 'body', 'world_id', 'categories', 'world']
+        fields = ['id', 'title', 'body', 'world_id', 'categories']

@@ -36,8 +36,7 @@ function ConstructService($http, UserService) {
     deleteCategory(categoryId) {
       return $http({
         method: 'DELETE',
-        url: `worlds/categories/${categoryId}`,
-        data: { categoryId }
+        url: `worlds/categories/${categoryId}`
       });
     },
 

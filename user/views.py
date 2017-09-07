@@ -6,7 +6,7 @@ from .models import Account
 from construct.models import World, Category
 
 from construct.serializers import WorldSerializer, CategorySerializer
-from .serializers import AccountSerializer
+from .serializers import AccountSerializer, PictureSerializer
 
 from theworld.settings import STATIC_URL
 import construct.manager as construct
@@ -81,3 +81,13 @@ def get_worlds(request):
 def logout_user(request):
     logout(request)
     return JsonResponse({})
+
+
+def upload_image(request):
+    if request.POST.get('owner') != request.user.pk:
+        return JsonResponse({}, status=401)
+    serializer = PictureSerializer(data=request.POST)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data)
+    return JsonResponse(serializer.errors, status=400)

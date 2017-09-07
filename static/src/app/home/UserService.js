@@ -41,6 +41,21 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
+    saveImage({path, instance_type = 'account', instance_id = this.user.id}) {
+      const params = {
+        path,
+        instance_type,
+        instance_id,
+        owner: this.user.id
+      };
+
+      return $http({
+        method: 'POST',
+        url: 'account/upload_image',
+        data: $.param(params)
+      });
+    },
+
     getCurrentUser() {
       if (!$cookies.getObject('currentUser')) {
         return null;

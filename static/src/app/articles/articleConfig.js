@@ -1,7 +1,7 @@
 function articleConfig($stateProvider) {
   $stateProvider.state('article', {
     url: '/article/:articleId',
-    template: '<article-manager article="ctrl.article" world="ctrl.article.world"></article-mamanger>',
+    template: '<article-manager article="ctrl.article"></article-mamanger>',
     resolve: {
       article: ['ArticleService', '$stateParams', (ArticleService, $stateParams) => {
         return ArticleService.getArticle($stateParams.articleId).then(res => res.data);

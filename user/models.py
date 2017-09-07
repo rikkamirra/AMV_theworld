@@ -64,7 +64,8 @@ class Account(AbstractBaseUser):
         return self.email
 
 
-    def get_json(self):
-        jsons = serializers.serialize('json', [self,])
-        obj = json.loads(jsons)
-        return obj[0]
+class Picture(models.Model):
+    path = models.URLField(max_length=255)
+    instance_type = models.CharField(max_length=15, default="article") #article, category, world, account
+    instance_id = models.IntegerField()
+    owner = models.ForeignKey(Account, null=True, blank=True)
