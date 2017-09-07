@@ -91,7 +91,7 @@ class CategoryList(APIView):
             serialize.save()
             categories = Category.objects.filter(
                 world=World.objects.get(pk=request.POST['world']),
-                parent_id=Category.objects.get(pk=request.POST.get('parent_id'))
+                parent_id=request.POST.get('parent_id')
                 )
             serialized_categories = CategorySerializer(categories, many=True)
             return Response(serialized_categories.data)
