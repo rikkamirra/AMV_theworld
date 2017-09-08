@@ -57,22 +57,6 @@ a {
   max-height: 45rem;
 }
 
-.link-button {
-  display: inline-block;
-  padding: 0.1rem 1rem;
-  background-color: #48adea;
-  color: white;
-  border-radius: 20px;
-}
-
-.link-button--world {
-  background-color: #7a83ff;
-}
-
-.link-button:hover {
-  color: white;
-}
-
 /* file upload */
 .cloud-upload {
   background-color: #fff5dc;
@@ -125,6 +109,41 @@ a {
   margin: 0.2em 1em;
 }
 
+
+/* image tile */
+.image-tile {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-tile--item {
+  margin: 1rem;
+  box-shadow: 0 0 1rem 0.1rem gray;
+  text-align: center;
+  overflow: hidden;
+  height: 15rem;
+}
+
+.image-tile--item:hover img {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.image-tile--item:hover p {
+  color: black;
+  text-decoration: none;
+}
+
+.image-tile--item img {
+  height: 15rem;
+}
+
+.image-tile--item p {
+  position: relative;
+  top: -2rem;
+  color: #def0ff;
+  font-weight: bold;
+}
 
 
 /* common */

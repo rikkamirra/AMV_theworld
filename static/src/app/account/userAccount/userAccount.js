@@ -1,3 +1,5 @@
+import { map } from 'underscore';
+
 const userAccount = {
   restrict: 'E',
   template: require('./userAccount.html'),
@@ -13,6 +15,6 @@ function UserAccountController(UserService, $state) {
   }
 }
 
-UserAccountController.$inject = ['UserService', '$state'];
+UserAccountController.$inject = ['UserService', '$state', 'Carousel'];
 
 export default userAccount;

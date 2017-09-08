@@ -1,6 +1,11 @@
 import angular from 'angular';
 import 'angular-ui-router';
+
+import 'angular-ui-bootstrap';
+import 'angular-ui-carousel';
+
 import 'angular-cookies';
+import 'angular-animate';
 import 'ng-file-upload';
 import 'cloudinary-angular';
 import 'jquery';
@@ -17,6 +22,8 @@ import ArticleApp from './articles/articles';
 
 angular.module('TWApp', [
   'ui.router',
+  'ui.bootstrap',
+  'ui.carousel',
   'ngCookies',
   'ngFileUpload',
   'cloudinary',

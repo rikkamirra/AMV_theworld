@@ -1,19 +1,26 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <h2>[[ $ctrl.user.username ]]</h2>
-      <p class="text-muted">[[ $ctrl.user.email ]]</p>
-      <hr>
-      <div class="worlds-panel">
-        <a class="worlds-panel--item" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
+  <h2>[[ $ctrl.user.username ]]</h2>
+  <p class="text-muted">[[ $ctrl.user.email ]]</p>
+
+  <uib-tabset active="activeJustified" justified="true">
+    <uib-tab index="0" heading="Проекты">
+      <a ui-sref="newConstruct">Создать новый Мир</a>
+      <div class="image-tile">
+        <a class="image-tile--item" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
           <img ng-src="[[ world.picture ]]" height="250" alt="world">
           <p>[[ world.name ]]</p>
         </a>
       </div>
-    </div>
+    </uib-tab>
 
-    <div class="col-md-6">
-      <a ui-sref="newConstruct" class="lead link-button">Создать новый Мир</a>
-    </div>
-  </div>
+    <uib-tab index="1" heading="Галерея">
+      <div class="image-tile">
+        <div class="image-tile--item" ng-repeat="image in $ctrl.user.pictures">
+          <img height="250" ng-src="[[image.path]]">
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="2" heading="Long Justified">Long Labeled Justified content</uib-tab>
+  </uib-tabset>
 </div>

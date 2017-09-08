@@ -4,13 +4,16 @@
   "description": "Project to create ideas",
   "dependencies": {
     "angular": "^1.6.4",
+    "angular-animate": "^1.6.6",
     "angular-cookies": "^1.6.4",
+    "angular-ui-carousel": "^0.1.10",
     "angular-ui-router": "^1.0.3",
     "bootstrap": "^3.3.7",
     "cloudinary-angular": "^1.0.1",
     "jquery": "^3.2.1",
     "ng-file-upload": "^12.2.13",
     "node-rsa": "^0.4.2",
-    "requirejs": "^2.3.3"
+    "requirejs": "^2.3.3",
+    "ui-bootstrap": "^0.1.10"
   }
 }
