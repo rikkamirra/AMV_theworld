@@ -6,6 +6,7 @@
     "angular": "^1.6.4",
     "angular-animate": "^1.6.6",
     "angular-cookies": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.0",
     "angular-ui-carousel": "^0.1.10",
     "angular-ui-router": "^1.0.3",
     "bootstrap": "^3.3.7",
@@ -14,6 +15,11 @@
     "ng-file-upload": "^12.2.13",
     "node-rsa": "^0.4.2",
     "requirejs": "^2.3.3",
-    "ui-bootstrap": "^0.1.10"
+    "ui-bootstrap": "^0.1.10",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "raw-loader": "^0.5.1",
+    "webpack": "^3.5.6"
   }
 }

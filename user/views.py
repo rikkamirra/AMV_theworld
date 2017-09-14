@@ -51,7 +51,7 @@ def create_user(request): #email, usrename, password
         user = authenticate(username=request.POST['email'], password=request.POST['password'])
         login(request, user)
         serializer = AccountSerializer(user)
-        return JsonResponse(usre.data)
+        return JsonResponse(user.data)
 
 
 def login_user(request):
