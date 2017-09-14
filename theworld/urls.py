@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^registration/', userapp.create_user),
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
-    url(r'^account/worlds', userapp.get_worlds),
+    url(r'^user/?$', userapp.get_info),
     url(r'^account/upload_image', userapp.upload_image),
 
     url(r'^worlds/?$', world.WorldList.as_view()),

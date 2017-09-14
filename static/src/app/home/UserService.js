@@ -56,6 +56,14 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
+    getUser() {
+      console.log('iygkuf');
+      return $http({
+        method: 'GET',
+        url: '/user'
+      })
+    },
+
     getCurrentUser() {
       if (!$cookies.getObject('currentUser')) {
         return null;

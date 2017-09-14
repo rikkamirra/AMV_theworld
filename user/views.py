@@ -72,10 +72,9 @@ def login_user(request):
         return JsonResponse(['Invalid credentiald'], status=409, safe=False)
 
 
-def get_worlds(request):
-    worlds = World.objects.filter(author=request.user)
-    serializer = WorldSerializer(worlds, many=True)
-    return JsonResponse(serializer.data, safe=False)
+def get_info(request):
+    account = AccountSerializer(request.user)
+    return JsonResponse(account.data, safe=False)
 
 
 def logout_user(request):
@@ -84,8 +83,6 @@ def logout_user(request):
 
 
 def upload_image(request):
-    if request.POST.get('owner') != request.user.pk:
-        return JsonResponse({}, status=401)
     serializer = PictureSerializer(data=request.POST)
     if serializer.is_valid():
         serializer.save()

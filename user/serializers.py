@@ -6,13 +6,20 @@ from articles.models import Article
 
 
 class PictureSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
     class Meta:
         model = Picture
-        fields = ['id', 'path', 'instance_type', 'instance_id']
+        fields = ['id', 'path', 'instance_type', 'instance_id', 'owner']
 
 
 class AccountSerializer(serializers.ModelSerializer):
     pictures = serializers.SerializerMethodField('add_pictures')
+    worlds = serializers.SerializerMethodField('add_worlds')
+
+    def add_worlds(self, obj):
+        worlds = World.objects.filter(author=obj.id)
+        serializer = WorldSerializer(worlds, many=True)
+        return serializer.data
 
     def add_pictures(self, obj):
         pictures = Picture.objects.filter(owner=obj.id)
@@ -25,6 +32,7 @@ class AccountSerializer(serializers.ModelSerializer):
             'id',
             'email',
             'username',
+            'worlds',
             'pictures',
             'is_constructor',
             'is_betaconstructor',

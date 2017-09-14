@@ -22,8 +22,8 @@ function CloudUploadController(Upload, UserService) {
       this.imgUrl = res.data.url;
       if (this.onUpload) {
         this.onUpload({ src: this.imgUrl });
-        UserService.saveImage({path: this.imgUrl, instance_type: this.instanceType || 'account', instance_id: this.instanceId || false});
       }
+      UserService.saveImage({path: this.imgUrl, instance_type: this.instanceType || 'account', instance_id: this.instanceId || false});
     }, err => {
       console.log(err);
     }, avt => {
