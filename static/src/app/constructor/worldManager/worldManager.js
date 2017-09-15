@@ -17,8 +17,6 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
     this.showArticleListner = $rootScope.$on('showArticle', (e, data) => {
       this.showArticle(data.article, data.category);
     });
-
-    this.accessToChange = this.user.id === this.world.author;
     this.isShowWorldPictureEditor = false;
 
     this.style = {
@@ -29,6 +27,8 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
       'background-size': 'cover',
       'background-attachment': 'fixed'
     };
+
+    this.accessToChange = this.user.id === this.world.author;
   };
 
   this.$onDestroy = () => {
@@ -39,6 +39,7 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
     ConstructService.createWorld(this.name).then((res) => {
       this.isCreated = true;
       this.world = res.data;
+      this.accessToChange = true;
     });
   };
 

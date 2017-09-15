@@ -26,10 +26,11 @@
               class="form-control"
               ng-model="$ctrl.newCategory.name"
               placeholder="Новая категория">
-            <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus"></span>
-          </div>
+            <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus">
+            </span>
+          </p>
           <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
-        </p>
+        </div>
       </div>
 
       <div ng-if="$ctrl.selectedCategory" class="col-md-7">

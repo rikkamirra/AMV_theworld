@@ -1,6 +1,6 @@
 function constructorConfig($stateProvider) {
   $stateProvider.state('newConstruct', {
-    url: '/constructor/',
+    url: '/constructor/new',
     module: 'private',
     template: '<world-manager></world-manager>'
   })
