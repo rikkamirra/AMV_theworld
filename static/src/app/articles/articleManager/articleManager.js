@@ -12,7 +12,7 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce) {
+function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService) {
   this.$onInit = () => {
     this.isEdit = false;
     if (this.article && !this.article.parsedBody) {
@@ -27,30 +27,13 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.addImage = () => {
-    this.article.body += '\n<div><img height="300" src="Загрузите картинку на облако и вставьте урл сюда"></div>\n';
+    ModalService.addPicture().result.then(picture => {
+      this.article.body = this.article.body ? this.article.body + `\n<div><img height="300" src="${picture.path}"></div>\n` : `<div><img height="300" src="${picture.path}"></div>\n`;
+    });
   };
 
   this.addText = () => {
     this.article.body += '\n<p>\nВставьте текст сюда\n</p>\n';
-  };
-
-  this.upload = function (file) {
-    Upload.upload({
-      url: 'https://api.cloudinary.com/v1_1/drjvh4g6x/image/upload/',
-      data: { file: file, upload_preset: 'zero8500zero', api_key: '467695578193825' }
-    }).then(function (resp) {
-
-    }, function (resp) {
-      console.log('Error status: ' + resp.status);
-    }, function (evt) {
-      var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-    });
-  };
-
-  this.submitImage = () => {
-    if (this.image) {
-      this.upload(this.image);
-    }
   };
 
   this.showArticle = () => {
@@ -100,6 +83,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService'];
 
 export default articleManager;

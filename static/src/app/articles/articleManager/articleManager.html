@@ -9,8 +9,10 @@
         <input class="form-control inline-block" ng-model="$ctrl.article.title" placeholder="Название" required>
         <hr>
 
-        <span ng-click="$ctrl.addImage()" class="glyphicon glyphicon-picture clck-icon"></span>
-        <span ng-click="$ctrl.addText()" class="glyphicon glyphicon-pencil clck-icon"></span>
+        <div class="tools-panel">
+          <div class="tools-panel__item" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></div>
+          <div class="tools-panel__item" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></div>
+        </div>
 
         <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.body" rows="20" required></textarea>
 
@@ -21,7 +23,6 @@
 
       </div>
     </form>
-    <cloud-upload instance-type="article" instance-id="$ctrl.article.id"></cloud-upload>
     <h3>Добавить статью к категории</h3>
     <hr>
     <input class="form-control short-input" ng-model="$ctrl.articleAddToCategory" placeholder="Поиск">

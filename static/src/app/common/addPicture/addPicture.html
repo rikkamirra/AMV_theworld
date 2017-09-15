@@ -1,0 +1,25 @@
+<div class="modal-container">
+  <div class="carousel-container">
+    <div class="arrow-btn pointer" ng-click="$ctrl.changePicture(false)"><span class="glyphicon glyphicon-chevron-left"></span></div>
+    <img height="300" width="500" ng-src="[[ $ctrl.currentPicture.path ]]">
+    <div class="arrow-btn pointer" ng-click="$ctrl.changePicture(true)"><span class="glyphicon glyphicon-chevron-right"></span></div>
+  </div>
+
+  <div class="tools-panel">
+    <div class="tools-panel__item" ng-click="$ctrl.selectImage()"><span class="glyphicon glyphicon-ok"></span></div>
+    <div
+      class="tools-panel__item"
+      ngf-select
+      ng-model="$ctrl.newImage"
+      name="file"
+      ngf-pattern="'image/*'"
+      ngf-accept="'image/*'" ngf-max-size="20MB"
+      ngf-resize="{width: 1000, height: 1000}"
+      ngf-change="$ctrl.fileSelected()"
+      >
+      <span class="glyphicon glyphicon-folder-open"></span>
+    </div>
+  </div>
+
+  <div class="progress-bar" ng-style="$ctrl.style"></div>
+</div>

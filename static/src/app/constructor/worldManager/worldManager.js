@@ -7,7 +7,7 @@ const worldManager = {
   controller: WorldManagerController
 };
 
-function WorldManagerController(ConstructService, UserService, $state, $rootScope) {
+function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope) {
   this.$onInit = () => {
     this.user = UserService.user;
     if (this.world) {
@@ -66,18 +66,16 @@ function WorldManagerController(ConstructService, UserService, $state, $rootScop
   };
 
   this.showWorldPictureEditor = () => {
-    this.isShowWorldPictureEditor = !this.isShowWorldPictureEditor;
-  };
-
-  this.updateWorldPicture = (src) => {
-    this.world.picture = src
-    ConstructService.updateWorld(this.world).then(res => {
-      this.world = res.data;
-      this.style['background-image'] = `url(${this.world.picture})`;
+    ModalService.addPicture().result.then(picture => {
+      this.world.picture = picture.path;
+      ConstructService.updateWorld(this.world).then(res => {
+        this.world = res.data;
+        this.style['background-image'] = `url(${this.world.picture})`;
+      });
     });
   };
 }
 
-WorldManagerController.$inject = ['ConstructService', 'UserService', '$state', '$rootScope'];
+WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$rootScope'];
 
 export default worldManager;
