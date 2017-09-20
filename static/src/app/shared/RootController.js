@@ -1,4 +1,4 @@
-function RootController(UserService, $state) {
+function RootController(UserService, $state, ModalService) {
   this.$onInit = () => {
   };
 
@@ -8,17 +8,16 @@ function RootController(UserService, $state) {
   };
 
   this.login = () => {
-    $state.go('login', {
-      nextState: $state.current.name,
-      nextStateParams: $state.current.params
+    ModalService.openLoginForm().result.then(() => {
+      $state.reload();
     });
   };
 
   this.logout = () => {
-    UserService.logout().then(() => $state.go('root'));
+    UserService.logout().then(() => $state.reload());
   };
 }
 
-RootController.$inject = ['UserService', '$state'];
+RootController.$inject = ['UserService', '$state', 'ModalService'];
 
 export default RootController;

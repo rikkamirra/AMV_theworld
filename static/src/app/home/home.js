@@ -2,7 +2,7 @@ import homeConfig from './homeConfig';
 import UserService from './UserService';
 import LoginController from './LoginController';
 import twHome from './twHome/twHome';
-import twLoginForm from './twLoginForm/twLoginForm';
+import loginForm from './loginForm/loginForm';
 import regForm from './regForm/regForm';
 
 const MODULE_NAME = 'TWApp.HomeApp';
@@ -14,7 +14,7 @@ angular.module(MODULE_NAME, [])
   .controller('LoginController', LoginController)
 
   .component('twHome', twHome)
-  .component('twLoginForm', twLoginForm)
+  .component('loginForm', loginForm)
   .component('regForm', regForm);
 
 

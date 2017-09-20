@@ -28,7 +28,7 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
       });
     });
 
-    this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
+    this.accessToChange = (UserService.user && UserService.user.id === this.world.author);
   };
 
   this.showInput = () => this.config.isShowInput = !this.config.isShowInput;

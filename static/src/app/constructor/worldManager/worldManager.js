@@ -28,7 +28,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
       'background-attachment': 'fixed'
     };
 
-    this.accessToChange = this.user.id === this.world.author;
+    this.accessToChange = (this.user && this.user.id === this.world.author);
   };
 
   this.$onDestroy = () => {

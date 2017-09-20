@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { omit } from 'underscore';
 
 function UserService($http, $cookies, $rootScope, $state) {
   return {
@@ -57,7 +58,6 @@ function UserService($http, $cookies, $rootScope, $state) {
     },
 
     getUser() {
-      console.log('iygkuf');
       return $http({
         method: 'GET',
         url: '/user'
@@ -66,15 +66,15 @@ function UserService($http, $cookies, $rootScope, $state) {
 
     getCurrentUser() {
       if (!$cookies.getObject('currentUser')) {
-        return null;
+        return this.user;
       }
       this.user = $cookies.getObject('currentUser');
       return this.user;
     },
 
     setUserData(response) {
-      this.user = response.data;
-      $cookies.putObject('currentUser', response.data);
+      this.user = omit(response.data, 'pictures', 'worlds');
+      $cookies.putObject('currentUser', this.user);
     },
 
     clearUserData() {

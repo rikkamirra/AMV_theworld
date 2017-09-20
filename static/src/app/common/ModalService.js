@@ -1,5 +1,15 @@
 function ModalService($uibModal) {
   return {
+    openLoginForm() {
+      return $uibModal.open({
+        animation: true,
+        component: 'loginForm',
+        resolve: {
+
+        }
+      })
+    },
+
     addPicture() {
       return $uibModal.open({
         animation: true,
