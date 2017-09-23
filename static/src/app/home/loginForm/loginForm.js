@@ -10,7 +10,21 @@ const loginForm = {
 };
 
 function LoginFormController(UserService, $state) {
-  this.submit = () => {
+  this.$onInit = () => {
+    this.showLoginForm = true;
+  },
+
+  this.checkoutForm = () => this.showLoginForm = !this.showLoginForm;
+
+  this.login = () => {
+    UserService.login(this.user).then(() => {
+      this.close();
+    }).catch(res => {
+      this.errors = res.data;
+    });
+  },
+
+  this.registration = () => {
     UserService.login(this.user).then(() => {
       this.close();
     }).catch(res => {

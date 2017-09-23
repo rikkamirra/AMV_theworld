@@ -117,11 +117,19 @@ a {
 }
 
 .image-tile--item {
+  position: relative;
   margin: 1rem;
   box-shadow: 0 0 1rem 0.1rem gray;
   text-align: center;
   overflow: hidden;
   height: 15rem;
+}
+
+.inside-img-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .image-tile--item:hover img {

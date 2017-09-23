@@ -14,7 +14,7 @@ const articleManager = {
 
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService) {
   this.$onInit = () => {
-    this.isEdit = false;
+    this.isEdit = !(this.article && this.article.id);
     if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
@@ -24,6 +24,10 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     });
 
     this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
+  };
+
+  this.$onChanges = (obj) => {
+    this.isEdit = !(this.article && this.article.id);
   };
 
   this.addImage = () => {

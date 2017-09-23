@@ -3,11 +3,15 @@ function ModalService($uibModal) {
     openLoginForm() {
       return $uibModal.open({
         animation: true,
-        component: 'loginForm',
-        resolve: {
-
-        }
+        component: 'loginForm'
       })
+    },
+
+    openRegForm() {
+      return $uibModal.open({
+        animation: true,
+        component: 'regForm'
+      });
     },
 
     addPicture() {

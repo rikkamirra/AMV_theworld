@@ -74,7 +74,7 @@ function UserService($http, $cookies, $rootScope, $state) {
 
     setUserData(response) {
       this.user = omit(response.data, 'pictures', 'worlds');
-      $cookies.putObject('currentUser', this.user);
+      $cookies.putObject('currentUser', omit(response.data, 'pictures', 'worlds'));
     },
 
     clearUserData() {
