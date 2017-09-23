@@ -7,10 +7,19 @@ from articles.models import Article
 
 class PictureSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
-    
+
     class Meta:
         model = Picture
-        fields = ['id', 'path', 'instance_type', 'instance_id', 'owner']
+        fields = [
+            'id',
+            'path',
+            'instance_type',
+            'instance_id',
+            'owner',
+            'is_deleted',
+            'created_at',
+            'updated_at'
+        ]
 
 
 class AccountSerializer(serializers.ModelSerializer):

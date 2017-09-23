@@ -20,7 +20,7 @@ function ModalService($uibModal) {
         component: 'addPicture',
         resolve: {
           pictures: ['UserService', (UserService) => {
-            return UserService.getCurrentUser().pictures;
+            return UserService.getPictures().then(res => res.data);
           }]
         }
       });

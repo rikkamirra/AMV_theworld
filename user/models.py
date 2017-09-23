@@ -69,3 +69,7 @@ class Picture(models.Model):
     instance_type = models.CharField(max_length=15, default="article") #article, category, world, account
     instance_id = models.IntegerField()
     owner = models.ForeignKey(Account, null=True, blank=True)
+
+    is_deleted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

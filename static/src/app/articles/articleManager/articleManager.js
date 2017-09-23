@@ -32,7 +32,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.addImage = () => {
     ModalService.addPicture().result.then(picture => {
-      this.article.body = this.article.body ? this.article.body + `\n<div><img height="300" src="${picture.path}"></div>\n` : `<div><img height="300" src="${picture.path}"></div>\n`;
+      this.article.body = this.article.body ? this.article.body + `\n<div><img height="300" style="margin: 0.5rem;" src="${picture.path}"></div>\n` : `<div><img style="margin: 0.5rem;" height="300" src="${picture.path}"></div>\n`;
     });
   };
 

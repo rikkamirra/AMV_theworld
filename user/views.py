@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, render
 from django.template.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
 
-from .models import Account
+from .models import Account, Picture
 from construct.models import World, Category
 
 from construct.serializers import WorldSerializer, CategorySerializer
@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 import json
 from django.middleware.csrf import get_token
 
-# from rest_framework.views import APIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -80,11 +80,17 @@ def get_info(request):
 def logout_user(request):
     logout(request)
     return JsonResponse({})
+    
 
 
-def upload_image(request):
-    serializer = PictureSerializer(data=request.POST)
-    if serializer.is_valid():
-        serializer.save()
-        return JsonResponse(serializer.data)
-    return JsonResponse(serializer.errors, status=400)
+class AccountPictureItem(APIView):
+    def post(self, request):
+        serializer = PictureSerializer(data=request.POST)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
+    def get(self, request):
+        serializer = PictureSerializer(Picture.objects.filter(owner=request.user), many=True)
+        return Response(serializer.data)

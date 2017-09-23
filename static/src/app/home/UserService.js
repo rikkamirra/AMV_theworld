@@ -52,8 +52,15 @@ function UserService($http, $cookies, $rootScope, $state) {
 
       return $http({
         method: 'POST',
-        url: 'account/upload_image',
+        url: 'account/pictures',
         data: $.param(params)
+      });
+    },
+
+    getPictures() {
+      return $http({
+        method: 'GET',
+        url: 'account/pictures'
       });
     },
 
