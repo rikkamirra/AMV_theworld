@@ -20,7 +20,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     this.isShowWorldPictureEditor = false;
 
     this.style = {
-      'background-image': `url(${this.world.picture.path})`,
+      'background-image': `url(${this.world.picture})`,
       'background-repeat': 'no-repeat',
       'background-position': 'center',
       'background-repeat': 'no-repeat',

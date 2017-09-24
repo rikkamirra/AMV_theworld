@@ -71,27 +71,23 @@ class PicturesRelationship(models.Model):
 
 
 class PictureManager(models.Manager):
-    def create(self, params):
-        picture = self.model(path=params.get('path'), owner=Account.objects.get(pk=params.get('owner')))
-        picture.save()
+    def create(self, **kwargs):
+        picture = None;
+        if self.model.objects.filter(path=kwargs.get('path')).count() == 0:
+            picture = self.model(path=kwargs.get('path'), owner=kwargs.get('owner'))
+            picture.save()
+        else:
+            picture = self.model.objects.get(path=kwargs.get('path'))
 
-        picture_relationship = PicturesRelationship(picture=picture, instance_id=params.get('instance_id', 0), instance_type=params.get('instance_type', 'undefined'))
+        picture_relationship = PicturesRelationship(picture=picture, instance_id=kwargs.get('instance_id', 0), instance_type=kwargs.get('instance_type', 'undefined'))
         picture_relationship.save()
 
         return picture
-    # 
-    # def update(self, **kwargs):
-    #     try:
-    #         picture = self.model.objects.get(path=kwargs.get('data').get('path'))
-    #     except Exception:
-    #         picture = self.model(path=kwargs.get('data').get('path'))
-    #         picture.save()
-    #         new_relationship = PicturesRelationship(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'), picture=picture)
-    #         new_relationship.save()
-    #         return picture
-    #
-    #     old_relationships = PicturesRelationship.objects.filter(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'))
 
+    def update(self, list_images, **kwargs):
+        old_relationships = PicturesRelationship.objects.filter(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type')).delete()
+        for image in list_images:
+            self.create(path=image, owner=kwargs.get('owner'), instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'))
 
 
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Article
+from user.models import Picture, PicturesRelationship
 from construct.models import Category, World
 from construct.manager import get_object, get_object_from_set
 
@@ -9,6 +10,7 @@ from .serializers import ArticleSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+import re
 
 
 class ArticleList(APIView):
@@ -23,6 +25,7 @@ class ArticleList(APIView):
             return Response(status=403)
         category = Category.objects.get(pk=request.POST.get('category_id'))
         article = Article.objects.create(title=request.POST.get('title'), body=request.POST.get('body'), world=world)
+        Picture.objects.update(re.findall('src="(.+?)"', article.body), owner=request.user, instance_id=article.pk, instance_type='article')
         category.articles.add(article)
         return Response(status=201)
 
@@ -50,6 +53,7 @@ class ArticleItem(APIView):
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            Picture.objects.update(re.findall('src="(.+?)"', request.data.get('body')), owner=request.user, instance_id=article.pk, instance_type='article')
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 

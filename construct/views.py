@@ -60,6 +60,8 @@ class WorldItem(APIView):
         serializer = WorldSerializer(world, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            if request.data.get('picture'):
+                Picture.objects.update([request.data.get('picture')], owner=request.user, instance_type='world', instance_id=serializer.data.get('id'))
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
