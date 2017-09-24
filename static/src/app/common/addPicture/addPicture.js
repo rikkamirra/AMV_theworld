@@ -25,7 +25,7 @@ function AddPictureController(Upload, UserService) {
       url: 'https://api.cloudinary.com/v1_1/drjvh4g6x/image/upload/',
       data: { file: file, upload_preset: 'zero8500zero', api_key: '467695578193825' }
     }).then(res => {
-      UserService.saveImage({path: res.data.url, instance_type: this.resolve.instanceType || 'account', instance_id: this.resolve.instanceId || UserService.getCurrentUser().id}).then(res => {
+      UserService.saveImage({path: res.data.url, instance_type: this.resolve.instance_type || 'account', instance_id: this.resolve.instance_id || UserService.getCurrentUser().id}).then(res => {
         this.resolve.pictures.push(res.data);
         this.currentIndex = this.resolve.pictures.length - 1;
         this.currentPicture = res.data;

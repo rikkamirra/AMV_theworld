@@ -1,4 +1,12 @@
-<div ng-style="$ctrl.style">
+<div class="world-container-background" ng-style="$ctrl.style">
+  <div ng-show="$ctrl.accessToChange" class="world-tools">
+    <div ng-click="$ctrl.showWorldPictureEditor()" class="world-tools__item">
+      <span ng-show="$ctrl.accessToChange" class="glyphicon glyphicon-picture"></span>
+    </div>
+    <div ng-click="$ctrl.showWorldPictureEditor()" class="world-tools__item">
+      <span ng-show="$ctrl.accessToChange" class="glyphicon glyphicon-pencil"></span>
+    </div>
+  </div>
   <div class="container world-container">
     <div class="row">
       <div class="col-md-5">
@@ -14,7 +22,7 @@
             </div>
           </div>
           <div ng-show="$ctrl.isCreated" class="col-md-6">
-            <h3>[[ $ctrl.world.name ]]<span ng-show="$ctrl.accessToChange" ng-click="$ctrl.showWorldPictureEditor()" class="clck-icon glyphicon glyphicon-picture"></span></h3>
+            <h3>[[ $ctrl.world.name ]]</h3>
             <hr>
           </div>
         </div>
@@ -28,7 +36,7 @@
             <span ng-click="$ctrl.addCategory($ctrl.newCategory)" class="input-group-addon pointer glyphicon glyphicon-plus">
             </span>
           </p>
-          <category-item ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
+          <category-item ng-animate="'category-list-animation'" ng-repeat="category in $ctrl.world.categories" root="category" world="$ctrl.world"></category-item>
         </div>
       </div>
 

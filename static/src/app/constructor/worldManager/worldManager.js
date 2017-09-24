@@ -20,7 +20,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     this.isShowWorldPictureEditor = false;
 
     this.style = {
-      'background-image': `url(${this.world.picture})`,
+      'background-image': `url(${this.world.picture.path})`,
       'background-repeat': 'no-repeat',
       'background-position': 'center',
       'background-repeat': 'no-repeat',
@@ -66,7 +66,8 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
   };
 
   this.showWorldPictureEditor = () => {
-    ModalService.addPicture().result.then(picture => {
+    if (!(this.world && this.world.id)) return;
+    ModalService.addPicture({instance_type : 'world', instance_id : this.world.id}).result.then(picture => {
       this.world.picture = picture.path;
       ConstructService.updateWorld(this.world).then(res => {
         this.world = res.data;

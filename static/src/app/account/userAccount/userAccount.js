@@ -12,14 +12,7 @@ const userAccount = {
 function UserAccountController(UserService, $state) {
   this.$onInit = () => {
     this.isShowDeleteButton = false;
-    // this.user = UserService.user;
-    // UserService.getWorlds().then(res => {
-    //   this.user.worlds = res.data;
-    // });
   }
-
-  this.showDeleteButton = () => this.isShowDeleteButton = true;
-  this.hideDeleteButton = () => this.isShowDeleteButton = false;
 }
 
 UserAccountController.$inject = ['UserService', '$state', 'Carousel'];

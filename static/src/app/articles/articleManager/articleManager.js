@@ -31,7 +31,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   };
 
   this.addImage = () => {
-    ModalService.addPicture().result.then(picture => {
+    if (!(this.article && this.article.id)) return;
+    ModalService.addPicture({instance_type: 'article', instance_id: this.article.id}).result.then(picture => {
       this.article.body = this.article.body ? this.article.body + `\n<div><img height="300" style="margin: 0.5rem;" src="${picture.path}"></div>\n` : `<div><img style="margin: 0.5rem;" height="300" src="${picture.path}"></div>\n`;
     });
   };

@@ -6,7 +6,7 @@
     <uib-tab index="0" heading="Проекты">
       <a ui-sref="newConstruct">Создать новый Мир</a>
       <div class="image-tile">
-        <a class="image-tile--item" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
+        <a class="image-tile__item--hoverable" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
           <img ng-src="[[ world.picture ]]" height="250" alt="world">
           <p>[[ world.name ]]</p>
         </a>
@@ -15,9 +15,8 @@
 
     <uib-tab index="1" heading="Галерея">
       <div class="image-tile">
-        <div ng-mouseenter="$ctrl.showDeleteButton()" ng-mouseleave="$ctrl.hideDeleteButton()" class="image-tile--item" ng-repeat="image in $ctrl.user.pictures">
-          <img height="250" ng-src="[[image.path]]">
-          <span ng-show="$ctrl.isShowDeleteButton" class="clck-icon inside-img-center glyphicon glyphicon-remove"></span>
+        <div ng-repeat="image in $ctrl.user.pictures">
+          <img-item image="image"></img-item>
         </div>
       </div>
     </uib-tab>

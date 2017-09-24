@@ -1,0 +1,6 @@
+<div class="img-item" ng-mouseenter="$ctrl.showDeleteButton()" ng-mouseleave="$ctrl.hideDeleteButton()" >
+  <img src="[[ $ctrl.image.path ]]" height="300">
+  <div class="img-item__text-container">
+    <p ng-repeat="relationship in $ctrl.image.relationships" class="img-item__text">[[ relationship.instance_type ]]</p>
+  </div>
+</div>

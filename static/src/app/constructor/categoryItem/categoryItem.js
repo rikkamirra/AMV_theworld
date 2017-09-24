@@ -50,7 +50,7 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
       parent_id: this.root.id
     }).then(res => {
       this.children = res.data;
-      this.isShowInput = false;
+      this.config.isShowInput = false;
     });
   };
 

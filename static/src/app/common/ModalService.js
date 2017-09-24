@@ -14,14 +14,16 @@ function ModalService($uibModal) {
       });
     },
 
-    addPicture() {
+    addPicture({ instance_type = 'account', instance_id = 1 } = {}) {
       return $uibModal.open({
         animation: true,
         component: 'addPicture',
         resolve: {
           pictures: ['UserService', (UserService) => {
             return UserService.getPictures().then(res => res.data);
-          }]
+          }],
+          instance_id: () => instance_id,
+          instance_type: () => instance_type
         }
       });
     }

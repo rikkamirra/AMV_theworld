@@ -2,11 +2,11 @@ from django.shortcuts import render_to_response, render
 from django.template.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
 
-from .models import Account, Picture
+from .models import Account, Picture, PicturesRelationship
 from construct.models import World, Category
 
 from construct.serializers import WorldSerializer, CategorySerializer
-from .serializers import AccountSerializer, PictureSerializer
+from .serializers import AccountSerializer, PictureSerializer, PicturesRelationshipSerializer
 
 from theworld.settings import STATIC_URL
 import construct.manager as construct
@@ -17,6 +17,14 @@ from django.middleware.csrf import get_token
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+
+def permit(request, *args):
+    fields = {}
+    for arg in args:
+        fields[arg] = request.get(arg, None)
+    return fields
+
 
 
 def index(request):
@@ -80,16 +88,14 @@ def get_info(request):
 def logout_user(request):
     logout(request)
     return JsonResponse({})
-    
+
 
 
 class AccountPictureItem(APIView):
     def post(self, request):
-        serializer = PictureSerializer(data=request.POST)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+        picture = Picture.objects.create(request.POST)
+        picture_serializer = PictureSerializer(picture)
+        return JsonResponse(picture_serializer.data)
 
     def get(self, request):
         serializer = PictureSerializer(Picture.objects.filter(owner=request.user), many=True)

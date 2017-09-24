@@ -6,6 +6,7 @@ import construct.manager as manager
 
 from construct.models import World, Category
 from articles.models import Article
+from user.models import Picture
 from .serializers import WorldSerializer, CategorySerializer
 from articles.serializers import ArticleSerializer
 

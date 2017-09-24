@@ -24,6 +24,7 @@ angular.module('TWApp', [
   'ui.router',
   'ui.bootstrap',
   'ui.carousel',
+  'ngAnimate',
   'ngCookies',
   'ngFileUpload',
   'cloudinary',

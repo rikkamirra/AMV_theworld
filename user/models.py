@@ -64,12 +64,45 @@ class Account(AbstractBaseUser):
         return self.email
 
 
+class PicturesRelationship(models.Model):
+    picture = models.ForeignKey('user.Picture')
+    instance_type = models.CharField(max_length=16)
+    instance_id = models.IntegerField()
+
+
+class PictureManager(models.Manager):
+    def create(self, params):
+        picture = self.model(path=params.get('path'), owner=Account.objects.get(pk=params.get('owner')))
+        picture.save()
+
+        picture_relationship = PicturesRelationship(picture=picture, instance_id=params.get('instance_id', 0), instance_type=params.get('instance_type', 'undefined'))
+        picture_relationship.save()
+
+        return picture
+    # 
+    # def update(self, **kwargs):
+    #     try:
+    #         picture = self.model.objects.get(path=kwargs.get('data').get('path'))
+    #     except Exception:
+    #         picture = self.model(path=kwargs.get('data').get('path'))
+    #         picture.save()
+    #         new_relationship = PicturesRelationship(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'), picture=picture)
+    #         new_relationship.save()
+    #         return picture
+    #
+    #     old_relationships = PicturesRelationship.objects.filter(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'))
+
+
+
+
+
+
 class Picture(models.Model):
     path = models.URLField(max_length=255)
-    instance_type = models.CharField(max_length=15, default="article") #article, category, world, account
-    instance_id = models.IntegerField()
     owner = models.ForeignKey(Account, null=True, blank=True)
 
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = PictureManager()

@@ -24,10 +24,6 @@ a {
   display: inline-block;
 }
 
-.font-sm {
-  font-size: 0.7rem;
-}
-
 .short-input {
   width: 15rem;
 }
@@ -71,6 +67,7 @@ a {
 .world-container {
   background-color: rgba(255, 255, 255, 0.9);
   min-height: 47rem;
+  position: relative;
 }
 
 
@@ -81,18 +78,22 @@ a {
   flex-wrap: wrap;
 }
 
-.worlds-panel--item {
+.worlds-panel__item {
   height: 12.5rem;
   margin: 0.5rem;
   box-shadow: 0 0 1rem grey;
   text-align: center;
 }
 
-.worlds-panel--item p {
+.worlds-panel__item p {
   position: relative;
   top: -2rem;
   color: #def0ff;
   font-weight: bold;
+}
+
+.worlds-panel__item:hover {
+  opacity: 0.7;
 }
 
 
@@ -116,7 +117,7 @@ a {
   flex-wrap: wrap;
 }
 
-.image-tile--item {
+.image-tile__item {
   position: relative;
   margin: 1rem;
   box-shadow: 0 0 1rem 0.1rem gray;
@@ -132,25 +133,50 @@ a {
   transform: translate(-50%, -50%);
 }
 
-.image-tile--item:hover img {
+.image-tile__item--hoverable:hover img {
   opacity: 0.5;
   cursor: pointer;
 }
 
-.image-tile--item:hover p {
+.image-tile__item--hoverable:hover p {
   color: black;
   text-decoration: none;
 }
 
-.image-tile--item img {
+.image-tile__item img {
   height: 15rem;
 }
 
-.image-tile--item p {
+.image-tile__item p {
   position: relative;
   top: -2rem;
   color: #def0ff;
   font-weight: bold;
+}
+
+
+/* imgItem */
+
+.img-item {
+  margin: 1rem;
+  opacity: 1;
+}
+
+.img-item:hover {
+  opacity: 0.7;
+}
+
+.img-item:hover .img-item__text-container {
+  visibility: visible;
+}
+
+.img-item__text-container {
+  position: relative;
+  top: -15rem;
+  padding: 1rem;
+  background-color: gray;
+  color: white;
+  visibility: hidden;
 }
 
 
@@ -210,6 +236,32 @@ a {
   height: 10rem;
 }
 
+
+/* world tools */
+
+.world-tools {
+  position: absolute;
+  left: 0;
+}
+
+
+.world-tools__item {
+  text-align: -webkit-right;
+  padding: 0.2rem;
+  background-color: rgba(249, 202, 98, 0.74);
+  width: 1.4rem;
+
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.world-tools__item:hover {
+  width: 2rem;
+}
+
 /* common */
 .text-center {
   text-align: center;
@@ -220,3 +272,32 @@ a {
   font-size: 0.8rem;
   color: red;
 }
+
+
+/* animation */
+
+/*.animate-repeat {
+  line-height:30px;
+  list-style:none;
+  box-sizing:border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  transition:all linear 0.5s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+  max-height:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height:30px;
+}*/
