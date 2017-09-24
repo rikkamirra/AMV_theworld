@@ -93,7 +93,12 @@ def logout_user(request):
 
 class AccountPictureItem(APIView):
     def post(self, request):
-        picture = Picture.objects.create(request.POST)
+        picture = Picture.objects.create(
+            path=request.POST.get('path'),
+            owner=request.user,
+            instance_id=request.POST.get('instance_id', 0),
+            instance_type=request.POST.get('instance_type', 'undefined')
+            )
         picture_serializer = PictureSerializer(picture)
         return JsonResponse(picture_serializer.data)
 
