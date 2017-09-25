@@ -40,8 +40,9 @@
         </div>
       </div>
 
-      <div ng-if="$ctrl.selectedCategory" class="col-md-7">
-        <article-manager mode="$ctrl.articleActionMode" article="$ctrl.selectedArticle" category="$ctrl.selectedCategory" world="$ctrl.world"></article-manager>
+      <div class="col-md-7">
+        <ui-view></ui-view>
+        <!-- <article-manager mode="$ctrl.articleActionMode" article="$ctrl.selectedArticle" category="$ctrl.selectedCategory" world="$ctrl.world"></article-manager> -->
       </div>
     </div>
   </div>

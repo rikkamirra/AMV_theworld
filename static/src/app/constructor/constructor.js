@@ -2,6 +2,8 @@ import constructorConfig from './constructorConfig';
 import ConstructService from './ConstructService';
 
 import ConstructController from './ConstructController';
+import ShowArticleController from './ShowArticleController';
+import NewArticleController from './NewArticleController';
 
 import worldManager from './worldManager/worldManager';
 import categoryItem from './categoryItem/categoryItem';
@@ -13,6 +15,8 @@ angular.module(MODULE_NAME, [])
 .factory('ConstructService', ConstructService)
 
 .controller('ConstructController', ConstructController)
+.controller('ShowArticleController', ShowArticleController)
+.controller('NewArticleController', NewArticleController)
 
 .component('worldManager', worldManager)
 .component('categoryItem', categoryItem);

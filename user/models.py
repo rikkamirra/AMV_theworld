@@ -68,6 +68,7 @@ class PicturesRelationship(models.Model):
     picture = models.ForeignKey('user.Picture')
     instance_type = models.CharField(max_length=16)
     instance_id = models.IntegerField()
+    redirect = models.CharField(max_length=255, default="/")
 
 
 class PictureManager(models.Manager):
@@ -79,7 +80,7 @@ class PictureManager(models.Manager):
         else:
             picture = self.model.objects.get(path=kwargs.get('path'))
 
-        picture_relationship = PicturesRelationship(picture=picture, instance_id=kwargs.get('instance_id', 0), instance_type=kwargs.get('instance_type', 'undefined'))
+        picture_relationship = PicturesRelationship(picture=picture, instance_id=kwargs.get('instance_id', 0), instance_type=kwargs.get('instance_type', 'undefined'), redirect=kwargs.get('redirect', '/'))
         picture_relationship.save()
 
         return picture
@@ -87,7 +88,7 @@ class PictureManager(models.Manager):
     def update(self, list_images, **kwargs):
         old_relationships = PicturesRelationship.objects.filter(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type')).delete()
         for image in list_images:
-            self.create(path=image, owner=kwargs.get('owner'), instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'))
+            self.create(path=image, owner=kwargs.get('owner'), instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'), redirect=kwargs.get('redirect', '/'))
 
 
 

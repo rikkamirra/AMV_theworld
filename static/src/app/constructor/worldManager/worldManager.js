@@ -56,13 +56,11 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
   };
 
   this.showArticle = (article, category) => {
-    if (!article) {
-      this.articleActionMode = 'create';
+    if (article) {
+      $state.go('article', {articleId: article.id, category: category, world: this.world});
     } else {
-      this.articleActionMode = 'edit';
+      $state.go('newArticle', {category: category, world: this.world});
     }
-    this.selectedArticle = article;
-    this.selectedCategory = category;
   };
 
   this.showWorldPictureEditor = () => {
