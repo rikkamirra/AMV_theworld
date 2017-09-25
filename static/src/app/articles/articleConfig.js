@@ -1,5 +1,5 @@
 function articleConfig($stateProvider) {
-  $stateProvider.state('article', {
+  $stateProvider.state('showArticle', {
     url: '/article/:articleId',
     template: '<article-manager article="ctrl.article"></article-mamanger>',
     resolve: {

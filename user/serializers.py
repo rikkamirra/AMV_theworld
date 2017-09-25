@@ -8,7 +8,7 @@ from articles.models import Article
 class PicturesRelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = PicturesRelationship
-        fields = ['instance_id', 'instance_type']
+        fields = ['instance_id', 'instance_type', 'redirect']
 
 
 class PictureSerializer(serializers.ModelSerializer):

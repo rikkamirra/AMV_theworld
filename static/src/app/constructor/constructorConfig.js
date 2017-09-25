@@ -19,6 +19,35 @@ function constructorConfig($stateProvider) {
     },
     controller: 'ConstructController as ctrl'
   })
+  .state('article', {
+    parent: 'construct',
+    url: '/article/:articleId',
+    template: '<article-manager article="ctrl.article" category="ctrl.category" world="ctrl.world"></article-manager>',
+    resolve: {
+      article: ['ArticleService', '$stateParams', (ArticleService, $stateParams) => {
+        return ArticleService.getArticle($stateParams.articleId).then(res => res.data);
+      }]
+    },
+    controller: 'ShowArticleController as ctrl'
+  })
+  .state('newArticle', {
+    parent: 'construct',
+    url: '/article/new',
+    params: {
+      category: null,
+      world: null
+    },
+    template: '<article-manager category="ctrl.category" world="ctrl.world"></article-manager>',
+    resolve: {
+      category: ['$stateParams', ($stateParams) => {
+        return $stateParams.category;
+      }],
+      world: ['$stateParams', ($stateParams) => {
+        return $stateParams.world;
+      }]
+    },
+    controller: 'NewArticleController as ctrl'
+  })
 };
 
 constructorConfig.$inject = ['$stateProvider'];

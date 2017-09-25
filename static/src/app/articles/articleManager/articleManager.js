@@ -6,8 +6,7 @@ const articleManager = {
   bindings: {
     article: '<',
     category: '<',
-    world: '<',
-    mode: '<'
+    world: '<'
   },
   controller: ArticleManagerController
 };
@@ -18,6 +17,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
+
+    console.log(this);
 
     ArticleService.getArticlesByWorld(this.world.id).then(res => {
       this.allArticles = res.data;
