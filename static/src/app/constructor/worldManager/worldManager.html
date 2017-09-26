@@ -6,7 +6,7 @@
     <div ng-click="$ctrl.showWorldPictureEditor()" class="world-tools__item">
       <span ng-show="$ctrl.accessToChange" class="glyphicon glyphicon-pencil"></span>
     </div>
-    <div ng-show="$ctrl.world.is_private" class="world-tools__item">
+    <div ng-click="$ctrl.changeKey()" ng-show="$ctrl.world.is_private" class="world-tools__item">
       <span class="glyphicon glyphicon-lock"></span>
     </div>
   </div>
@@ -30,9 +30,6 @@
           </div>
           <div ng-show="$ctrl.isCreated" class="col-md-6">
             <h3>[[ $ctrl.world.name ]]</h3>
-            <a href="javascript:void(0)" ng-if="$ctrl.world.is_private" ng-click="$ctrl.showKeyInput()">Ввести новый ключ</a>
-            <input ng-show="$ctrl.isShowKeyInput" class="form-control" ng-model="$ctrl.key">
-            <a ng-show="$ctrl.isShowKeyInput" href="javascript:void(0)" ng-click="$ctrl.changeKey()">Изменить</a>
             <hr>
           </div>
         </div>

@@ -9,6 +9,9 @@ const worldManager = {
 
 function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope, CryptoService) {
   this.$onInit = () => {
+    if (this.world.is_private && !CryptoService.getKey()) {
+      this.changeKey();
+    }
     this.user = UserService.user;
     if (this.world) {
       this.isCreated = true;
@@ -36,13 +39,10 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     this.showArticleListner();
   };
 
-  this.showKeyInput = () => {
-    this.isShowKeyInput = !this.isShowKeyInput;
-  }
-
   this.changeKey = () => {
-    CryptoService.setKey(this.key);
-    this.isShowKeyInput = false;
+    ModalService.enterKey().result.then(() => {
+      $state.reload();
+    })
   }
 
   this.createWorld = () => {

@@ -42,7 +42,6 @@ class ArticleList(APIView):
 
 class ArticleItem(APIView):
     def get(self, request, article_id, format=None):
-        article = None
         try:
             article = Article.objects.get(pk=article_id)
         except Article.DoesNotExist:

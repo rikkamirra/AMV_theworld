@@ -79,7 +79,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.deleteArticle = () => {
     ArticleService.deleteArticle(this.article.id).then(res => {
-      $state.reload();
+      $state.go('construct', { worldId: this.article.world.id });
     });
   };
 
