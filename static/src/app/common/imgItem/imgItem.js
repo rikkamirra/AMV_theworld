@@ -9,7 +9,6 @@ const imgItem = {
 
 function ImgItemController($state) {
   this.goTo = (relationship) => {
-    console.log(relationship.instance_id);
     $state.go('showArticle', {articleId: relationship.instance_id});
   }
 }

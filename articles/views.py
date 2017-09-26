@@ -20,7 +20,6 @@ class ArticleList(APIView):
         return Response([article for article in articles])
 
     def post(self, request, format=None):
-        print(request.POST['title'])
         world = World.objects.get(pk=request.POST.get('world'))
         if request.user.pk != world.author.pk:
             return Response(status=403)
@@ -62,7 +61,6 @@ class ArticleItem(APIView):
         except Article.DoesNotExist:
             return Response(status=404)
 
-        print(article.world)
         if request.user.pk != article.world.author.pk:
             return Response(status=401)
         serializer = ArticleSerializer(article, data=request.data)

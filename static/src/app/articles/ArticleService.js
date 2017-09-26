@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-function ArticleService($http, CryptoService) {
+function ArticleService($http) {
   return {
     createArticle(params, isCrypt) {
       return $http({
@@ -59,6 +59,6 @@ function ArticleService($http, CryptoService) {
   }
 }
 
-ArticleService.$inject = ['$http', 'CryptoService'];
+ArticleService.$inject = ['$http'];
 
 export default ArticleService;
