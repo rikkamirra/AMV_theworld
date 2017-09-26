@@ -10,7 +10,7 @@ function UserService($http, $cookies, $rootScope, $state) {
       return $http({
         method: 'POST',
         url: 'registration/',
-        data: $.param(creds)
+        data: creds
       }).then(res => {
         this.setUserData(res);
       });
@@ -20,7 +20,7 @@ function UserService($http, $cookies, $rootScope, $state) {
       return $http({
         method: 'POST',
         url: 'login/',
-        data: $.param(creds)
+        data: creds
       }).then(res => {
         this.setUserData(res);
       });
@@ -53,7 +53,7 @@ function UserService($http, $cookies, $rootScope, $state) {
       return $http({
         method: 'POST',
         url: 'account/pictures',
-        data: $.param(params)
+        data: params
       });
     },
 

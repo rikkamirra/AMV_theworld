@@ -1,19 +1,21 @@
 import $ from 'jquery';
 
-function ArticleService($http) {
+function ArticleService($http, CryptoService) {
   return {
-    createArticle(params) {
+    createArticle(params, isCrypt) {
       return $http({
         method: 'POST',
         url: 'articles/',
-        data: $.param(params)
+        crypt: isCrypt,
+        data: params
       });
     },
 
-    updateArticle(articleId, params) {
+    updateArticle(articleId, params, isCrypt) {
       return $http({
         method: 'PUT',
         url: `articles/${articleId}/`,
+        crypt: isCrypt,
         data: params
       });
     },
@@ -25,10 +27,11 @@ function ArticleService($http) {
       });
     },
 
-    getArticle(articleId) {
+    getArticle(articleId, isCrypt) {
       return $http({
         method: 'GET',
-        url: `articles/${articleId}`
+        url: `articles/${articleId}`,
+        crypt: isCrypt
       });
     },
 
@@ -50,12 +53,12 @@ function ArticleService($http) {
       return $http({
         method: 'POST',
         url: 'articles/add_category',
-        data: $.param(params)
+        data: params
       });
     }
   }
 }
 
-ArticleService.$inject = ['$http'];
+ArticleService.$inject = ['$http', 'CryptoService'];
 
 export default ArticleService;

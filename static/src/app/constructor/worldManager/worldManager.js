@@ -7,7 +7,7 @@ const worldManager = {
   controller: WorldManagerController
 };
 
-function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope) {
+function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope, CryptoService) {
   this.$onInit = () => {
     this.user = UserService.user;
     if (this.world) {
@@ -29,14 +29,27 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     };
 
     this.accessToChange = (this.user && this.user.id === this.world.author);
+    this.isShowKeyInput = false;
   };
 
   this.$onDestroy = () => {
     this.showArticleListner();
   };
 
+  this.showKeyInput = () => {
+    this.isShowKeyInput = !this.isShowKeyInput;
+  }
+
+  this.changeKey = () => {
+    CryptoService.setKey(this.key);
+    this.isShowKeyInput = false;
+  }
+
   this.createWorld = () => {
-    ConstructService.createWorld(this.name).then((res) => {
+    if (this.world.is_private && this.kay) {
+      CryptoService.setKey(this.key);
+    }
+    ConstructService.createWorld(this.world).then((res) => {
       this.isCreated = true;
       this.world = res.data;
       this.accessToChange = true;
@@ -75,6 +88,6 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
   };
 }
 
-WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$rootScope'];
+WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$rootScope', 'CryptoService'];
 
 export default worldManager;

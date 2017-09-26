@@ -18,7 +18,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
 
-    console.log(this);
 
     ArticleService.getArticlesByWorld(this.world.id).then(res => {
       this.allArticles = res.data;
@@ -61,7 +60,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     ArticleService.createArticle(
-      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id, world_id: this.world.id })
+      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id, world: this.world.id }),
+      this.world.is_private
     ).then(res => {
       $state.reload();
     });
@@ -70,7 +70,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.editArticle = () => {
     ArticleService.updateArticle(
       this.article.id,
-      Object.assign(pick(this.article, 'title', 'body', 'world_id'), { category_id: this.category.id })
+      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id }),
+      this.world.is_private
     ).then(res => {
       $state.reload();
     });

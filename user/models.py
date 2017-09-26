@@ -96,7 +96,7 @@ class PictureManager(models.Manager):
 
 class Picture(models.Model):
     path = models.URLField(max_length=255)
-    owner = models.ForeignKey(Account, null=True, blank=True)
+    owner = models.ForeignKey(Account, null=True, blank=True, on_delete=models.CASCADE)
 
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

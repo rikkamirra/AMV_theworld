@@ -81,12 +81,7 @@ class WorldItem(APIView):
         if world.author.pk != request.user.pk:
             return Response(status=403)
 
-        categories = Category.objects.filter(world=world)
-        articles = Article.objects.filter(world=world)
-
         world.delete()
-        categories.delete()
-        articles.delete()
         return Response(status=200)
 
 
@@ -150,6 +145,7 @@ class CategoryItem(APIView):
                 delete_category(child.pk)
 
         delete_category(category_id)
+        Article.objects.clear()
         return Response({})
 
 
