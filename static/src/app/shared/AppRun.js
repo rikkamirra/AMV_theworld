@@ -1,11 +1,11 @@
 import $ from 'jquery';
 
-function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService) {
+function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService, CryptoService) {
 
   UserService.getCurrentUser();
+  CryptoService.getKey();
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
-    console.log(toState.module, 'liyluyfr');
     if (toState.module === 'private' && !UserService.user) {
       e.preventDefault();
       $state.go('login', { nextState: toState, nextStateParams: toParams });
@@ -13,6 +13,6 @@ function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructServi
   });
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$cookies', '$http', 'UserService', 'ConstructService'];
+AppRun.$inject = ['$rootScope', '$state', '$cookies', '$http', 'UserService', 'ConstructService', 'CryptoService'];
 
 export default AppRun;

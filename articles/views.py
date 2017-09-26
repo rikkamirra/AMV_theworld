@@ -20,13 +20,14 @@ class ArticleList(APIView):
         return Response([article for article in articles])
 
     def post(self, request, format=None):
-        world = World.objects.get(pk=request.POST.get('world_id'))
+        world = World.objects.get(pk=request.POST.get('world'))
         if request.user.pk != world.author.pk:
             return Response(status=403)
         category = Category.objects.get(pk=request.POST.get('category_id'))
         article = Article.objects.create(
             title=request.POST.get('title'),
-            body=request.POST.get('body')
+            body=request.POST.get('body'),
+            world=world
             )
         Picture.objects.update(
             re.findall('src="(.+?)"', article.body),
@@ -41,14 +42,16 @@ class ArticleList(APIView):
 
 class ArticleItem(APIView):
     def get(self, request, article_id, format=None):
-        article = None
         try:
             article = Article.objects.get(pk=article_id)
         except Article.DoesNotExist:
             return Response(status=404)
 
         serializer = ArticleSerializer(article)
-        return Response(serializer.data)
+        response = Response(serializer.data)
+        if article.world.is_private:
+            response['Crypt'] = 'Crypt'
+        return response
 
     def put(self, request, article_id, format=None):
         article = None
@@ -70,7 +73,10 @@ class ArticleItem(APIView):
                 instance_type='article',
                 redirect="/constructor/"+str(article.world.id)+"/article/"+str(article.id)
                 )
-            return Response(serializer.data)
+            response = Response(serializer.data)
+            if article.world.is_private:
+                response['Crypt'] = 'Crypt'
+            return response
         return Response(serializer.errors, status=400)
 
 
@@ -87,12 +93,18 @@ def get_articles_by_category(request, category_id):
         return Response(status=404)
 
     serialize = ArticleSerializer(category.articles.all(), many=True)
-    return JsonResponse(serialize.data, safe=False)
+    response = JsonResponse(serialize.data, safe=False)
+    if category.world.is_private:
+        response['Crypt'] = 'Crypt'
+    return response
 
 
 def get_articles_by_world(request, world_id):
     articles = Article.objects.filter(world=world_id).values('id', 'title')
-    return JsonResponse([a for a in articles], safe=False)
+    response = JsonResponse([a for a in articles], safe=False)
+    if World.objects.get(pk=world_id).is_private:
+        response['Crypt'] = 'Crypt'
+    return response
 
 
 def add_category(request):

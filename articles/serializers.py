@@ -7,8 +7,12 @@ from articles.models import Article
 
 class ArticleSerializer(serializers.ModelSerializer):
     categories = serializers.SerializerMethodField()
-    world = serializers.PrimaryKeyRelatedField(queryset=World.objects)
+    world = serializers.SerializerMethodField()
     body = serializers.CharField(required=False)
+
+    def get_world(self, obj):
+        serializer = WorldSerializer(obj.world)
+        return serializer.data;
 
     def get_categories(self, obj):
         article = Article.objects.get(pk=obj.id)

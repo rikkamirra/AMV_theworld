@@ -2,11 +2,11 @@ import $ from 'jquery';
 
 function ConstructService($http, UserService) {
   return {
-    createWorld(name) {
+    createWorld(params) {
       return $http({
         method: 'POST',
         url: 'worlds/',
-        data: $.param({ name, author: UserService.getCurrentUser().id })
+        data: Object.assign(params, { author: UserService.getCurrentUser().id })
       });
     },
 
@@ -29,7 +29,7 @@ function ConstructService($http, UserService) {
       return $http({
         method: 'POST',
         url: 'worlds/categories/',
-        data: $.param(params)
+        data: params
       });
     },
 

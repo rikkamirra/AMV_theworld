@@ -25,6 +25,13 @@ function ModalService($uibModal) {
           instance_id: () => instance_id,
           instance_type: () => instance_type
         }
+      })
+    },
+
+    enterKey() {
+      return $uibModal.open({
+        animation: true,
+        component: 'enterKey'
       });
     }
   }
