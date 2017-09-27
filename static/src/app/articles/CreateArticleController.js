@@ -1,6 +1,8 @@
-function CreateArticleController() {
+function CreateArticleController(world, category) {
+  this.world = world;
+  this.category = category;
 }
 
-CreateArticleController.$inject = [];
+CreateArticleController.$inject = ['world', 'category'];
 
 export default CreateArticleController;

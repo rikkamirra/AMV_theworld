@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from user.models import Account
-from construct.models import World, Category
+from .models import World, Category
 from articles.models import Article
 
 

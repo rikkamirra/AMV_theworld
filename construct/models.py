@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class World(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey('user.Account', on_delete=models.CASCADE)

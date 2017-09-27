@@ -57,7 +57,7 @@ function ConstructService($http, UserService) {
     getChildren(parentId) {
       return $http({
         method: 'GET',
-        url: `worlds/categories/children/${parentId}`
+        url: `worlds/categories/${parentId}/children`
       });
     }
   }

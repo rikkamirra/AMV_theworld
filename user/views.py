@@ -34,32 +34,16 @@ def index(request):
     return response
 
 
-def create_user(request): #email, usrename, password
-    errors = []
-    if not request.POST.get('email', False):
-        errors.append("No email")
-    elif Account.objects.filter(email=request.POST['email']).count() > 0:
-        errors.append('Email already exists')
-    if not request.POST.get('password', False):
-        errors.append('No password')
-    if not request.POST.get('username', False):
-        errors.append('No username')
-    elif Account.objects.filter(username=request.POST['username']).count() > 0:
-        errors.append('Username already exists')
+def create_user(request):
+    try:
+        user = Account.objects.create(request.POST)
+    except Exception as e:
+        return JsonResponse([e.__str__(),], status=400, safe=False)
 
-    if errors:
-        return JsonResponse(errors, status=409, safe=False)
-    else:
-        user = Account.objects.create_user(
-            email=request.POST['email'],
-            password=request.POST['password'],
-            username=request.POST.get('username', request.POST['email']),
-            role=request.POST.get('role', False)
-            )
-        user = authenticate(username=request.POST['email'], password=request.POST['password'])
-        login(request, user)
-        serializer = AccountSerializer(user)
-        return JsonResponse(user.data)
+    user = authenticate(username=request.POST['email'], password=request.POST['password'])
+    login(request, user)
+    serializer = AccountSerializer(user)
+    return JsonResponse(serializer.data)
 
 
 def login_user(request):

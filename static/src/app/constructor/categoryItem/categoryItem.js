@@ -60,9 +60,9 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
     });
   };
 
-  this.clickArticle = (article) => {
-    $rootScope.$emit('showArticle', {article, category: this.root});
-  };
+  this.clickArticle = () => {
+    $state.go('newArticle', {world: this.world, category: this.root});
+  }
 }
 
 CategoryItemController.$inject = ['ConstructService', 'ArticleService', 'UserService', '$state', '$rootScope', '$sce'];

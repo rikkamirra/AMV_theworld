@@ -2,10 +2,10 @@ import $ from 'jquery';
 
 function ArticleService($http) {
   return {
-    createArticle(params, isCrypt) {
+    createArticle(params,categoryId,  isCrypt) {
       return $http({
         method: 'POST',
-        url: 'articles/',
+        url: `categories/${categoryId}/articles`,
         crypt: isCrypt,
         data: params
       });
@@ -38,14 +38,14 @@ function ArticleService($http) {
     getArticlesByWorld(world_id) {
       return $http({
         method: 'GET',
-        url: `articles_by_world/${world_id}`
+        url: `worlds/${world_id}/articles`
       });
     },
 
     getArticlesByCategory(categoryId) {
       return $http({
         method: 'GET',
-        url: `articles_by_category/${categoryId}`
+        url: `categories/${categoryId}/articles`
       });
     },
 

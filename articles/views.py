@@ -12,18 +12,22 @@ from rest_framework.response import Response
 from rest_framework import status
 import re
 
+from theworld.decorators import set_instance
+
 
 class ArticleList(APIView):
+    @set_instance('Category', False)
+    def get(self, request, category):
+        serializer = ArticleSerializer(category.articles.all(), many=True)
+        response = Response(serializer.data)
+        if category.world.is_private:
+            response['Crypt'] = 'Crypt'
+        return response
 
-    def get(self, request, format=None):
-        articles = Article.objects.all().values('pk', 'title')
-        return Response([article for article in articles])
-
-    def post(self, request, format=None):
-        world = World.objects.get(pk=request.POST.get('world'))
-        if request.user.pk != world.author.pk:
+    @set_instance('Category', False)
+    def post(self, request, category):
+        if request.user.pk != category.world.author.pk:
             return Response(status=403)
-        category = Category.objects.get(pk=request.POST.get('category_id'))
         article = Article.objects.create(
             title=request.POST.get('title'),
             body=request.POST.get('body'),
@@ -37,31 +41,20 @@ class ArticleList(APIView):
             redirect="/constructor/"+str(world.id)+"/article/"+str(article.id)
             )
         category.articles.add(article)
-        return Response(status=201)
+        return Response(ArticleSerializer(article).data, status=201)
 
 
 class ArticleItem(APIView):
-    def get(self, request, article_id, format=None):
-        try:
-            article = Article.objects.get(pk=article_id)
-        except Article.DoesNotExist:
-            return Response(status=404)
-
+    @set_instance('Article', False)
+    def get(self, request, article):
         serializer = ArticleSerializer(article)
         response = Response(serializer.data)
         if article.world.is_private:
             response['Crypt'] = 'Crypt'
         return response
 
-    def put(self, request, article_id, format=None):
-        article = None
-        try:
-            article = Article.objects.get(pk=article_id)
-        except Article.DoesNotExist:
-            return Response(status=404)
-
-        if request.user.pk != article.world.author.pk:
-            return Response(status=401)
+    @set_instance('Article', False)
+    def put(self, request, article):
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -79,9 +72,9 @@ class ArticleItem(APIView):
             return response
         return Response(serializer.errors, status=400)
 
-
-    def delete(self, request, article_id, format=None):
-        Article.objects.get(pk=article_id).delete()
+    @set_instance('Article', True)
+    def delete(self, request, article):
+        article.delete()
         return JsonResponse({})
 
 

@@ -19,10 +19,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.contrib import admin
 import user.views as userapp
-import construct.views as world
 import articles.views as articles
 
-from construct.views import WorldItem, WorldList, CategoryList, CategoryItem
+from construct.categories import CategoryList, CategoryItem, get_children
+from construct.worlds import WorldItem, WorldList
 from articles.views import ArticleList, ArticleItem
 from user.views import AccountPictureItem
 
@@ -34,17 +34,16 @@ urlpatterns = [
     url(r'^user/?$', userapp.get_info),
     url(r'^account/pictures', AccountPictureItem.as_view()),
 
-    url(r'^worlds/?$', world.WorldList.as_view()),
+    url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),
     url(r'^worlds/categories/?$', CategoryList.as_view()),
     url(r'^worlds/categories/(?P<category_id>\d+)/?$', CategoryItem.as_view()),
-    url(r'^worlds/categories/children/(?P<parent_id>\d+)/?$', world.get_children),
+    url(r'^worlds/categories/(?P<parent_id>\d+)/children/?$', get_children),
 
-    url(r'^articles/$', ArticleList.as_view()),
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
 
-    url(r'^articles_by_category/(?P<category_id>\d+)', articles.get_articles_by_category),
-    url(r'^articles_by_world/(?P<world_id>\d+)', articles.get_articles_by_world),
+    url(r'^categories/(?P<category_id>\d+)/articles/?', ArticleList.as_view()),
+    url(r'^worlds/(?P<world_id>\d+)/articles/?', articles.get_articles_by_world),
     url(r'^articles/add_category', articles.add_category),
 
     url(r'^admin/', admin.site.urls),

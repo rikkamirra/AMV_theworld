@@ -5,7 +5,7 @@ import json
 
 
 class AccountManager(BaseUserManager):
-    def create_user(self, **kwargs):
+    def create(self, kwargs):
         if not kwargs.get('email'):
             raise ValueError('Users must have a valid email address.')
 
@@ -19,13 +19,14 @@ class AccountManager(BaseUserManager):
             email=self.normalize_email(kwargs.get('email')), username=kwargs.get('username')
         )
 
-        role = kwargs.get('role')
+        role = kwargs.get('role', '')
         setattr(account, role, True)
 
         account.set_password(kwargs.get('password'))
         account.save()
 
         return account
+
 
     def set_role(self, user_id, role):
         account = self.get(pk=user_id)

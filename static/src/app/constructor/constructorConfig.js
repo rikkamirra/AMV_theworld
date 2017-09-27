@@ -46,7 +46,7 @@ function constructorConfig($stateProvider) {
         return $stateParams.world;
       }]
     },
-    controller: 'NewArticleController as ctrl'
+    controller: 'CreateArticleController as ctrl'
   })
 };
 

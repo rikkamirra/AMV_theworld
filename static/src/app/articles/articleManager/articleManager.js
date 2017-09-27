@@ -13,7 +13,10 @@ const articleManager = {
 
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService) {
   this.$onInit = () => {
+    if (!(this.world || this.category)) window.history.back();
+
     this.isEdit = !(this.article && this.article.id);
+    
     if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
@@ -60,7 +63,8 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     ArticleService.createArticle(
-      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id, world: this.world.id }),
+      Object.assign(pick(this.article, 'title', 'body'), { world: this.world.id }),
+      this.category.id,
       this.world.is_private
     ).then(res => {
       $state.reload();
@@ -70,7 +74,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.editArticle = () => {
     ArticleService.updateArticle(
       this.article.id,
-      Object.assign(pick(this.article, 'title', 'body'), { category_id: this.category.id }),
+      pick(this.article, 'title', 'body'),
       this.world.is_private
     ).then(res => {
       $state.reload();
