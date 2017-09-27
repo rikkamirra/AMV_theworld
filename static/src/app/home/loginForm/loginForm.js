@@ -25,7 +25,7 @@ function LoginFormController(UserService, $state) {
   },
 
   this.registration = () => {
-    UserService.login(this.user).then(() => {
+    UserService.createUser(this.user).then(() => {
       this.close();
     }).catch(res => {
       this.errors = res.data;

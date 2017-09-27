@@ -9,7 +9,7 @@ const worldManager = {
 
 function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope, CryptoService) {
   this.$onInit = () => {
-    if (this.world.is_private && !CryptoService.getKey()) {
+    if (this.world && this.world.is_private && !CryptoService.getKey()) {
       this.changeKey();
     }
     this.user = UserService.user;
@@ -17,13 +17,10 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
       this.isCreated = true;
     }
 
-    this.showArticleListner = $rootScope.$on('showArticle', (e, data) => {
-      this.showArticle(data.article, data.category);
-    });
     this.isShowWorldPictureEditor = false;
 
     this.style = {
-      'background-image': `url(${this.world.picture})`,
+      'background-image': `url(${this.world.picture || ''})`,
       'background-repeat': 'no-repeat',
       'background-position': 'center',
       'background-repeat': 'no-repeat',
@@ -33,10 +30,6 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
 
     this.accessToChange = (this.user && this.user.id === this.world.author);
     this.isShowKeyInput = false;
-  };
-
-  this.$onDestroy = () => {
-    this.showArticleListner();
   };
 
   this.changeKey = () => {
@@ -50,9 +43,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
       CryptoService.setKey(this.key);
     }
     ConstructService.createWorld(this.world).then((res) => {
-      this.isCreated = true;
-      this.world = res.data;
-      this.accessToChange = true;
+      $state.go('construct', {worldId: res.data.id});
     });
   };
 
