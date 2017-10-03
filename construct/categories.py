@@ -36,7 +36,7 @@ class CategoryList(APIView):
 
 
 class CategoryItem(APIView):
-    @set_instance('Category', False)
+    @set_instance('Category')
     def get(self, request, category):
         chain = []
         chain.append(category)
@@ -48,14 +48,14 @@ class CategoryItem(APIView):
         serialize = CategorySerializer(chain, many=True)
         return JsonResponse(serialize.data, safe=False)
 
-    @set_instance('Category', True)
+    @set_instance('Category', need_auth=True)
     def put(self, request, category):
         serializer = CategorySerializer(category, data=request.data)
         if serializer.is_valid():
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-    @set_instance('Category', True)
+    @set_instance('Category', need_auth=True)
     def delete(self, request, category):
         def delete_category(category_id):
             category = Category.objects.get(pk=category_id)

@@ -19,3 +19,6 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = ArticleManager()
+
+    class Meta:
+        ordering = ('title',)

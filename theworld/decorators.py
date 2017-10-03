@@ -3,8 +3,14 @@ from user.models import Account, Picture
 from articles.models import Article
 
 
+get_author = {
+    'Category': lambda x: x.world.author.pk,
+    'World': lambda x: x.author.pk,
+    'Article': lambda x: x.world.pk
+    }
 
-def set_instance(name, is_auth):
+
+def set_instance(name, need_auth=False):
     def wrap(fun):
         def wrapped_f(view, request, **kwargs):
             try:
@@ -15,8 +21,8 @@ def set_instance(name, is_auth):
             except Exception as e:
                 return Response([str(e)], status=500)
 
-            if is_auth:
-                if instance.author.id != request.user.pk:
+            if need_auth:
+                if get_author[name](instance) != request.user.pk:
                     return Response(status=401)
             new_kwargs = {}
             new_kwargs[name.lower()] = instance

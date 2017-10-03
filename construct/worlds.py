@@ -37,12 +37,12 @@ class WorldList(APIView):
 
 
 class WorldItem(APIView):
-    @set_instance('World', False)
+    @set_instance('World')
     def get(self, request, world):
         serializer = WorldSerializer(world)
         return Response(serializer.data)
 
-    @set_instance('World', True)
+    @set_instance('World', need_auth=True)
     def put(self, request, world):
         serializer = WorldSerializer(world, data=request.data)
         if serializer.is_valid():
@@ -58,7 +58,7 @@ class WorldItem(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-    @set_instance('World', True)
+    @set_instance('World', need_auth=True)
     def delete(self, request, world):
         world.delete()
         return Response(status=200)

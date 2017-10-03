@@ -1,3 +1,6 @@
+import $ from 'jquery';
+
+
 const addPicture = {
   restrict: 'E',
   template: require('./addPicture.html'),

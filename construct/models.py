@@ -11,6 +11,9 @@ class World(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('created_at',)
+
 
 
 class Category(models.Model):
@@ -18,3 +21,6 @@ class Category(models.Model):
     parent_id = models.IntegerField(default=0)
     articles = models.ManyToManyField('articles.Article')
     world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        ordering = ('name',)

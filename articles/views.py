@@ -16,7 +16,7 @@ from theworld.decorators import set_instance
 
 
 class ArticleList(APIView):
-    @set_instance('Category', False)
+    @set_instance('Category')
     def get(self, request, category):
         serializer = ArticleSerializer(category.articles.all(), many=True)
         response = Response(serializer.data)
@@ -24,28 +24,28 @@ class ArticleList(APIView):
             response['Crypt'] = 'Crypt'
         return response
 
-    @set_instance('Category', False)
+    @set_instance('Category', need_auth=True)
     def post(self, request, category):
         if request.user.pk != category.world.author.pk:
             return Response(status=403)
         article = Article.objects.create(
             title=request.POST.get('title'),
             body=request.POST.get('body'),
-            world=world
+            world=category.world
             )
         Picture.objects.update(
             re.findall('src="(.+?)"', article.body),
             owner=request.user,
             instance_id=article.pk,
             instance_type='article',
-            redirect="/constructor/"+str(world.id)+"/article/"+str(article.id)
+            redirect="/constructor/"+str(category.world.id)+"/article/"+str(article.id)
             )
         category.articles.add(article)
         return Response(ArticleSerializer(article).data, status=201)
 
 
 class ArticleItem(APIView):
-    @set_instance('Article', False)
+    @set_instance('Article')
     def get(self, request, article):
         serializer = ArticleSerializer(article)
         response = Response(serializer.data)
@@ -53,7 +53,7 @@ class ArticleItem(APIView):
             response['Crypt'] = 'Crypt'
         return response
 
-    @set_instance('Article', False)
+    @set_instance('Article', need_auth=True)
     def put(self, request, article):
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid():
@@ -72,7 +72,7 @@ class ArticleItem(APIView):
             return response
         return Response(serializer.errors, status=400)
 
-    @set_instance('Article', True)
+    @set_instance('Article', need_auth=True)
     def delete(self, request, article):
         article.delete()
         return JsonResponse({})
