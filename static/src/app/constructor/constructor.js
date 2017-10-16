@@ -7,6 +7,7 @@ import NewArticleController from './NewArticleController';
 
 import worldManager from './worldManager/worldManager';
 import categoryItem from './categoryItem/categoryItem';
+import editWorld from './editWorld/editWorld';
 
 const MODULE_NAME = 'TWApp.Constructor';
 
@@ -19,6 +20,7 @@ angular.module(MODULE_NAME, [])
 .controller('NewArticleController', NewArticleController)
 
 .component('worldManager', worldManager)
-.component('categoryItem', categoryItem);
+.component('categoryItem', categoryItem)
+.component('editWorld', editWorld);
 
 export default MODULE_NAME;

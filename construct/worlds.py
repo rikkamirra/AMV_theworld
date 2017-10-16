@@ -22,7 +22,8 @@ class WorldList(APIView):
     def get(self, request):
         worlds = World.objects.filter(is_private=False)
         serializer = WorldSerializer(worlds, many=True)
-        return Response(serializer.data)
+        response = Response(serializer.data)
+        return response
 
     def post(self, request):
         if not request.user.is_constructor:
@@ -40,7 +41,10 @@ class WorldItem(APIView):
     @set_instance('World')
     def get(self, request, world):
         serializer = WorldSerializer(world)
-        return Response(serializer.data)
+        response = Response(serializer.data)
+        if world.is_private:
+            response['Crypt'] = 'Crypt'
+        return response
 
     @set_instance('World', need_auth=True)
     def put(self, request, world):
@@ -55,7 +59,9 @@ class WorldItem(APIView):
                     instance_id=world.id,
                     redirect="/constructor/"+str(world.id)
                     )
-            return Response(serializer.data)
+            response = Response(serializer.data)
+            response['Crypt'] = 'Crypt'
+            return response
         return Response(serializer.errors, status=400)
 
     @set_instance('World', need_auth=True)

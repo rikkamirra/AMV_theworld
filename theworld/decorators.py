@@ -13,7 +13,7 @@ from rest_framework.response import Response
 get_author = {
     'Category': lambda x: x.world.author.pk,
     'World': lambda x: x.author.pk,
-    'Article': lambda x: x.world.pk
+    'Article': lambda x: x.world.author.pk
     }
 
 

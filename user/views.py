@@ -77,7 +77,8 @@ class AccountList(APIView):
 class AccountItem(APIView):
     def get(self, request, user_id):
         account = AccountSerializer(request.user)
-        return JsonResponse(account.data, safe=False)
+        response = JsonResponse(account.data, safe=False)
+        return response
 
     def post(self, request, user_id):
         return Response()

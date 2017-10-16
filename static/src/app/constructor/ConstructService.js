@@ -2,20 +2,20 @@ import $ from 'jquery';
 
 function ConstructService($http, UserService) {
   return {
-    createWorld(params) {
-      return $http({
+    createWorld(params, config) {
+      return $http(Object.assign(config, {
         method: 'POST',
         url: 'worlds/',
         data: Object.assign(params, { author: UserService.getCurrentUser().id })
-      });
+      }));
     },
 
-    updateWorld(params) {
-      return $http({
+    updateWorld(params, config) {
+      return $http(Object.assign(config, {
         method: 'PUT',
         url: `worlds/${params.id}`,
         data: params
-      });
+      }));
     },
 
     getAllWorlds() {
@@ -25,12 +25,12 @@ function ConstructService($http, UserService) {
       });
     },
 
-    createCategory(params) {
-      return $http({
+    createCategory(params, config) {
+      return $http(Object.assign(config, {
         method: 'POST',
         url: 'worlds/categories/',
         data: params
-      });
+      }));
     },
 
     deleteCategory(categoryId) {
