@@ -24,6 +24,14 @@ a {
   display: inline-block;
 }
 
+.flex-container {
+  display: flex;
+}
+
+.flex-container * {
+  align-self: center;
+}
+
 .short-input {
   width: 15rem;
 }

@@ -24,7 +24,7 @@ import articles.views as articles
 from construct.categories import CategoryList, CategoryItem, get_children
 from construct.worlds import WorldItem, WorldList
 from articles.views import ArticleList, ArticleItem
-from user.views import AccountPictureItem
+from user.views import AccountPictureItem, AccountItem #, AccountDetails
 
 
 urlpatterns = [
@@ -32,7 +32,9 @@ urlpatterns = [
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
     url(r'^user/?$', userapp.get_info),
-    url(r'^account/pictures', AccountPictureItem.as_view()),
+    # url(r'^account/', AccountList.as_view()),
+    url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
+    # url(r'^account/pictures', AccountPictureItem.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),

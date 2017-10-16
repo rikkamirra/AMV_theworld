@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.core import serializers
 import json
+import re
 
 
 class AccountManager(BaseUserManager):
@@ -90,9 +91,6 @@ class PictureManager(models.Manager):
         old_relationships = PicturesRelationship.objects.filter(instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type')).delete()
         for image in list_images:
             self.create(path=image, owner=kwargs.get('owner'), instance_id=kwargs.get('instance_id'), instance_type=kwargs.get('instance_type'), redirect=kwargs.get('redirect', '/'))
-
-
-
 
 
 class Picture(models.Model):

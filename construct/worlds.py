@@ -20,7 +20,7 @@ from theworld.decorators import set_instance
 
 class WorldList(APIView):
     def get(self, request):
-        worlds = World.objects.all()
+        worlds = World.objects.filter(is_private=False)
         serializer = WorldSerializer(worlds, many=True)
         return Response(serializer.data)
 
