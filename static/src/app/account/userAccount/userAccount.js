@@ -4,7 +4,7 @@ const userAccount = {
   restrict: 'E',
   template: require('./userAccount.html'),
   bindings: {
-    user: '<'
+    user: '='
   },
   controller: UserAccountController
 };
@@ -12,6 +12,14 @@ const userAccount = {
 function UserAccountController(UserService, $state) {
   this.$onInit = () => {
     this.isShowDeleteButton = false;
+    this.isEditAccount = false;
+  }
+
+  this.accountAction = (newUserData) => {
+    if (newUserData) {
+      this.user = newUserData;
+    }
+    this.isEditAccount = !this.isEditAccount;
   }
 }
 

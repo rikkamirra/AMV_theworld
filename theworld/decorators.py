@@ -1,6 +1,11 @@
 from construct.models import World, Category
-from user.models import Account, Picture
+# from construct.serializers import WorldSerializer, CategorySerializer
+
 from articles.models import Article
+# from articles.serializers import ArticleSerializer
+
+from user.models import Account, Picture
+# from user.serializers import AccountSerializer, PictureSerializer
 
 from rest_framework.response import Response
 

@@ -16,6 +16,17 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
+    updateUser(data) {
+      return $http({
+        method: 'PATCH',
+        url: `account/${this.user.id}`,
+        data
+      }).then(res => {
+        this.setUserData(res);
+        return res;
+      });
+    },
+
     login(creds) {
       return $http({
         method: 'POST',
@@ -67,8 +78,11 @@ function UserService($http, $cookies, $rootScope, $state) {
     getUser() {
       return $http({
         method: 'GET',
-        url: '/user'
-      })
+        url: `/account/${this.user.id}`
+      }).then(res => {
+        this.setUserData(res);
+        return res;
+      });
     },
 
     getCurrentUser() {

@@ -19,14 +19,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-def permit(request, *args):
-    fields = {}
-    for arg in args:
-        fields[arg] = request.get(arg, None)
-    return fields
-
-
-
 def index(request):
     csrf_token = get_token(request)
     response = render(request, 'index.html')
@@ -72,6 +64,35 @@ def get_info(request):
 def logout_user(request):
     logout(request)
     return JsonResponse({})
+
+
+class AccountList(APIView):
+    def get(self, request):
+        return Response()
+
+    def post(self, request):
+        return Response()
+
+
+class AccountItem(APIView):
+    def get(self, request, user_id):
+        account = AccountSerializer(request.user)
+        return JsonResponse(account.data, safe=False)
+
+    def post(self, request, user_id):
+        return Response()
+
+    def patch(self, request, user_id):
+        serializer = AccountSerializer(request.user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors(), status=400)
+
+
+    def delete(self, request, user_id):
+        return Response()
 
 
 

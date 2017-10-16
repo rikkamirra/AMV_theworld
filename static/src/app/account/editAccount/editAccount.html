@@ -1,0 +1,8 @@
+<form class="tw-login-form form-group" name="editAccountForm">
+  <label for="edit-username">Имя</label>
+  <input id="edit-username" class="form-control" ng-model="$ctrl.user.username" required>
+  <label for="edit-email">Email</label>
+  <input id="edit-email" class="form-control" type="email" ng-model="$ctrl.user.email" required>
+  <p class="error" ng-repeat="error in $ctrl.errors">[[ error ]]</p>
+  <button class="btn btn-right btn-primary" ng-disabled="editAccountForm.$invalid" ng-click="$ctrl.submit()">Сохранить</button>
+</form>
