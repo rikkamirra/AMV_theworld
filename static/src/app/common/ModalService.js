@@ -28,6 +28,18 @@ function ModalService($uibModal) {
       })
     },
 
+    editWorld(worldId) {
+      return $uibModal.open({
+        animation: true,
+        component: 'editWorld',
+        resolve: {
+          world: ['ConstructService', (ConstructService) => {
+            return ConstructService.getWorld(worldId).then(res => res.data);
+          }]
+        }
+      })
+    },
+
     enterKey() {
       return $uibModal.open({
         animation: true,

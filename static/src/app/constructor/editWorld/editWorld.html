@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h3>Изменить</h3>
+</div>
+<div class="modal-body">
+  <form name="editWorldForm">
+    <div class="form-group">
+      <input class="form-control" ng-model="$ctrl.world.name" placeholder="Название">
+      <div class="checkbox">
+        <label><input type="checkbox" ng-model="$ctrl.world.is_private">Приватный</label>
+      </div>
+      <input class="form-control" ng-show="$ctrl.world.is_private" ng-model="$ctrl.cryptoKey" placeholder="Введите новый ключ">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="$ctrl.submit()" ng-disabled="editWorldForm.$invalid">Сохранить</button>
+</div>

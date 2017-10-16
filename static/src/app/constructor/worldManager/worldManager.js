@@ -42,7 +42,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     if (this.world.is_private && this.kay) {
       CryptoService.setKey(this.key);
     }
-    ConstructService.createWorld(this.world).then((res) => {
+    ConstructService.createWorld(this.world, {crypt: this.world.is_private}).then((res) => {
       $state.go('construct', {worldId: res.data.id});
     });
   };
@@ -54,7 +54,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
       name: category.name,
       world: this.world.id,
       parent_id: 0
-    }).then(res => {
+    }, {crypt: this.world.is_private}).then(res => {
       this.world.categories = res.data;
     });
   };
@@ -77,6 +77,13 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
       });
     });
   };
+
+  this.showWorldEditor = () => {
+    if (!(this.world && this.world.id)) return;
+    ModalService.editWorld(this.world.id).result.then(newWorldData => {
+      this.world = newWorldData;
+    });
+  }
 }
 
 WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$rootScope', 'CryptoService'];

@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^user/?$', userapp.get_info),
     # url(r'^account/', AccountList.as_view()),
     url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
-    # url(r'^account/pictures', AccountPictureItem.as_view()),
+    url(r'^account/pictures', AccountPictureItem.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),

@@ -28,7 +28,7 @@ function AppConfig($interpolateProvider, $httpProvider, $locationProvider, $urlR
        if (config.crypt) {
          config.data = CryptoService.handleParams(config.data, 'encrypt');
        }
-       if (config.method === 'POST' && !config.data.api_key) { 
+       if (config.method === 'POST' && !config.data.api_key) {
          config.data = $.param(config.data);
        }
        return config;
