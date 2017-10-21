@@ -16,6 +16,27 @@ angular.module(MODULE_NAME, [])
 .component('cloudUpload', cloudUpload)
 .component('addPicture', addPicture)
 .component('imgItem', imgItem)
-.component('enterKey', enterKey);
+.component('enterKey', enterKey)
+
+.filter('myDate', () => {
+  return (input) => {
+    const date = new Date(input);
+    const months = {
+      0: 'января',
+      1: 'февраля',
+      2: 'марта',
+      3: 'апреля',
+      4: 'мая',
+      5: 'июня',
+      6: 'июля',
+      7: 'августа',
+      8: 'сентября',
+      9: 'октября',
+      10: 'ноября',
+      11: 'декабря'
+    };
+    return `${date.getDay()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  }
+});
 
 export default MODULE_NAME;

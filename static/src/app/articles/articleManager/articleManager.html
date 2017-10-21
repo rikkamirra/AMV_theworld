@@ -40,4 +40,8 @@
     <hr>
     <div ng-bind-html="$ctrl.article.parsedBody"></div>
   </div>
+  <div class="text-right">
+    <small class="text-muted">Создан: [[ $ctrl.article.created_at | myDate ]]</small></br>
+    <small class="text-muted">Обновлен: [[ $ctrl.article.updated_at | myDate ]]</small>
+  </div>
 </div>
