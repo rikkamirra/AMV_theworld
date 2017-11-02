@@ -35,7 +35,7 @@ angular.module(MODULE_NAME, [])
       10: 'ноября',
       11: 'декабря'
     };
-    return `${date.getDay()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   }
 });
 

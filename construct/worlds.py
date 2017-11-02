@@ -60,7 +60,8 @@ class WorldItem(APIView):
                     redirect="/constructor/"+str(world.id)
                     )
             response = Response(serializer.data)
-            response['Crypt'] = 'Crypt'
+            if world.is_private:
+                response['Crypt'] = 'Crypt'
             return response
         return Response(serializer.errors, status=400)
 
