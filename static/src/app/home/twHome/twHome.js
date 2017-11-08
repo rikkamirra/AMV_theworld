@@ -5,11 +5,13 @@ const twHome = {
   controller: TwHomeController
 };
 
-function TwHomeController(UserService, ConstructService, ModalService, $state) {
+function TwHomeController(UserService, ConstructService, ChatService, ModalService, $state) {
   this.$onInit = () => {
     ConstructService.getAllWorlds().then(res => {
       this.worlds = res.data;
     });
+
+    ChatService.getAllChats().then(res => this.chats = res.data);
 
     this.isOpenChat = UserService.getCurrentUser();
   };
@@ -29,6 +31,6 @@ function TwHomeController(UserService, ConstructService, ModalService, $state) {
   };
 }
 
-TwHomeController.$inject = ['UserService', 'ConstructService', 'ModalService', '$state'];
+TwHomeController.$inject = ['UserService', 'ConstructService', 'ChatService', 'ModalService', '$state'];
 
 export default twHome;

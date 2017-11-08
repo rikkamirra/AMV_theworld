@@ -1,6 +1,6 @@
 function ChatService($http) {
   return {
-    getAllUserChats() {
+    getAllChats() {
       return $http({
         method: 'GET',
         url: `chats/`
