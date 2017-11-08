@@ -25,6 +25,7 @@ from construct.categories import CategoryList, CategoryItem, get_children
 from construct.worlds import WorldItem, WorldList
 from articles.views import ArticleList, ArticleItem
 from user.views import AccountPictureItem, AccountItem #, AccountDetails
+from chat.views import ChatRoomList, MessageList
 
 
 urlpatterns = [
@@ -35,6 +36,10 @@ urlpatterns = [
     # url(r'^account/', AccountList.as_view()),
     url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
     url(r'^account/pictures', AccountPictureItem.as_view()),
+
+    url(r'^chats/?', ChatRoomList.as_view()),
+
+    url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),

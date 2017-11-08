@@ -1,0 +1,8 @@
+<div ng-repeat="message in $ctrl.messages">
+  <chat-item msg="message"></chat-item>
+</div>
+
+<form ng-show="$ctrl.enableChat" name="chatForm" ng-submit="$ctrl.sendMessage()">
+  <textarea class="form-control" ng-model="$ctrl.message.body"></textarea>
+  <button class="btn btn-primary" type="submit">Отправить</button>
+</form>

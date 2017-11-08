@@ -19,6 +19,7 @@ import CommonApp from './common/common';
 import AccountApp from './account/account';
 import ConstructorApp from './constructor/constructor';
 import ArticleApp from './articles/articles';
+import ChatApp from './chat/chat';
 
 angular.module('TWApp', [
   'ui.router',
@@ -32,7 +33,8 @@ angular.module('TWApp', [
   CommonApp,
   AccountApp,
   ConstructorApp,
-  ArticleApp
+  ArticleApp,
+  ChatApp
 ])
 .config(AppConfig)
 .run(AppRun)

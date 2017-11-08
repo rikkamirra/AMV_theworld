@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
     'user',
     'articles',
-    'construct'
+    'construct',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +57,8 @@ MIDDLEWARE = [
 ]
 
 CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_HTTPONLY = False
+
 
 ROOT_URLCONF = 'theworld.urls'
 
@@ -140,3 +145,17 @@ AUTH_USER_MODEL = 'user.Account'
 #         'rest_framework.permissions.IsAuthenticated',
 #     )
 # }
+
+
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+       "ROUTING": "theworld.routing.channel_routing", # We will create it in a moment
+    },
+}

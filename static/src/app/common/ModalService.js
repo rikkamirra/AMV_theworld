@@ -45,6 +45,13 @@ function ModalService($uibModal) {
         animation: true,
         component: 'enterKey'
       });
+    },
+
+    createChat() {
+      return $uibModal.open({
+        animation: true,
+        component: 'createChatForm'
+      });
     }
   }
 }
