@@ -26,8 +26,6 @@ class ArticleList(APIView):
 
     @set_instance('Category', need_auth=True)
     def post(self, request, category):
-        if request.user.pk != category.world.author.pk:
-            return Response(status=403)
         article = Article.objects.create(
             title=request.POST.get('title'),
             body=request.POST.get('body'),

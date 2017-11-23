@@ -13,6 +13,12 @@
   </div>
 
   <div class="col-md-3">
-    Место для показа последних активностей пользователей
+    <p>Беседы</p>
+    <p ng-repeat="chat in $ctrl.chats">
+      <a href="chat/[[ chat.name ]]">[[ chat.name ]]</a>
+    </p>
   </div>
 </div>
+
+
+<button class="btn btn-primary" ng-click="$ctrl.createChat()">Создать чат</button>
