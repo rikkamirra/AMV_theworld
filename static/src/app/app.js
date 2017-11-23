@@ -21,6 +21,8 @@ import ConstructorApp from './constructor/constructor';
 import ArticleApp from './articles/articles';
 import ChatApp from './chat/chat';
 
+import Config from './shared/Config';
+
 angular.module('TWApp', [
   'ui.router',
   'ui.bootstrap',
@@ -37,5 +39,6 @@ angular.module('TWApp', [
   ChatApp
 ])
 .config(AppConfig)
+.constant('Config', Config)
 .run(AppRun)
 .controller('RootController', RootController);

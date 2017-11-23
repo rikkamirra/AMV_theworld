@@ -8,6 +8,7 @@ const chatComponent = {
   controller: ChatComponentController
 };
 
+
 function ChatComponentController($scope, UserService, $cookies) {
   this.$onInit = () => {
     this.userId = UserService.getCurrentUser().id;
@@ -16,9 +17,8 @@ function ChatComponentController($scope, UserService, $cookies) {
 
     this.webSocket.onmessage = (message) => {
       var data = JSON.parse(message.data);
-      if (data.messages) {
-        this.messages = data.messages;
-      } else {
+      console.log(data);
+      if (data.text) {
         this.messages.push(data);
       }
       $scope.$digest();
@@ -31,7 +31,7 @@ function ChatComponentController($scope, UserService, $cookies) {
   }
 
   this.$onDestroy = () => {
-    if (this.webSocket && his.webSocket.readyState === WebSocket.OPEN) {
+    if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
       this.webSocket.close();
    }
   }

@@ -5,7 +5,7 @@ from urllib.parse import parse_qs
 
 from user.models import Account
 from .models import ChatRoom, Message
-
+from Crypto.PublicKey import RSA
 
 # Connected to websocket.connect
 @channel_session
@@ -29,12 +29,14 @@ def ws_connect(message, room_name):
 @channel_session
 def ws_message(message, room_name):
     sender = Account.objects.get(pk=message.channel_session['user'])
-    Message.objects.create(room=ChatRoom.objects.get(name=room_name), text=message["text"], sender=sender)
+    message_to_save = Message.objects.create(room=ChatRoom.objects.get(name=room_name), text=message["text"], sender=sender)
+    print('send message')
     Group(room_name).send({
         "text": json.dumps({
-            "text": message["text"],
+            "text": message_to_save.text,
             "sender_name": sender.username,
-        }),
+            "created_at": str(message_to_save.created_at)
+        })
     })
 
 # Connected to websocket.disconnect
