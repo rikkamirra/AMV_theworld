@@ -82,6 +82,7 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     if (!(this.world && this.world.id)) return;
     ModalService.editWorld(this.world.id).result.then(newWorldData => {
       this.world = newWorldData;
+      $rootScope.$broadcast('worldChanged', this.world);
     });
   }
 }

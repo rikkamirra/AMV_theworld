@@ -9,17 +9,18 @@ const enterKey = {
   controller: EnterKeyController
 };
 
-function EnterKeyController(CryptoService) {
+function EnterKeyController(CryptoService, $rootScope) {
   this.$onInit = () => {
     this.key = CryptoService.getKey();
   }
 
   this.setNewKey = () => {
     CryptoService.setKey(this.key);
+    $rootScope.$broadcast('worldChanged');
     this.close();
   }
 }
 
-EnterKeyController.$inject = ['CryptoService'];
+EnterKeyController.$inject = ['CryptoService', '$rootScope'];
 
 export default enterKey;

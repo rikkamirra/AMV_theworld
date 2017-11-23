@@ -9,7 +9,7 @@ const editWorld = {
   controller: EditWorldController
 };
 
-function EditWorldController(ConstructService, CryptoService) {
+function EditWorldController(ConstructService, CryptoService, $rootScope) {
   this.$onInit = () => {
     this.world = this.resolve.world;
     this.cryptoKey = CryptoService.getKey();
@@ -19,10 +19,12 @@ function EditWorldController(ConstructService, CryptoService) {
     if (this.cryptoKey) {
       CryptoService.setKey(this.cryptoKey);
     }
-    ConstructService.updateWorld(this.world, {crypt: this.world.is_private}).then(res => this.close({$value: res.data}));
+    ConstructService.updateWorld(this.world, {crypt: this.world.is_private}).then(res => {
+      this.close({$value: res.data});
+    });
   }
 }
 
-EditWorldController.$inject = ['ConstructService', 'CryptoService'];
+EditWorldController.$inject = ['ConstructService', 'CryptoService', '$rootScope'];
 
 export default editWorld;

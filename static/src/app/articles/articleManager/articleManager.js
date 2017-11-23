@@ -11,12 +11,12 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService) {
+function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService, ConstructService) {
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
 
     this.isEdit = !(this.article && this.article.id);
-    
+
     if (this.article && !this.article.parsedBody) {
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
@@ -27,7 +27,18 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     });
 
     this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
+
+    this.cryptoStatusChangedEvent = $rootScope.$on('worldChanged', (e, newWorld) => {
+      if (newWorld) {
+        this.world = newWorld;
+      }
+      this.articleAction();
+    });
   };
+
+  this.$onDestroy = () => {
+    this.cryptoStatusChangedEvent();
+  }
 
   this.$onChanges = (obj) => {
     this.isEdit = !(this.article && this.article.id);
@@ -94,6 +105,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService', 'ConstructService'];
 
 export default articleManager;
