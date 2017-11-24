@@ -102,6 +102,13 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     ArticleService.addArticleToCategory({ article_id: article.id, category_id: this.category.id }).then(res => {
       $state.reload();
     });
+  };
+
+  this.addComment = () => {
+    this.comment.article_id = this.article.id;
+    ArticleService.addComment(this.comment).then(res => {
+      this.article.comments.push(res.data);
+    })
   }
 }
 

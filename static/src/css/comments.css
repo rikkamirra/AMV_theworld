@@ -1,0 +1,21 @@
+.comments-block {
+  padding: 0.5rem;
+}
+
+.comment-item {
+  border-top-color: #ccc;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+.comment-author-name {
+
+}
+
+.comment-text {
+
+}
+
+.comment-date {
+  color: gray;
+}

@@ -55,6 +55,14 @@ function ArticleService($http) {
         url: 'articles/add_category',
         data: params
       });
+    },
+
+    addComment(params) {
+      return $http({
+        method: 'POST',
+        url: 'comments/',
+        data: params
+      });
     }
   }
 }

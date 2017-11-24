@@ -50,6 +50,8 @@ urlpatterns = [
 
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
 
+    url(r'comments/?', CommentListView.as_view()),
+
     url(r'^categories/(?P<category_id>\d+)/articles/?', ArticleList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/articles/?', articles.get_articles_by_world),
     url(r'^articles/add_category', articles.add_category),

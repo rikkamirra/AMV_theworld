@@ -27,7 +27,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_comments(self, obj):
-        return Comment.objects.filter(article_id=obj.id)
+        return CommentSerializer(Comment.objects.filter(article_id=obj.id), many=True).data
 
     class Meta:
         model = Article

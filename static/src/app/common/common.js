@@ -35,7 +35,13 @@ angular.module(MODULE_NAME, [])
       10: 'ноября',
       11: 'декабря'
     };
-    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+
+    var showTimeFormat = (date) => {
+      let hours = date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`;
+      let minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
+      return `${hours}:${minutes}`;
+    }
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}  ${showTimeFormat(date)}`;
   }
 });
 

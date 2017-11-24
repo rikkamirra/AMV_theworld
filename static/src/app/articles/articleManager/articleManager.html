@@ -44,4 +44,15 @@
     <small class="text-muted">Создан: [[ $ctrl.article.created_at | myDate ]]</small></br>
     <small class="text-muted">Обновлен: [[ $ctrl.article.updated_at | myDate ]]</small>
   </div>
+
+  <div class="comments-block">
+    <h3>Комментарии</h3>
+    <div ng-repeat="comment in $ctrl.article.comments" class="comment-item">
+      <strong class="comment-author-name">[[ comment.author_name ]]</strong>
+      <p class="comment-text">[[ comment.text ]]</p>
+      <small class="comment-date">[[ comment.created_at | myDate ]]</small>
+    </div>
+    <textarea class="form-control" ng-model="$ctrl.comment.text"></textarea>
+    <button ng-click="$ctrl.addComment()" class="btn btn-primary">Добавить</button>
+  </div>
 </div>
