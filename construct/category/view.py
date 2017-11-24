@@ -1,19 +1,17 @@
-# from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-# from django.core import serializers
-# import json
-import construct.manager as manager
 
-from construct.models import World, Category
-from articles.models import Article
+from .model import Category
+from construct.world.model import World
+from articles.article.model import Article
 from user.models import Picture
-from .serializers import WorldSerializer, CategorySerializer
-from articles.serializers import ArticleSerializer
+
+from construct.world.serializer import WorldSerializer
+from .serializer import CategorySerializer
+
+from articles.article.serializer import ArticleSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-# from rest_framework import status
-# from rest_framework.parsers import JSONParser
 
 from theworld.decorators import set_instance
 

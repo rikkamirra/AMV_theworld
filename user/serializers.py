@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from user.models import Account, Picture, PicturesRelationship
-from construct.models import World, Category
-from construct.serializers import CategorySerializer, WorldSerializer
-from articles.models import Article
+from construct.world.model import World
+from construct.category.model import Category
+from construct.world.serializer import WorldSerializer
+from construct.category.serializer import CategorySerializer
+from articles.article.model import Article
 
 
 class PicturesRelationshipSerializer(serializers.ModelSerializer):

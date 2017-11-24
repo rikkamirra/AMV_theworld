@@ -1,7 +1,8 @@
-from construct.models import World, Category
+from construct.world.model import World
+from construct.category.model import Category
 # from construct.serializers import WorldSerializer, CategorySerializer
 
-from articles.models import Article
+from articles.article.model import Article
 # from articles.serializers import ArticleSerializer
 
 from user.models import Account, Picture

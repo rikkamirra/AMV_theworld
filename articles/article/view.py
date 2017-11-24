@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Article
+from .model import Article
 from user.models import Picture, PicturesRelationship
-from construct.models import Category, World
-from construct.manager import get_object, get_object_from_set
+from construct.world.model import World
+from construct.category.model import Category
 
-from .serializers import ArticleSerializer
+from .serializer import ArticleSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response

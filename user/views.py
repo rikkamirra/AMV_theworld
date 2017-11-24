@@ -3,13 +3,15 @@ from django.template.context_processors import csrf
 from django.http import HttpResponse, JsonResponse
 
 from .models import Account, Picture, PicturesRelationship
-from construct.models import World, Category
+from construct.category.model import Category
+from construct.world.model import World
 
-from construct.serializers import WorldSerializer, CategorySerializer
+from construct.world.serializer import WorldSerializer
+from construct.category.serializer import CategorySerializer
+
 from .serializers import AccountSerializer, PictureSerializer, PicturesRelationshipSerializer
 
 from theworld.settings import STATIC_URL
-import construct.manager as construct
 from django.contrib.auth import authenticate, login, logout
 import json
 from django.middleware.csrf import get_token

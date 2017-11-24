@@ -19,11 +19,12 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.contrib import admin
 import user.views as userapp
-import articles.views as articles
+import articles.article.view as articles
 
-from construct.categories import CategoryList, CategoryItem, get_children
-from construct.worlds import WorldItem, WorldList
-from articles.views import ArticleList, ArticleItem
+from construct.category.view import CategoryList, CategoryItem, get_children
+from construct.world.view import WorldItem, WorldList
+from articles.article.view import ArticleList, ArticleItem
+from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem #, AccountDetails
 from chat.views import ChatRoomList, MessageList
 

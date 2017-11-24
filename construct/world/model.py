@@ -1,5 +1,5 @@
 from django.db import models
-
+from articles.article.model import Article
 
 class World(models.Model):
     name = models.CharField(max_length=255)
@@ -11,16 +11,8 @@ class World(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_articles(self):
+        return Article.objects.filter(world_id=self.id)
+
     class Meta:
         ordering = ('created_at',)
-
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-    parent_id = models.IntegerField(default=0)
-    articles = models.ManyToManyField('articles.Article')
-    world = models.ForeignKey(World, on_delete=models.CASCADE, null=True)
-
-    class Meta:
-        ordering = ('name',)

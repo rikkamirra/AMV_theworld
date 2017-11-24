@@ -1,7 +1,11 @@
 from rest_framework import serializers
 from user.models import Account
-from .models import World, Category
-from articles.models import Article
+from construct.category.model import Category
+from construct.category.serializer import CategorySerializer
+from articles.article.model import Article
+from articles.comment.serializer import CommentSerializer
+from articles.comment.model import Comment
+from .model import World
 
 
 class WorldSerializer(serializers.ModelSerializer):
@@ -17,11 +21,3 @@ class WorldSerializer(serializers.ModelSerializer):
     class Meta:
         model = World
         fields = ['id', 'name', 'author', 'categories', 'picture', 'is_private', 'created_at', 'updated_at']
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    articles = serializers.PrimaryKeyRelatedField(many=True, queryset=Article.objects)
-
-    class Meta:
-        model = Category
-        fields = ['id', 'name', 'parent_id', 'world', 'articles']

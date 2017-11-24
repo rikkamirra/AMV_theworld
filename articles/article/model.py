@@ -9,6 +9,7 @@ class ArticleManager(models.Manager):
                 article.delete()
 
 
+
 class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
@@ -19,6 +20,9 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = ArticleManager()
+
+    def get_comments(self):
+        return Comment.objects.filter(article_id=self.id)
 
     class Meta:
         ordering = ('title',)
