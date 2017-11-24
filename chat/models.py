@@ -1,6 +1,5 @@
 from django.db import models
 from user.models import Account
-# Create your models here.
 
 
 class ChatRoom(models.Model):
@@ -11,7 +10,7 @@ class ChatRoom(models.Model):
 
 class Message(models.Model):
     sender = models.ForeignKey(Account)
-    room = models.ForeignKey(ChatRoom)
+    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     text = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)

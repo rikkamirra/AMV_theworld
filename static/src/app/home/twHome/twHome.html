@@ -13,12 +13,12 @@
   </div>
 
   <div class="col-md-3">
-    <p>Беседы</p>
-    <p ng-repeat="chat in $ctrl.chats">
-      <a href="chat/[[ chat.name ]]">[[ chat.name ]]</a>
-    </p>
+    <div ng-show="$ctrl.isAuth">
+      <p>Беседы</p>
+      <p ng-repeat="chat in $ctrl.chats">
+        <a href="chat/[[ chat.name ]]">[[ chat.name ]]</a>
+      </p>
+      <button class="btn btn-primary" ng-click="$ctrl.createChat()">Создать чат</button>
+    </div>
   </div>
 </div>
-
-
-<button class="btn btn-primary" ng-click="$ctrl.createChat()">Создать чат</button>

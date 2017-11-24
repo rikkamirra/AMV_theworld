@@ -3,7 +3,7 @@
   <chat-item ng-repeat="message in $ctrl.messages" msg="message"></chat-item>
 
   <form ng-show="$ctrl.enableChat" name="chatForm" ng-submit="$ctrl.sendMessage()">
-    <textarea class="form-control" ng-model="$ctrl.message.body"></textarea>
+    <p><textarea class="form-control" ng-model="$ctrl.message.body"></textarea></p>
     <button class="btn btn-primary" type="submit">Отправить</button>
   </form>
 </div>
