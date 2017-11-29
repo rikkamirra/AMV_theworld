@@ -38,14 +38,16 @@ function ArticleService($http) {
     getArticlesByWorld(world_id) {
       return $http({
         method: 'GET',
-        url: `worlds/${world_id}/articles`
+        url: '/articles',
+        params: {world: world_id}
       });
     },
 
     getArticlesByCategory(categoryId) {
       return $http({
         method: 'GET',
-        url: `categories/${categoryId}/articles`
+        url: '/articles',
+        params: {category: categoryId}
       });
     },
 

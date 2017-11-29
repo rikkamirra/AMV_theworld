@@ -16,11 +16,17 @@ from theworld.decorators import set_instance
 
 
 class ArticleList(APIView):
-    @set_instance('Category')
-    def get(self, request, category):
-        serializer = ArticleSerializer(category.articles.all(), many=True)
+    def get(self, request):
+        if (request.GET.get('category', False)):
+            articles, is_private = self.__get_articles_by__('category', request.GET.get('category'))
+        elif (request.GET.get('world', False)):
+            articles, is_private = self.__get_articles_by__('world', request.GET.get('world'))
+        else:
+            articles, is_private = Article.objects.all(), True
+
+        serializer = ArticleSerializer(articles, many=True)
         response = Response(serializer.data)
-        if category.world.is_private:
+        if is_private:
             response['Crypt'] = 'Crypt'
         return response
 
@@ -40,6 +46,15 @@ class ArticleList(APIView):
             )
         category.articles.add(article)
         return Response(ArticleSerializer(article).data, status=201)
+
+    def __get_articles_by__(self, instance_name, instance_id):
+        if instance_name == 'category':
+            category = Category.objects.get(pk=instance_id)
+            return category.articles.all(), category.world.is_private
+        elif instance_name == 'world':
+            return Article.objects.filter(world_id=instance_id), World.objects.get(pk=instance_id).is_private
+        else:
+            return Article.objects.all(), True
 
 
 class ArticleItem(APIView):
@@ -74,28 +89,6 @@ class ArticleItem(APIView):
     def delete(self, request, article):
         article.delete()
         return JsonResponse({})
-
-
-def get_articles_by_category(request, category_id):
-    category = None
-    try:
-        category = Category.objects.get(pk=category_id)
-    except Category.DoesNotExist:
-        return Response(status=404)
-
-    serialize = ArticleSerializer(category.articles.all(), many=True)
-    response = JsonResponse(serialize.data, safe=False)
-    if category.world.is_private:
-        response['Crypt'] = 'Crypt'
-    return response
-
-
-def get_articles_by_world(request, world_id):
-    articles = Article.objects.filter(world=world_id).values('id', 'title')
-    response = JsonResponse([a for a in articles], safe=False)
-    if World.objects.get(pk=world_id).is_private:
-        response['Crypt'] = 'Crypt'
-    return response
 
 
 def add_category(request):

@@ -17,6 +17,14 @@ from theworld.decorators import set_instance
 
 
 class CategoryList(APIView):
+    def get(self, request):
+        if request.GET.get('parent', False):
+            categories = Category.objects.filter(parent_id=request.GET.get('parent'))
+        else:
+            categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
     def post(self, request):
         world = World.objects.get(pk=request.POST.get('world'))
         if world.author.pk != request.user.pk:

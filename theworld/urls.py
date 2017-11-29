@@ -19,13 +19,12 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.contrib import admin
 import user.views as userapp
-import articles.article.view as articles
 
-from construct.category.view import CategoryList, CategoryItem, get_children
+from construct.category.view import CategoryList, CategoryItem
 from construct.world.view import WorldItem, WorldList
-from articles.article.view import ArticleList, ArticleItem
+from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
-from user.views import AccountPictureItem, AccountItem #, AccountDetails
+from user.views import AccountPictureItem, AccountItem
 from chat.views import ChatRoomList, MessageList
 
 
@@ -34,27 +33,23 @@ urlpatterns = [
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
     url(r'^user/?$', userapp.get_info),
-    # url(r'^account/', AccountList.as_view()),
     url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
     url(r'^account/pictures', AccountPictureItem.as_view()),
 
     url(r'^chats/?', ChatRoomList.as_view()),
-
     url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),
     url(r'^worlds/categories/?$', CategoryList.as_view()),
     url(r'^worlds/categories/(?P<category_id>\d+)/?$', CategoryItem.as_view()),
-    url(r'^worlds/categories/(?P<parent_id>\d+)/children/?$', get_children),
 
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
+    url(r'^articles/?$', ArticleList.as_view()),
 
     url(r'comments/?', CommentListView.as_view()),
 
-    url(r'^categories/(?P<category_id>\d+)/articles/?', ArticleList.as_view()),
-    url(r'^worlds/(?P<world_id>\d+)/articles/?', articles.get_articles_by_world),
-    url(r'^articles/add_category', articles.add_category),
+    url(r'^articles/add_category', add_category),
 
     url(r'^admin/', admin.site.urls),
 
