@@ -14,7 +14,16 @@
           <div class="tools-panel__item" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></div>
         </div>
 
-        <textarea ng-if="!$ctrl.showParsedBody" class="form-control" ng-model="$ctrl.article.body" rows="20" required></textarea>
+        <textarea
+          id="article-input"
+          ng-if="!$ctrl.showParsedBody"
+          class="form-control"
+          ng-model="$ctrl.article.body"
+          ng-keypress="$ctrl.handleKeyPress($event)"
+          rows="20"
+          required
+          >
+        </textarea>
 
         <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 

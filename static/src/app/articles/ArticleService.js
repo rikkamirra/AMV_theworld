@@ -63,6 +63,10 @@ function ArticleService($http) {
         url: 'comments/',
         data: params
       });
+    },
+
+    insertString(position, text, stringToInsert) {
+      return text.slice(0, position) + stringToInsert + text.slice(position);
     }
   }
 }

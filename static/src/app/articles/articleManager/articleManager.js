@@ -15,6 +15,12 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
 
+    if (!this.article) {
+      this.article = {
+        body: ''
+      }
+    }
+
     this.isEdit = !(this.article && this.article.id);
 
     if (this.article && !this.article.parsedBody) {
@@ -47,12 +53,25 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.addImage = () => {
     if (!(this.article && this.article.id)) return;
     ModalService.addPicture({instance_type: 'article', instance_id: this.article.id}).result.then(picture => {
-      this.article.body = this.article.body ? this.article.body + `\n<div><img height="300" style="margin: 0.5rem;" src="${picture.path}"></div>\n` : `<div><img style="margin: 0.5rem;" height="300" src="${picture.path}"></div>\n`;
+      this.article.body += `<div><img height="300" style="margin: 0.5rem;" src="${picture.path}"></div>\n`
     });
   };
 
   this.addText = () => {
-    this.article.body += '\n<p>\nВставьте текст сюда\n</p>\n';
+    this.article.body = (this.article.body || '') + '\n<p>\nВставьте текст сюда\n</p>\n';
+  };
+
+  this.handleKeyPress = (e) => {
+    switch (e.code) {
+      case "Enter":
+        e.preventDefault();
+        let position = e.srcElement.selectionStart;
+        let stringToInsert = '</br>\n';
+        this.article.body = ArticleService.insertString(position, this.article.body,  stringToInsert);
+        break;
+      default:
+        break;
+    }
   };
 
   this.showArticle = () => {
