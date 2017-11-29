@@ -127,6 +127,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     this.comment.article_id = this.article.id;
     ArticleService.addComment(this.comment).then(res => {
       this.article.comments.push(res.data);
+      this.comment.text = '';
     })
   }
 }
