@@ -4,7 +4,7 @@ function CryptoService($cookies) {
   var key = '';
 
   function isCryptableParam(name) {
-    const paramsForCrypt = ['title', 'body'];
+    const paramsForCrypt = ['title', 'body', 'text'];
     for (let i = 0; i < paramsForCrypt.length; i+=1) {
       if (name == paramsForCrypt[i]) return true;
     }

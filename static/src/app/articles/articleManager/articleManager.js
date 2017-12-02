@@ -93,8 +93,7 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     ArticleService.createArticle(
-      Object.assign(pick(this.article, 'title', 'body'), { world: this.world.id }),
-      this.category.id,
+      Object.assign(pick(this.article, 'title', 'body'), { world: this.world.id, category: this.category.id }),
       this.world.is_private
     ).then(res => {
       $state.reload();

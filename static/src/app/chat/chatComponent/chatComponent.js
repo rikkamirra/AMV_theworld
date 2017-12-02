@@ -9,7 +9,7 @@ const chatComponent = {
 };
 
 
-function ChatComponentController($scope, UserService, $cookies) {
+function ChatComponentController($scope, UserService, $cookies, CryptoService) {
   this.$onInit = () => {
     this.userId = UserService.getCurrentUser().id;
     this.enableChat = false && this.userId;
@@ -17,7 +17,6 @@ function ChatComponentController($scope, UserService, $cookies) {
 
     this.webSocket.onmessage = (message) => {
       var data = JSON.parse(message.data);
-      console.log(data);
       if (data.text) {
         this.messages.push(data);
       }
@@ -43,6 +42,6 @@ function ChatComponentController($scope, UserService, $cookies) {
   }
 }
 
-ChatComponentController.$inject = ['$scope', 'UserService', '$cookies'];
+ChatComponentController.$inject = ['$scope', 'UserService', '$cookies', 'CryptoService'];
 
 export default chatComponent;

@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^worlds/categories/(?P<category_id>\d+)/?$', CategoryItem.as_view()),
 
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
-    url(r'^articles/?$', ArticleList.as_view()),
+    url(r'^articles/?', ArticleList.as_view()),
 
     url(r'comments/?', CommentListView.as_view()),
 

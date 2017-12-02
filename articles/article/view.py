@@ -30,8 +30,8 @@ class ArticleList(APIView):
             response['Crypt'] = 'Crypt'
         return response
 
-    @set_instance('Category', need_auth=True)
-    def post(self, request, category):
+    def post(self, request):
+        category = Category.objects.get(pk=request.POST.get('category'))
         article = Article.objects.create(
             title=request.POST.get('title'),
             body=request.POST.get('body'),

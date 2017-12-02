@@ -2,10 +2,10 @@ import $ from 'jquery';
 
 function ArticleService($http) {
   return {
-    createArticle(params,categoryId,  isCrypt) {
+    createArticle(params, isCrypt) {
       return $http({
         method: 'POST',
-        url: `categories/${categoryId}/articles`,
+        url: `/articles`,
         crypt: isCrypt,
         data: params
       });
