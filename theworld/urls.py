@@ -22,6 +22,7 @@ import user.views as userapp
 
 from construct.category.view import CategoryList, CategoryItem
 from construct.world.view import WorldItem, WorldList
+from construct.world.view import get_full_world
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem
@@ -50,6 +51,8 @@ urlpatterns = [
     url(r'comments/?', CommentListView.as_view()),
 
     url(r'^articles/add_category', add_category),
+
+    url(r'^get_full_world/(?P<world_id>\d+)/?$', get_full_world),
 
     url(r'^admin/', admin.site.urls),
 
