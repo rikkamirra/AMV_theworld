@@ -1,4 +1,4 @@
-import { pick } from 'underscore';
+import { pick, sortBy } from 'underscore';
 
 const articleManager = {
   restrict: 'E',
@@ -59,6 +59,10 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.addText = () => {
     this.article.body = (this.article.body || '') + '\n<p>\nВставьте текст сюда\n</p>\n';
+  };
+
+  this.sortText = () => {
+    this.article.body = sortBy(this.article.body.split('\n')).join('\n');
   };
 
   this.handleKeyPress = (e) => {
