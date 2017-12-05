@@ -19,8 +19,10 @@ function EditWorldController(ConstructService, CryptoService, $rootScope) {
     if (this.cryptoKey) {
       CryptoService.setKey(this.cryptoKey);
     }
-    ConstructService.updateWorld(this.world, {crypt: this.world.is_private}).then(res => {
-      this.close({$value: res.data});
+    ConstructService.updateAllArticles(this.world.id, this.world.is_private).then(() => {
+      ConstructService.updateWorld(this.world, {crypt: this.world.is_private}).then(res => {
+        this.close({$value: res.data});
+      });
     });
   }
 }

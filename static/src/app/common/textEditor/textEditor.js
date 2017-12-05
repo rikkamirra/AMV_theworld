@@ -9,49 +9,48 @@ const textEditor = {
 
 function TextEditorController(TextService, ModalService) {
   this.$onInit = () => {
+    this.cursor = {
+      start: 0,
+      end: 0
+    };
     this.textareaElement = document.getElementById('article-input');
     this.myText = this.myText || '';
   }
 
-  function buildImage(src) {
-    return `\n<img height="300" style="margin: 0.5rem;" src="${src}">\n`;
-  }
-
-  function buildText() {
-    return '\n<p>\nтекст\n</p>\n';
-  }
-
-  function getStartText(position) {
-    return position + '\n<p>\n'.length;
-  }
-
-  function getEndText(position) {
-    return position + '\n<p>\n'.length + 'текст'.length;
-  }
-
   this.saveCursor = (e) => {
-    this.myTextareaCursorPosition = e.srcElement.selectionStart;
+    this.cursor.start = e.srcElement.selectionStart;
+    this.cursor.end = e.srcElement.selectionEnd;
   };
 
   this.addImage = () => {
-    const position = this.myTextareaCursorPosition || this.myText.length;
+    const position = this.cursor.start || this.myText.length;
     if (!this.myText) return;
     ModalService.addPicture().result.then(picture => {
-      const stringToInsert = buildImage(picture.path);
+      const stringToInsert = TextService.buildImage(picture.path);
       this.myText = TextService.insertString(position, this.myText, stringToInsert);
       TextService.setCursor(this.textareaElement, position + stringToInsert.length);
     });
   };
 
   this.addText = () => {
-    const position = this.myTextareaCursorPosition || 0;
-    const stringToInsert = buildText();
+    const position = this.cursor.start || 0;
+    const stringToInsert = TextService.buildText();
     this.myText = TextService.insertString(position, this.myText, stringToInsert);
-    TextService.setCursor(this.textareaElement, getStartText(position), getEndText(position));
+    TextService.setCursor(this.textareaElement, TextService.getStartText(position), TextService.getEndText(position));
   };
 
   this.sortText = () => {
     this.myText = sortBy(this.myText.split('\n')).join('\n');
+  };
+
+  this.wrapText = (wrap) => {
+    const element = TextService.buildElement(wrap);
+    this.myText = TextService.wrapByString(
+      this.myText,
+      element,
+      this.cursor
+    );
+    TextService.setCursor(this.textareaElement, this.cursor.start);
   };
 
   this.handleKeyPress = (e) => {

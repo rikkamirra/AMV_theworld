@@ -14,7 +14,7 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService, ConstructService, $interval) {
+function ArticleManagerController(ArticleService, UserService, $state, $scope, Upload, $sce, ModalService, ConstructService, $interval) {
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
 
@@ -30,17 +30,9 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     });
 
     this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
-
-    this.cryptoStatusChangedEvent = $rootScope.$on('worldChanged', (e, newWorld) => {
-      if (newWorld) {
-        this.world = newWorld;
-      }
-      this.articleAction();
-    });
   };
 
   this.$onDestroy = () => {
-    this.cryptoStatusChangedEvent();
     if (this.authSaveStop) {
       $interval.cancel(this.authSaveStop);
     }
@@ -126,6 +118,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService', 'ConstructService', '$interval'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$scope', 'Upload', '$sce', 'ModalService', 'ConstructService', '$interval'];
 
 export default articleManager;

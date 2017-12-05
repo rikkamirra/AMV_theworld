@@ -1,6 +1,7 @@
 import $ from 'jquery';
+import { pick } from 'underscore';
 
-function ConstructService($http, UserService) {
+function ConstructService($http, UserService, ArticleService, $q) {
   return {
     createWorld(params, config) {
       return $http(Object.assign(config || {}, {
@@ -22,6 +23,26 @@ function ConstructService($http, UserService) {
       return $http({
         method: 'GET',
         url: 'worlds/'
+      });
+    },
+
+    getArticles(worldId) {
+      return $http({
+        method: 'GET',
+        url: '/articles',
+        params: {
+          world: worldId
+        }
+      });
+    },
+
+    updateAllArticles(worldId, isPrivate) {
+      return this.getArticles(worldId).then(res => {
+        var promises = [];
+        res.data.forEach((article) => {
+          promises.push(ArticleService.updateArticle(article.id, pick(article, 'title', 'body'), isPrivate))
+        });
+        return $q.all(promises);
       });
     },
 
@@ -64,6 +85,6 @@ function ConstructService($http, UserService) {
   }
 }
 
-ConstructService.$inject = ['$http', 'UserService'];
+ConstructService.$inject = ['$http', 'UserService', 'ArticleService', '$q'];
 
 export default ConstructService;

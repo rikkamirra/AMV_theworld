@@ -1,3 +1,5 @@
+import { pick } from 'underscore';
+
 const worldManager = {
   restrict: 'E',
   template: require('./worldManager.html'),
@@ -7,7 +9,7 @@ const worldManager = {
   controller: WorldManagerController
 };
 
-function WorldManagerController(ConstructService, UserService, ModalService, $state, $rootScope, CryptoService) {
+function WorldManagerController(ConstructService, UserService, ModalService, $state, $scope, CryptoService, $q, ArticleService) {
   this.$onInit = () => {
     if (this.world && this.world.is_private && !CryptoService.getKey()) {
       this.changeKey();
@@ -82,11 +84,10 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     if (!(this.world && this.world.id)) return;
     ModalService.editWorld(this.world.id).result.then(newWorldData => {
       this.world = newWorldData;
-      $rootScope.$broadcast('worldChanged', this.world);
     });
   }
 }
 
-WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$rootScope', 'CryptoService'];
+WorldManagerController.$inject = ['ConstructService', 'UserService', 'ModalService', '$state', '$scope', 'CryptoService', '$q', 'ArticleService'];
 
 export default worldManager;
