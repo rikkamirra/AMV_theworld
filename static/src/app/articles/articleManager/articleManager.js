@@ -11,7 +11,7 @@ const articleManager = {
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService, ConstructService) {
+function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService, ConstructService, $interval) {
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
 
@@ -44,6 +44,9 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.$onDestroy = () => {
     this.cryptoStatusChangedEvent();
+    if (this.authSaveStop) {
+      $interval.cancel(this.authSaveStop);
+    }
   }
 
   this.$onChanges = (obj) => {
@@ -85,33 +88,44 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.showEditTools = () => {
     this.isEdit = true;
+    let reload = false;
+    this.authSaveStop = $interval(() => {
+      this.showAuthsaveMessage = true;
+      this.articleAction(reload).then(res => {
+        this.showAuthsaveMessage = false;
+      });
+    }, 10000);
   };
 
-  this.articleAction = () => {
+  this.getArticleAction = () => {
     if (this.article.id) {
-      this.editArticle();
+      return this.editArticle;
     } else {
-      this.saveArticle();
+      return this.saveArticle;
     }
-  }
+  };
+
+  this.articleAction = (reload = true) => {
+    return this.getArticleAction().call(this).then(res => {
+      if (reload) {
+        $state.reload();
+      }
+    });
+  };
 
   this.saveArticle = () => {
-    ArticleService.createArticle(
+    return ArticleService.createArticle(
       Object.assign(pick(this.article, 'title', 'body'), { world: this.world.id, category: this.category.id }),
       this.world.is_private
-    ).then(res => {
-      $state.reload();
-    });
+    );
   };
 
   this.editArticle = () => {
-    ArticleService.updateArticle(
+    return ArticleService.updateArticle(
       this.article.id,
       pick(this.article, 'title', 'body'),
       this.world.is_private
-    ).then(res => {
-      $state.reload();
-    });
+    );
   };
 
   this.deleteArticle = () => {
@@ -135,6 +149,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   }
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService', 'ConstructService'];
+ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$rootScope', 'Upload', '$sce', 'ModalService', 'ConstructService', '$interval'];
 
 export default articleManager;

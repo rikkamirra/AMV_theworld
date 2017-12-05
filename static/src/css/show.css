@@ -4,6 +4,10 @@ body, html {
   height: 100%;
 }
 
+.form-control {
+  background-color: inherit;
+}
+
 a {
   font-size: 0.8rem;
 }
