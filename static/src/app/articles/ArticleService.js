@@ -39,7 +39,9 @@ function ArticleService($http) {
       return $http({
         method: 'GET',
         url: '/articles',
-        params: {world: world_id}
+        params: {
+          world: world_id
+        }
       });
     },
 
@@ -47,7 +49,9 @@ function ArticleService($http) {
       return $http({
         method: 'GET',
         url: '/articles',
-        params: {category: categoryId}
+        params: {
+          category: categoryId
+        }
       });
     },
 
@@ -65,10 +69,6 @@ function ArticleService($http) {
         url: 'comments/',
         data: params
       });
-    },
-
-    insertString(position, text, stringToInsert) {
-      return text.slice(0, position) + stringToInsert + text.slice(position);
     }
   }
 }

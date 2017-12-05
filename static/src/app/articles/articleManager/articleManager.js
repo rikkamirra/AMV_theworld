@@ -1,4 +1,7 @@
-import { pick, sortBy } from 'underscore';
+import {
+  pick,
+  sortBy
+} from 'underscore';
 
 const articleManager = {
   restrict: 'E',
@@ -14,12 +17,6 @@ const articleManager = {
 function ArticleManagerController(ArticleService, UserService, $state, $rootScope, Upload, $sce, ModalService, ConstructService, $interval) {
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
-
-    if (!this.article) {
-      this.article = {
-        body: ''
-      }
-    }
 
     this.isEdit = !(this.article && this.article.id);
 
@@ -53,34 +50,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
     this.isEdit = !(this.article && this.article.id);
   };
 
-  this.addImage = () => {
-    if (!(this.article && this.article.id)) return;
-    ModalService.addPicture({instance_type: 'article', instance_id: this.article.id}).result.then(picture => {
-      this.article.body += `<div><img height="300" style="margin: 0.5rem;" src="${picture.path}"></div>\n`
-    });
-  };
-
-  this.addText = () => {
-    this.article.body = (this.article.body || '') + '\n<p>\nВставьте текст сюда\n</p>\n';
-  };
-
-  this.sortText = () => {
-    this.article.body = sortBy(this.article.body.split('\n')).join('\n');
-  };
-
-  this.handleKeyPress = (e) => {
-    switch (e.code) {
-      case "Enter":
-        e.preventDefault();
-        let position = e.srcElement.selectionStart;
-        let stringToInsert = '</br>\n';
-        this.article.body = ArticleService.insertString(position, this.article.body,  stringToInsert);
-        break;
-      default:
-        break;
-    }
-  };
-
   this.showArticle = () => {
     this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     this.isEdit = false;
@@ -89,12 +58,12 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
   this.showEditTools = () => {
     this.isEdit = true;
     let reload = false;
-    this.authSaveStop = $interval(() => {
-      this.showAuthsaveMessage = true;
-      this.articleAction(reload).then(res => {
-        this.showAuthsaveMessage = false;
-      });
-    }, 10000);
+    // this.authSaveStop = $interval(() => {
+    //   this.showAuthsaveMessage = true;
+    //   this.articleAction(reload).then(res => {
+    //     this.showAuthsaveMessage = false;
+    //   });
+    // }, 10000);
   };
 
   this.getArticleAction = () => {
@@ -115,7 +84,10 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.saveArticle = () => {
     return ArticleService.createArticle(
-      Object.assign(pick(this.article, 'title', 'body'), { world: this.world.id, category: this.category.id }),
+      Object.assign(pick(this.article, 'title', 'body'), {
+        world: this.world.id,
+        category: this.category.id
+      }),
       this.world.is_private
     );
   };
@@ -130,12 +102,17 @@ function ArticleManagerController(ArticleService, UserService, $state, $rootScop
 
   this.deleteArticle = () => {
     ArticleService.deleteArticle(this.article.id).then(res => {
-      $state.go('construct', { worldId: this.article.world.id });
+      $state.go('construct', {
+        worldId: this.article.world.id
+      });
     });
   };
 
   this.addArticleToCategory = (article) => {
-    ArticleService.addArticleToCategory({ article_id: article.id, category_id: this.category.id }).then(res => {
+    ArticleService.addArticleToCategory({
+      article_id: article.id,
+      category_id: this.category.id
+    }).then(res => {
       $state.reload();
     });
   };

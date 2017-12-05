@@ -1,22 +1,26 @@
 import ModalService from './ModalService';
 import CryptoService from './CryptoService';
+import TextService from './TextService';
 
 import twForm from './TwForm/twForm';
 import cloudUpload from './cloudUpload/cloudUpload';
 import addPicture from './addPicture/addPicture';
 import imgItem from './imgItem/imgItem';
 import enterKey from './enterKey/enterKey';
+import textEditor from './textEditor/textEditor';
 
 const MODULE_NAME = 'TWApp.Common';
 
 angular.module(MODULE_NAME, [])
 .factory('ModalService', ModalService)
 .factory('CryptoService', CryptoService)
+.factory('TextService', TextService)
 
 .component('cloudUpload', cloudUpload)
 .component('addPicture', addPicture)
 .component('imgItem', imgItem)
 .component('enterKey', enterKey)
+.component('textEditor', textEditor)
 
 .filter('myDate', () => {
   return (input) => {

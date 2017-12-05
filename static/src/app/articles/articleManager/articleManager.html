@@ -9,7 +9,7 @@
         <input class="form-control inline-block" ng-model="$ctrl.article.title" placeholder="Название" required>
         <hr>
 
-        <div class="tools-panel">
+        <!-- <div class="tools-panel">
           <div class="tools-panel__item" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></div>
           <div class="tools-panel__item" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></div>
           <div class="tools-panel__item" ng-click="$ctrl.sortText()"><span class="glyphicon glyphicon-sort-by-attributes"></span></div>
@@ -21,12 +21,15 @@
           class="form-control"
           ng-model="$ctrl.article.body"
           ng-keypress="$ctrl.handleKeyPress($event)"
+          ng-blur="$ctrl.saveCursor($event)"
           rows="20"
           required
           >
-        </textarea>
+        </textarea> -->
 
-        <div ng-if="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
+        <text-editor ng-show="!$ctrl.showParsedBody" my-text="$ctrl.article.body"></text-editor>
+
+        <div ng-show="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 
         <button class="btn btn-primary top-margin" ng-click="$ctrl.articleAction()" ng-disable="ArticleFrom.$invalid">Сохранить</button>
         <button class="btn btn-primary top-margin" ng-click="$ctrl.deleteArticle()">Удалить</button>

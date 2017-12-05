@@ -1,0 +1,16 @@
+<div class="tools-panel">
+  <div class="tools-panel__item" ng-click="$ctrl.addImage()"><span class="glyphicon glyphicon-picture"></span></div>
+  <div class="tools-panel__item" ng-click="$ctrl.addText()"><span class="glyphicon glyphicon-pencil"></span></div>
+  <div class="tools-panel__item" ng-click="$ctrl.sortText()"><span class="glyphicon glyphicon-sort-by-attributes"></span></div>
+</div>
+
+<textarea
+  id="article-input"
+  class="form-control"
+  ng-model="$ctrl.myText"
+  ng-keypress="$ctrl.handleKeyPress($event)"
+  ng-blur="$ctrl.saveCursor($event)"
+  rows="20"
+  required
+  >
+</textarea>
