@@ -1,5 +1,6 @@
 from django.db import models
 from articles.article.model import Article
+from construct.category.model import Category
 
 class World(models.Model):
     name = models.CharField(max_length=255)
@@ -13,6 +14,9 @@ class World(models.Model):
 
     def get_articles(self):
         return Article.objects.filter(world_id=self.id)
+
+    def get_root_ategories(self):
+        return Category.objects.filter(world_id=self.id, parent_id=0)
 
     class Meta:
         ordering = ('created_at',)

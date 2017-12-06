@@ -66,3 +66,21 @@ class WorldItem(APIView):
     def delete(self, request, world):
         world.delete()
         return Response(status=200)
+
+def get_full_world(request, world_id):
+    world = World.objects.get(pk=world_id)
+    obj = {}
+    root_categories = world.get_root_ategories()
+    for root_category in root_categories:
+        obj = _push_obj(root_category, obj)
+    print(obj)
+    return JsonResponse(obj, status=200)
+
+
+def _push_obj(_root_category, _obj_buffer):
+    _obj_buffer[_root_category.name] = []
+    children = Category.objects.filter(parent_id=_root_category.id)
+    for child in children:
+        _obj_buffer[_root_category.name].append(CategorySerializer(child).data)
+        _obj_buffer[child.name] = _push_obj(child, _obj_buffer)
+    return _obj_buffer

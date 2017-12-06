@@ -20,6 +20,7 @@ import AccountApp from './account/account';
 import ConstructorApp from './constructor/constructor';
 import ArticleApp from './articles/articles';
 import ChatApp from './chat/chat';
+import AdminApp from './admin/admin';
 
 import Config from './shared/Config';
 
@@ -36,7 +37,8 @@ angular.module('TWApp', [
   AccountApp,
   ConstructorApp,
   ArticleApp,
-  ChatApp
+  ChatApp,
+  AdminApp
 ])
 .config(AppConfig)
 .constant('Config', Config)
