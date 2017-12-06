@@ -28,6 +28,8 @@ from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem
 from chat.views import ChatRoomList, MessageList
 
+from admin.views import ArticleAdminView, CommentAdminView, WorldAdminView, CategoryAdminView, AccountAdminView, PictureAdminView, PicturesRelationshipAdminView
+
 
 urlpatterns = [
     url(r'^registration/', userapp.create_user),
@@ -48,13 +50,20 @@ urlpatterns = [
     url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
     url(r'^articles/?', ArticleList.as_view()),
 
-    url(r'comments/?', CommentListView.as_view()),
+    url(r'^comments/?', CommentListView.as_view()),
 
     url(r'^articles/add_category', add_category),
 
     url(r'^get_full_world/(?P<world_id>\d+)/?$', get_full_world),
 
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/articles', ArticleAdminView.as_view()),
+    url(r'^admin/comments', CommentAdminView.as_view()),
+    url(r'^admin/worlds', WorldAdminView.as_view()),
+    url(r'^admin/accounts', AccountAdminView.as_view()),
+    url(r'^admin/pictures', PictureAdminView.as_view()),
+    url(r'^admin/picture_relationships', PicturesRelationshipAdminView.as_view()),
+
+    # url(r'^admin/', admin.site.urls),
 
     url(r'^.*$', userapp.index),
 ]

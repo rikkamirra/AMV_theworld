@@ -62,6 +62,9 @@ class Account(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    def is_staff(self):
+        return False#self.is_admin
+
     def __unicode__(self):
         return self.email
 
