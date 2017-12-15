@@ -4,9 +4,11 @@ from .models import ChatRoom, Message
 
 
 class ChatRoomSerializer(serializers.ModelSerializer):
+    participants = serializer.PrimaryKeyRelatedField(queryset=Account.objects)
+    
     class Meta:
         model = ChatRoom
-        fields = ['id', 'name', 'created_at']
+        fields = ['id', 'name', 'created_at', 'participants']
 
 
 class MessageSerializer(serializers.ModelSerializer):
