@@ -11,10 +11,9 @@ const chatComponent = {
 
 function ChatComponentController($scope, UserService, $cookies, CryptoService, ChatService) {
   this.$onInit = () => {
-    console.log(this);
     this.userId = UserService.getCurrentUser().id;
-    this.enableChat = false && this.userId;
-    this.webSocket = new WebSocket(`ws://${window.location.host}/chat/${this.roomName}?user=${this.userId}`);
+    this.enableChat = false;
+    this.webSocket = new WebSocket(`ws://${window.location.host}/ws_chat/${this.chat.id}?user=${this.userId}`);
 
     this.webSocket.onmessage = (message) => {
       var data = JSON.parse(message.data);
@@ -25,7 +24,7 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService, C
     }
 
     this.webSocket.onopen = () => {
-      this.enableChat = true && this.userId;
+      this.enableChat = !!this.userId;
       $scope.$digest();
     }
 
@@ -45,7 +44,7 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService, C
   }
 
   this.inviteUser = () => {
-    ChatService.updateChat({user_id: this.userToInvite.id}, this.chat.id).then(res => this.participants = res.data.participants);
+    ChatService.updateChat({user_id: this.userToInvite.id}, this.chat.id).then(res => this.chat.participants = res.data.participants);
   }
 }
 

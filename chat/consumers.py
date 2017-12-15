@@ -9,7 +9,7 @@ from Crypto.PublicKey import RSA
 
 # Connected to websocket.connect
 @channel_session
-def ws_connect(message, room_name):
+def ws_connect(message, room_id):
     # Accept connection
     message.reply_channel.send({"accept": True})
     # Parse the query string
@@ -18,20 +18,21 @@ def ws_connect(message, room_name):
         # Set the username in the session
         message.channel_session["user"] = params[b"user"][0].decode("utf8")
         # Add the user to the room_name group
-        Group(room_name).add(message.reply_channel)
+        Group(room_id).add(message.reply_channel)
 
-        room, room_created = ChatRoom.objects.get_or_create(name=room_name)
+        room = ChatRoom.objects.get(pk=room_id)
     else:
         # Close the connection.
         message.reply_channel.send({"close": True})
 
 # Connected to websocket.receive
 @channel_session
-def ws_message(message, room_name):
+def ws_message(message, room_id):
+    print("MESSAGE")
     sender = Account.objects.get(pk=message.channel_session['user'])
-    message_to_save = Message.objects.create(room=ChatRoom.objects.get(name=room_name), text=message["text"], sender=sender)
+    message_to_save = Message.objects.create(room=ChatRoom.objects.get(pk=room_id), text=message["text"], sender=sender)
     print('send message')
-    Group(room_name).send({
+    Group(room_id).send({
         "text": json.dumps({
             "text": message_to_save.text,
             "sender_name": sender.username,
@@ -41,5 +42,5 @@ def ws_message(message, room_name):
 
 # Connected to websocket.disconnect
 @channel_session
-def ws_disconnect(message, room_name):
+def ws_disconnect(message, room_id):
     Group("chat-%s" % room_name).discard(message.reply_channel)

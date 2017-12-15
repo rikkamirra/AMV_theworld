@@ -14,6 +14,8 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 
     def get_messages(self, obj):
         serializer = MessageSerializer(Message.objects.filter(room_id=obj.id), many=True)
+        print(Message.objects.filter(room_id=obj.id))
+        print(obj.id)
         return serializer.data
 
     class Meta:

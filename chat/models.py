@@ -9,7 +9,8 @@ class ChatRoom(models.Model):
     participants = models.ManyToManyField('user.Account')
 
     def invite(self, user):
-        self.participants.add(user)
+        if not user in self.participants.all():
+            self.participants.add(user)
         return self
 
     def get_participants(self):
