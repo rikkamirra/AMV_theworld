@@ -11,27 +11,30 @@ from theworld.decorators import set_instance
 
 class ChatRoomList(APIView):
     def get(self, request):
-        chats_serializer = ChatRoomSerializer(ChatRoom.objects.all(), many=True)
+        chats_serializer = ChatRoomSerializer(request.user.chatroom_set.all(), many=True)
         return Response(chats_serializer.data)
 
     def post(self, request):
         chat, chat_created = ChatRoom.objects.get_or_create(name=request.POST['name'])
         if chat_created:
+            chat.participants.add(request.user)
             status=201
         else:
             status=200
         return Response(ChatRoomSerializer(chat).data, status=status)
 
 
-class ChatItem(APIView):
-    @set_instance('Chat')
-    def get(self, request, chat):
-        return Response(ChatRoomSerializer(chat))
+class ChatRoomItem(APIView):
+    @set_instance('ChatRoom')
+    def get(self, request, chatroom):
+        chat_serializer = ChatRoomSerializer(chatroom)
+        return Response(chat_serializer.data)
 
-    def put(self, request, chat_id):
+    @set_instance('ChatRoom')
+    def put(self, request, chatroom):
         if request.data.get('user_id', False):
-            chat.invite(self.__get_new_user_from_request__(request))
-            return Response(ChatRoomSerializer(chat))
+            chatroom.invite(self.__get_new_user_from_request__(request))
+            return Response(ChatRoomSerializer(chatroom).data)
         else:
             chat_serializer = ChatRoomSerializer(data=self.__get_chat_params__(request))
             if chat_serializer.is_valid():
@@ -57,7 +60,7 @@ class ChatItem(APIView):
             params[key] = request.data.get(key)
         return params
 
-        
+
 
 class MessageList(APIView):
     def get(self, request, room_name):

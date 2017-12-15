@@ -98,6 +98,11 @@ class AccountItem(APIView):
         return Response()
 
 
+class AccountList(APIView):
+    def get(self, request):
+        return Response(AccountSerializer(Account.objects.all(), many=True).data)
+
+
 
 class AccountPictureItem(APIView):
     def post(self, request):

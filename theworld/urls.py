@@ -25,8 +25,8 @@ from construct.world.view import WorldItem, WorldList
 from construct.world.view import get_full_world
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
-from user.views import AccountPictureItem, AccountItem
-from chat.views import ChatRoomList, MessageList
+from user.views import AccountPictureItem, AccountItem, AccountList
+from chat.views import ChatRoomList, ChatRoomItem, MessageList
 
 from admin.views import ArticleAdminView, CommentAdminView, WorldAdminView, CategoryAdminView, AccountAdminView, PictureAdminView, PicturesRelationshipAdminView
 
@@ -38,8 +38,10 @@ urlpatterns = [
     url(r'^user/?$', userapp.get_info),
     url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
     url(r'^account/pictures', AccountPictureItem.as_view()),
+    url(r'^accounts/$', AccountList.as_view()),
 
-    url(r'^chats/?', ChatRoomList.as_view()),
+    url(r'^chats/(?P<chatroom_id>[\d\w]+)/?$', ChatRoomItem.as_view()),
+    url(r'^chats/?$', ChatRoomList.as_view()),
     url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),

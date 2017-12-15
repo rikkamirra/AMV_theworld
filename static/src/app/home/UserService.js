@@ -37,6 +37,13 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
+    getAllUsers() {
+      return $http({
+        method: 'GET',
+        url: 'accounts/'
+      });
+    },
+
     getWorlds() {
       return $http({
         method: 'GET',

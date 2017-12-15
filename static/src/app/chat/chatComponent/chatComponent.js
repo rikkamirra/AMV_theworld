@@ -3,14 +3,15 @@ const chatComponent = {
   template: require('./chatComponent.html'),
   bindings: {
     roomName: '<',
-    messages: '<'
+    chat: '<'
   },
   controller: ChatComponentController
 };
 
 
-function ChatComponentController($scope, UserService, $cookies, CryptoService) {
+function ChatComponentController($scope, UserService, $cookies, CryptoService, ChatService) {
   this.$onInit = () => {
+    console.log(this);
     this.userId = UserService.getCurrentUser().id;
     this.enableChat = false && this.userId;
     this.webSocket = new WebSocket(`ws://${window.location.host}/chat/${this.roomName}?user=${this.userId}`);
@@ -18,7 +19,7 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService) {
     this.webSocket.onmessage = (message) => {
       var data = JSON.parse(message.data);
       if (data.text) {
-        this.messages.push(data);
+        this.chat.messages.push(data);
       }
       $scope.$digest();
     }
@@ -27,6 +28,8 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService) {
       this.enableChat = true && this.userId;
       $scope.$digest();
     }
+
+    UserService.getAllUsers().then(res => this.users = res.data);
   }
 
   this.$onDestroy = () => {
@@ -40,8 +43,12 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService) {
     this.webSocket.send(this.message.body);
     this.message.body = '';
   }
+
+  this.inviteUser = () => {
+    ChatService.updateChat({user_id: this.userToInvite.id}, this.chat.id).then(res => this.participants = res.data.participants);
+  }
 }
 
-ChatComponentController.$inject = ['$scope', 'UserService', '$cookies', 'CryptoService'];
+ChatComponentController.$inject = ['$scope', 'UserService', '$cookies', 'CryptoService', 'ChatService'];
 
 export default chatComponent;

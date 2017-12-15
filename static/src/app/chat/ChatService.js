@@ -7,12 +7,27 @@ function ChatService($http) {
       });
     },
 
+    getChat(room_id) {
+      return $http({
+        method: 'GET',
+        url: `chats/${room_id}`
+      });
+    },
+
     createChat(chat) {
       return $http({
         method: 'POST',
         url: 'chats/',
         data: chat
       })
+    },
+
+    updateChat(params, chat_id) {
+      return $http({
+        method: 'PUT',
+        url: `chats/${chat_id}`,
+        data: params
+      });
     },
 
     getMessages(roomName) {

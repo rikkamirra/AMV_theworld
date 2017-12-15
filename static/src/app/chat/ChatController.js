@@ -1,11 +1,10 @@
-function ChatController(messages, $stateParams) {
+function ChatController(chat, $stateParams) {
   this.$onInit = () => {
-    this.messages = messages;
+    this.chat = chat;
     this.roomName = $stateParams.roomName;
-    console.log('ctrl', messages);
   }
 };
 
-ChatController.$inject = ['messages','$stateParams'];
+ChatController.$inject = ['chat','$stateParams'];
 
 export default ChatController;

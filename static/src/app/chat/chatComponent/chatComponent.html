@@ -1,6 +1,13 @@
 <div class="container">
-  <h2>[[ $ctrl.roomName ]]</h2>
-  <chat-item ng-repeat="message in $ctrl.messages" msg="message"></chat-item>
+  <div class="flex-container">
+    <h2>[[ $ctrl.chat.name ]]</h2>
+    <select class="form-control" ng-options="user as user.username for user in $ctrl.users track by user.id" ng-model="$ctrl.userToInvite"></select>
+    <button class="btn btn-primary" ng-click="$ctrl.inviteUser()">Пригласить</button>
+  </div>
+
+  <p ng-repeat="user in $ctrl.chat.participants track by $index">[[ user.username ]]</p>
+
+  <chat-item ng-repeat="message in $ctrl.chat.messages" msg="message"></chat-item>
 
   <form ng-show="$ctrl.enableChat" name="chatForm" ng-submit="$ctrl.sendMessage()">
     <p><textarea class="form-control" ng-model="$ctrl.message.body"></textarea></p>

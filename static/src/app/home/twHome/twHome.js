@@ -18,7 +18,7 @@ function TwHomeController(UserService, ConstructService, ChatService, ModalServi
 
   this.createChat = () => {
     ModalService.createChat().result.then(chat => {
-      $state.go('chat', {roomName: chat.name})
+      $state.go('chat', {roomName: chat.id})
     });
   }
 

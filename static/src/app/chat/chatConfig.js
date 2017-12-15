@@ -4,12 +4,11 @@ function chatConfig($stateProvider) {
     params: {
       roomName: ''
     },
-    template: '<chat-component messages="ctrl.messages" room-name="ctrl.roomName"></chat-component>',
+    template: '<chat-component chat="ctrl.chat" room-name="ctrl.roomName"></chat-component>',
     controller: 'ChatController as ctrl',
     resolve: {
-      messages: ['ChatService', '$stateParams', (ChatService, $stateParams) => {
-        return ChatService.getMessages($stateParams.roomName).then(res => {
-          console.log('response', res.data);
+      chat: ['ChatService', '$stateParams', (ChatService, $stateParams) => {
+        return ChatService.getChat($stateParams.roomName).then(res => {
           return res.data
         });
       }]
