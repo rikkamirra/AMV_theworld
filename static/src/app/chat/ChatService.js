@@ -1,4 +1,4 @@
-function ChatService($http) {
+function ChatService($http, $state) {
   return {
     getAllChats() {
       return $http({
@@ -27,6 +27,11 @@ function ChatService($http) {
         method: 'PUT',
         url: `chats/${chat_id}`,
         data: params
+      }).then(res => {
+        if (Object.keys(res.data).length === 0) {
+          $state.go('root');
+        }
+        return res;
       });
     },
 
@@ -39,6 +44,6 @@ function ChatService($http) {
   }
 }
 
-ChatService.$inject = ['$http'];
+ChatService.$inject = ['$http', '$state'];
 
 export default ChatService;

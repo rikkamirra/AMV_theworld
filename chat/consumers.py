@@ -28,10 +28,8 @@ def ws_connect(message, room_id):
 # Connected to websocket.receive
 @channel_session
 def ws_message(message, room_id):
-    print("MESSAGE")
     sender = Account.objects.get(pk=message.channel_session['user'])
     message_to_save = Message.objects.create(room=ChatRoom.objects.get(pk=room_id), text=message["text"], sender=sender)
-    print('send message')
     Group(room_id).send({
         "text": json.dumps({
             "text": message_to_save.text,

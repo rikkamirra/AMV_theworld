@@ -44,7 +44,11 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService, C
   }
 
   this.inviteUser = () => {
-    ChatService.updateChat({user_id: this.userToInvite.id}, this.chat.id).then(res => this.chat.participants = res.data.participants);
+    ChatService.updateChat({user_id: this.userToInvite.id, action: 'invite'}, this.chat.id).then(res => this.chat = res.data);
+  }
+
+  this.removeUser = (user_id) => {
+    ChatService.updateChat({ user_id, action: 'remove' }, this.chat.id).then(res => this.chat = res.data);
   }
 }
 

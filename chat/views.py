@@ -32,8 +32,14 @@ class ChatRoomItem(APIView):
 
     @set_instance('ChatRoom')
     def put(self, request, chatroom):
-        if request.data.get('user_id', False):
-            chatroom.invite(self.__get_new_user_from_request__(request))
+        if request.data.get('user_id', False) and request.data.get('action', False):
+            if (request.data.get('action') == 'invite'):
+                chatroom.invite(self.__get_new_user_from_request__(request))
+            else:
+                chatroom.participants.remove(self.__get_new_user_from_request__(request))
+                if len(chatroom.participants.all()) == 0:
+                    chatroom.delete()
+                    return Response({})
             return Response(ChatRoomSerializer(chatroom).data)
         else:
             chat_serializer = ChatRoomSerializer(data=self.__get_chat_params__(request))

@@ -5,7 +5,10 @@
     <button class="btn btn-primary" ng-click="$ctrl.inviteUser()">Пригласить</button>
   </div>
 
-  <p ng-repeat="user in $ctrl.chat.participants track by $index">[[ user.username ]]</p>
+  <p ng-repeat="user in $ctrl.chat.participants track by $index">
+    [[ user.username ]]
+    <span class="clck-icon glyphicon glyphicon-remove font-sm" ng-click="$ctrl.removeUser(user.id)"></span>
+  </p>
 
   <chat-item ng-repeat="message in $ctrl.chat.messages" msg="message"></chat-item>
 
