@@ -41,4 +41,4 @@ def ws_message(message, room_id):
 # Connected to websocket.disconnect
 @channel_session
 def ws_disconnect(message, room_id):
-    Group("chat-%s" % room_name).discard(message.reply_channel)
+    Group("chat-%s" % room_id).discard(message.reply_channel)

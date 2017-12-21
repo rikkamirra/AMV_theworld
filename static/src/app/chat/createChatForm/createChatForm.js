@@ -10,6 +10,13 @@ const createChatForm = {
 };
 
 function CreateChatFormController(UserService, ChatService) {
+  this.$onInit = () => {
+    this.chat = {
+      name: '',
+      is_public: false
+    };
+  };
+
   this.createChat = () => {
     ChatService.createChat(this.chat).then(res => this.close({$value: res.data}));
   }

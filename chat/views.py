@@ -8,20 +8,27 @@ from rest_framework.response import Response
 
 from theworld.decorators import set_instance
 
+from itertools import chain
+
 
 class ChatRoomList(APIView):
     def get(self, request):
-        chats_serializer = ChatRoomSerializer(request.user.chatroom_set.all(), many=True)
+        chats_serializer = ChatRoomSerializer(list(chain(request.user.chatroom_set.all(), ChatRoom.objects.filter(is_public=True))), many=True)
         return Response(chats_serializer.data)
 
     def post(self, request):
-        chat, chat_created = ChatRoom.objects.get_or_create(name=request.POST['name'])
+        chat, chat_created = ChatRoom.objects.get_or_create(
+            name=request.POST['name'],
+            is_public=self.__get_bool_from_request__(request.POST.get('is_public', False)))
         if chat_created:
             chat.participants.add(request.user)
             status=201
         else:
             status=200
         return Response(ChatRoomSerializer(chat).data, status=status)
+
+    def __get_bool_from_request__(self, value):
+        return bool(value) and value.lower() not in ('false', '0')
 
 
 class ChatRoomItem(APIView):

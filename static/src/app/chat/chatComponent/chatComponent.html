@@ -1,14 +1,13 @@
-<div class="container">
-  <div class="flex-container">
-    <h2>[[ $ctrl.chat.name ]]</h2>
-    <select class="form-control" ng-options="user as user.username for user in $ctrl.users track by user.id" ng-model="$ctrl.userToInvite"></select>
-    <button class="btn btn-primary" ng-click="$ctrl.inviteUser()">Пригласить</button>
-  </div>
+<div class="container top-margin">
+  <h3>[[ $ctrl.chat.name ]]</h3>
+  <hr/>
 
-  <p ng-repeat="user in $ctrl.chat.participants track by $index">
-    [[ user.username ]]
-    <span class="clck-icon glyphicon glyphicon-remove font-sm" ng-click="$ctrl.removeUser(user.id)"></span>
-  </p>
+  <div class="text-right">
+    <p ng-repeat="user in $ctrl.chat.participants track by $index">
+      [[ user.username ]]
+      <span class="clck-icon glyphicon glyphicon-remove font-sm" ng-click="$ctrl.removeUser(user.id)"></span>
+    </p>
+  </div>
 
   <chat-item ng-repeat="message in $ctrl.chat.messages" msg="message"></chat-item>
 
@@ -16,4 +15,21 @@
     <p><textarea class="form-control" ng-model="$ctrl.message.body"></textarea></p>
     <button class="btn btn-primary" type="submit">Отправить</button>
   </form>
+
+  <div class="row top-margin">
+    <div class="col-sm-6">
+      <div class="flex-container">
+        <input ng-model="$ctrl.userToInvite" class="form-control">
+        <button class="btn btn-primary" ng-click="$ctrl.inviteUser()" ng-disabled="!$ctrl.canInvite">Пригласить</button>
+      </div>
+      <div ng-show="$ctrl.userToInvite.length">
+        <p ng-repeat="user in $ctrl.users | filter: $ctrl.userToInvite" ng-click="$ctrl.selectUserForInvite(user)">[[ user.username ]]</p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <select class="form-control" ng-model="$ctrl.shifr">
+        <option value="visener">Vishener</option>
+      </select>
+    </div>
+  </div>
 </div>

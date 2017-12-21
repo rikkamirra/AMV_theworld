@@ -29,6 +29,8 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService, C
     }
 
     UserService.getAllUsers().then(res => this.users = res.data);
+    this.canInvite = false;
+    this.shifr = 'visener';
   }
 
   this.$onDestroy = () => {
@@ -43,8 +45,14 @@ function ChatComponentController($scope, UserService, $cookies, CryptoService, C
     this.message.body = '';
   }
 
+  this.selectUserForInvite = (user) => {
+    this.userToInvite = user.username;
+    this.userIdToInvite = user.id;
+    this.canInvite = true;
+  }
+
   this.inviteUser = () => {
-    ChatService.updateChat({user_id: this.userToInvite.id, action: 'invite'}, this.chat.id).then(res => this.chat = res.data);
+    ChatService.updateChat({user_id: this.userIdToInvite, action: 'invite'}, this.chat.id).then(res => this.chat = res.data);
   }
 
   this.removeUser = (user_id) => {

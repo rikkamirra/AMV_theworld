@@ -4,6 +4,10 @@
   </div>
   <div class="modal-body" id="modal-body-{{name}}">
     <input class="form-control" ng-model="$ctrl.chat.name" placeholder="Имя беседы">
+
+    <div class="checkbox">
+      <label><input type="checkbox" ng-model="$ctrl.chat.is_public">Публичный</label>
+    </div>
   </div>
   <div class="modal-footer">
     <button class="margin-top btn btn-primary" type="submit" ng-click="$ctrl.createChat()">Создать</button>
