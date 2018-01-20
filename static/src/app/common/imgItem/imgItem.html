@@ -1,4 +1,4 @@
-<div class="img-item" ng-mouseenter="$ctrl.showDeleteButton()" ng-mouseleave="$ctrl.hideDeleteButton()" >
+<div class="img-item">
   <img src="[[ $ctrl.image.path ]]" height="300">
   <div class="img-item__text-container">
     <a ng-repeat="relationship in $ctrl.image.relationships" href="[[ relationship.redirect ]]" class="img-item__text" ng-click="$ctrl.goTo(relationship)">

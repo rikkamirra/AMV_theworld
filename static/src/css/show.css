@@ -100,8 +100,10 @@ a {
 .worlds-panel__item p {
   position: relative;
   top: -2rem;
-  color: #def0ff;
+  color: #484848;
   font-weight: bold;
+  background-color: white;
+  opacity: 0.5;
 }
 
 .worlds-panel__item:hover {

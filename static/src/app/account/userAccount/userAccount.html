@@ -12,8 +12,8 @@
   <uib-tabset active="activeJustified" justified="true">
     <uib-tab index="0" heading="Проекты">
       <a ui-sref="newConstruct">Создать новый Мир</a>
-      <div class="image-tile">
-        <a class="image-tile__item--hoverable" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
+      <div class="worlds-panel">
+        <a class="worlds-panel__item" ng-repeat="world in $ctrl.user.worlds" ui-sref="construct({worldId: world.id})">
           <img ng-src="[[ world.picture ]]" height="250" alt="world">
           <p>[[ world.name ]]</p>
         </a>
