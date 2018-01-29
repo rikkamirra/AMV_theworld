@@ -14,7 +14,7 @@ function RootController(UserService, $state, ModalService) {
   };
 
   this.logout = () => {
-    UserService.logout().then(() => $state.reload());
+    UserService.logout();
   };
 }
 

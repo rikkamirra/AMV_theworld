@@ -57,6 +57,11 @@ function UserService($http, $cookies, $rootScope, $state) {
         url: 'logout/'
       }).then(res => {
         this.clearUserData();
+        if ($state.current.name === 'account') {
+          $state.go('root');
+        } else {
+          $state.reload();
+        }
       });
     },
 
@@ -98,6 +103,10 @@ function UserService($http, $cookies, $rootScope, $state) {
         this.user = $cookies.getObject('currentUser');
       }
       return this.user;
+    },
+
+    isAuthenticate() {
+      return this.user && this.user.id
     },
 
     setUserData(data) {

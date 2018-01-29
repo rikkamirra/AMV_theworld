@@ -11,9 +11,11 @@ function TwHomeController(UserService, ConstructService, ChatService, ModalServi
       this.worlds = res.data;
     });
 
-    ChatService.getAllChats().then(res => this.chats = res.data);
+    this.isAuth = UserService.isAuthenticate();
 
-    this.isAuth = UserService.getCurrentUser();
+    if (this.isAuth) {
+      ChatService.getAllChats().then(res => this.chats = res.data);
+    }
   };
 
   this.createChat = () => {

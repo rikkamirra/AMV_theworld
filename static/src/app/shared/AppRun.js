@@ -1,8 +1,7 @@
 import $ from 'jquery';
 
 function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService, CryptoService) {
-  console.log(_userId);
-  if (_userId) {
+  if (_userId > 0) {
     UserService.getUser(_userId);
   }
   CryptoService.getKey();
