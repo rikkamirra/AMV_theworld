@@ -1,8 +1,10 @@
 import $ from 'jquery';
 
 function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService, CryptoService) {
-
-  UserService.getCurrentUser();
+  console.log(_userId);
+  if (_userId) {
+    UserService.getUser(_userId);
+  }
   CryptoService.getKey();
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {

@@ -12,7 +12,7 @@ function UserService($http, $cookies, $rootScope, $state) {
         url: 'registration/',
         data: creds
       }).then(res => {
-        this.setUserData(res);
+        this.setUserData(res.data);
       });
     },
 
@@ -22,7 +22,7 @@ function UserService($http, $cookies, $rootScope, $state) {
         url: `account/${this.user.id}`,
         data
       }).then(res => {
-        this.setUserData(res);
+        this.setUserData(res.data);
         return res;
       });
     },
@@ -33,7 +33,7 @@ function UserService($http, $cookies, $rootScope, $state) {
         url: 'login/',
         data: creds
       }).then(res => {
-        this.setUserData(res);
+        this.setUserData(res.data);
       });
     },
 
@@ -82,27 +82,27 @@ function UserService($http, $cookies, $rootScope, $state) {
       });
     },
 
-    getUser() {
+    getUser(userId) {
+      if (this.user) userId = this.user.id;
       return $http({
         method: 'GET',
-        url: `/account/${this.user.id}`
+        url: `/account/${userId}`
       }).then(res => {
-        this.setUserData(res);
+        this.setUserData(res.data);
         return res;
       });
     },
 
     getCurrentUser() {
-      if (!$cookies.getObject('currentUser')) {
-        return this.user;
+      if (!this.user && $cookies.getObject('currentUser')) {
+        this.user = $cookies.getObject('currentUser');
       }
-      this.user = $cookies.getObject('currentUser');
       return this.user;
     },
 
-    setUserData(response) {
-      this.user = omit(response.data, 'pictures', 'worlds');
-      $cookies.putObject('currentUser', omit(response.data, 'pictures', 'worlds'));
+    setUserData(data) {
+      this.user = omit(data, 'pictures', 'worlds');
+      $cookies.putObject('currentUser', omit(data, 'pictures', 'worlds'));
     },
 
     clearUserData() {

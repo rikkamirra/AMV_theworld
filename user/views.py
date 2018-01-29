@@ -23,7 +23,7 @@ from rest_framework import status
 
 def index(request):
     csrf_token = get_token(request)
-    response = render(request, 'index.html')
+    response = render(request, 'index.html', { 'user_id': request.user.id })
     response.set_cookie('csrftoken', csrf_token)
     return response
 
