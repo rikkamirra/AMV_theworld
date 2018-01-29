@@ -5,6 +5,7 @@ from articles.article.serializer import ArticleSerializer
 from articles.comment.model import Comment
 from articles.comment.serializer import CommentSerializer
 
+from user.models import Account
 from construct.world.model import World
 from construct.world.serializer import WorldSerializer
 from construct.category.model import Category
@@ -43,6 +44,7 @@ def register_admin(instance_name):
 
 
 INSTANCES = [
+    'Account',
     'Article',
     'Comment',
     'World',

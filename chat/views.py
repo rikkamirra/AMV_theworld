@@ -60,18 +60,13 @@ class ChatRoomItem(APIView):
     def __get_new_user_from_request__(self, request):
         return Account.objects.get(pk=request.data.get('user_id'))
 
-    def __chat_params__(self):
-        return [
-            'name',
-            'is_public',
-            'created_at'
-        ]
-
     def __get_chat_params__(self, request):
         params = {}
-        for key in self.__chat_params__():
+        for key in self.__chat_params__:
             params[key] = request.data.get(key)
         return params
+
+    __chat_params__ = ['name', 'is_public', 'created_at']
 
 
 
