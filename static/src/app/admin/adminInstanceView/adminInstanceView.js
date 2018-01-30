@@ -8,28 +8,18 @@ const adminInstanceView = {
   controller: AdminInstanceViewController
 };
 
-function AdminInstanceViewController($sce) {
+function AdminInstanceViewController($sce, AdminService) {
   this.$onInit = () => {
-    if (Array.isArray(this.instance)) {
-      this.type = "list";
-    } else if (typeof this.instance === "object" && this.instance != null) {
-      this.type = "obj";
-      this.url = `/admin/${this.instanceName}/${this.instance.id}`;
-    } else if (typeof this.instance === "string" && !isDate(this.instance)) {
-      this.type = "html";
+    this.type = AdminService.getType(this.instance);
+    if (this.type === 'string') {
       this.instance = $sce.trustAsHtml(this.instance);
-    } else if (isDate(this.instance)) {
-      this.type = 'date';
-    } else {
-      this.type = "value";
+    }
+    if (this.type === 'dict') {
+      this.url = `/admin/${this.instanceName}/${this.instance.id}`;
     }
   };
-
-  function isDate(value) {
-    return !isNaN(Date.parse(value)) && !Number.isInteger(value);
-  }
 }
 
-AdminInstanceViewController.$inject = ["$sce"];
+AdminInstanceViewController.$inject = ["$sce", "AdminService"];
 
 export default adminInstanceView;
