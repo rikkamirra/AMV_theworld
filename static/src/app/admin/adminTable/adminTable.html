@@ -1,0 +1,14 @@
+<table class='table'>
+  <thead>
+    <tr>
+      <th ng-repeat="head in $ctrl.tableHeads">[[ head ]]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in $ctrl.list track by $index">
+      <td ng-repeat="(key, value) in item track by $index">
+        <admin-instance-view instance="value" instance-name="key"></admin-instance-view>
+      </td>
+    </tr>
+  </tbody>
+</table>

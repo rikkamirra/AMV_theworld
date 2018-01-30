@@ -1,7 +1,7 @@
-function AdminController() {
-
+function AdminController(list) {
+  this.list = list;
 }
 
-AdminController.$inject = [];
+AdminController.$inject = ['list'];
 
 export default AdminController;

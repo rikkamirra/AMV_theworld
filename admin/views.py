@@ -33,14 +33,17 @@ class AdminRegister(type):
 
 def register_admin(instance_name):
     view_name = instance_name + 'AdminView'
+    view_item_name = instance_name + 'ItemAdminView'
     nmspc = {
         'permission_classes': (AdminPermission,),
         'queryset': globals()[instance_name].objects.all(),
         'serializer_class': globals()[instance_name + 'Serializer']
     }
     new_admin_class_view = type(view_name, (generics.ListCreateAPIView,), nmspc)
+    new_admin_item_class_view = type(view_item_name, (generics.RetrieveUpdateDestroyAPIView,), nmspc)
     scope = globals()
     scope[view_name] = new_admin_class_view
+    scope[view_item_name] = new_admin_item_class_view
 
 
 INSTANCES = [
