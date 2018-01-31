@@ -1,1 +1,28 @@
-Admin form
+<form name="adminForm" ng-submit="$ctrl.update()">
+  <div class="form-group" ng-repeat="(key, value) in $ctrl.instanceData">
+    <div ng-switch="$ctrl.getTypeOfField(value)">
+      <div ng-switch-when="string">
+        <label for="[[ key ]]">[[ key ]]</label>
+        <input class="form-control" id="[[ key ]]" ng-model="$ctrl.newModel[key]">
+      </div>
+
+      <div ng-switch-when="long_string">
+        <label for="[[ key ]]">[[ key ]]</label>
+        <textarea class="form-control" id="[[ key ]]" ng-model="$ctrl.newModel[key]"></textarea>
+      </div>
+
+      <div ng-switch-when="number">
+        <label for="[[ key ]]">[[ key ]]</label>
+        <input class="form-control" id="[[ key ]]" type="number" ng-model="$ctrl.newModel[key]">
+      </div>
+
+      <div class="form-check" ng-switch-when="boolean">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" ng-model="$ctrl.newModel[key]">
+          [[ key ]]
+        </label>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

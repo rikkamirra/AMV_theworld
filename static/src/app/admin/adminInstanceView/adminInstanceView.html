@@ -1,9 +1,11 @@
 <div class="small" ng-switch="$ctrl.type">
   <div ng-switch-when="string" ng-bind-html="$ctrl.instance"></div>
-  <div ng-switch-when="value">[[ $ctrl.instance ]]</div>
+  <div ng-switch-when="long_string" ng-bind-html="$ctrl.instance"></div>
+  <div ng-switch-when="number">[[ $ctrl.instance ]]</div>
   <div ng-switch-when="date">[[ $ctrl.instance | myDate ]]</div>
   <div ng-switch-when="dict"><a href="[[ $ctrl.url ]]">[[ $ctrl.instance.name || $ctrl.instance.title || $ctrl.instance.id ]]</a></div>
-  <div ng-switch-when="link"><a href="[[ $ctrl.instance ]]">[[ $ctrl.instance ]]</a></div> 
+  <div ng-switch-when="link"><a href="[[ $ctrl.instance ]]">[[ $ctrl.instance ]]</a></div>
+  <div ng-switch-when="boolean">[[ $ctrl.instance ]]</div>
   <div ng-switch-when="list">
     <div ng-repeat="item in $ctrl.instance track by $index"><admin-instance-view instance="item" instance-name="$ctrl.instanceName"></admin-instace-view></div>
   </div>

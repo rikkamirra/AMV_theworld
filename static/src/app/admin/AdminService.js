@@ -28,10 +28,10 @@ function AdminService($http) {
       });
     },
 
-    update(instanceName, newData) {
+    update(instanceName, instanceId, newData) {
       return $http({
         method: 'PUT',
-        url: getAdminUrl(instanceName),
+        url: `${getAdminUrl(instanceName)}/${instanceId}`,
         data: newData
       });
     },
@@ -47,8 +47,11 @@ function AdminService($http) {
       if (this.isArray(value)) return 'list';
       if (this.isDict(value)) return 'dict';
       if (this.isLink(value)) return 'link';
+      if (this.isLongString(value)) return 'long_string';
       if (this.isString(value)) return 'string';
+      if (this.isNumber(value)) return 'number';
       if (this.isDate(value)) return 'date';
+      if (this.isBoolean(value)) return 'boolean';
       return 'value';
     },
 
@@ -64,6 +67,10 @@ function AdminService($http) {
       return typeof value === 'string' && !this.isDate(value);
     },
 
+    isLongString(value) {
+      return this.isString(value) && value.length > 100;
+    },
+
     isDate(value) {
       return !isNaN(Date.parse(value)) && !Number.isInteger(value);
     },
@@ -72,6 +79,14 @@ function AdminService($http) {
       if (!this.isString(value)) return false;
       const linkRegExp = /^https?:\/\/./;
       return linkRegExp.test(value);
+    },
+
+    isNumber(value) {
+      return Number.isInteger(value);
+    },
+
+    isBoolean(value) {
+      return typeof value == typeof true;
     }
   }
 }

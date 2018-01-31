@@ -1,4 +1,18 @@
 <div>
-  Admin
-  <ui-view></ui-view>
+  <div class="row">
+    <div class="col-lg-2">
+      <ul>
+        <li><a ui-sref="table({instanceName: 'worlds'})">Worlds</a></li>
+        <li><a ui-sref="table({instanceName: 'articles'})">Articles</a></li>
+        <li><a ui-sref="table({instanceName: 'comments'})">Comments</a></li>
+        <li><a ui-sref="table({instanceName: 'categories'})">Categories</a></li>
+        <li><a ui-sref="table({instanceName: 'pictures'})">Pictures</a></li>
+        <li><a ui-sref="table({instanceName: 'picture_relationships'})">Picture Relationships</a></li>
+        <li><a ui-sref="table({instanceName: 'accounts'})">Accounts</a></li>
+      </ul>
+    </div>
+    <div class="col-lg-10">
+      <ui-view></ui-view>
+    </div>
+  </div>
 </div>

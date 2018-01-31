@@ -10,7 +10,7 @@ from articles.article.model import Article
 class PicturesRelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = PicturesRelationship
-        fields = ['instance_id', 'instance_type', 'redirect']
+        fields = ['id', 'instance_id', 'instance_type', 'redirect']
 
 
 class PictureSerializer(serializers.ModelSerializer):

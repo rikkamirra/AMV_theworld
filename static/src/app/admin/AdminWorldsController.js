@@ -1,8 +1,8 @@
-function AdminWorldsController(worlds) {
-  console.log(worlds);
-  this.worlds = worlds;
+function AdminWorldsController(instanceData, instanceName) {
+  this.instanceName = instanceName;
+  this.instanceData = instanceData;
 }
 
-AdminWorldsController.$inject = ['worlds'];
+AdminWorldsController.$inject = ['instanceData', 'instanceName'];
 
 export default AdminWorldsController;

@@ -11,7 +11,7 @@ const adminInstanceView = {
 function AdminInstanceViewController($sce, AdminService) {
   this.$onInit = () => {
     this.type = AdminService.getType(this.instance);
-    if (this.type === 'string') {
+    if (this.type === 'string' || this.type === 'long_string') {
       this.instance = $sce.trustAsHtml(this.instance);
     }
     if (this.type === 'dict') {

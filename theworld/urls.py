@@ -28,7 +28,7 @@ from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem, AccountList
 from chat.views import ChatRoomList, ChatRoomItem, MessageList
 
-from admin.views import ArticleAdminView, CommentAdminView, WorldAdminView, CategoryAdminView, AccountAdminView, PictureAdminView, PicturesRelationshipAdminView, CategoryItemAdminView
+from admin.views import ArticleAdminView, ArticleItemAdminView, CommentAdminView, CommentItemAdminView, WorldAdminView, WorldItemAdminView, CategoryAdminView, CategoryItemAdminView, AccountAdminView, AccountItemAdminView, PictureAdminView, PictureItemAdminView, PicturesRelationshipAdminView, PicturesRelationshipItemAdminView
 
 
 urlpatterns = [
@@ -58,14 +58,26 @@ urlpatterns = [
 
     url(r'^get_full_world/(?P<world_id>\d+)/?$', get_full_world),
 
-    url(r'^admin/articles', ArticleAdminView.as_view()),
+    url(r'^admin/articles/?$', ArticleAdminView.as_view()),
+    url(r'^admin/articles/(?P<pk>\d+)/?$', ArticleItemAdminView.as_view()),
+
     url(r'^admin/categories/?$', CategoryAdminView.as_view()),
     url(r'^admin/categories/(?P<pk>\d+)/?$', CategoryItemAdminView.as_view()),
-    url(r'^admin/comments', CommentAdminView.as_view()),
-    url(r'^admin/worlds', WorldAdminView.as_view()),
-    url(r'^admin/accounts', AccountAdminView.as_view()),
-    url(r'^admin/pictures', PictureAdminView.as_view()),
-    url(r'^admin/picture_relationships', PicturesRelationshipAdminView.as_view()),
+
+    url(r'^admin/comments/?$', CommentAdminView.as_view()),
+    url(r'^admin/comments/(?P<pk>\d+)/?$', CommentItemAdminView.as_view()),
+
+    url(r'^admin/worlds/?$', WorldAdminView.as_view()),
+    url(r'^admin/worlds/(?P<pk>\d+)/?$', WorldItemAdminView.as_view()),
+
+    url(r'^admin/accounts/?$', AccountAdminView.as_view()),
+    url(r'^admin/accounts/(?P<pk>\d+)/?$', AccountItemAdminView.as_view()),
+
+    url(r'^admin/pictures/?$', PictureAdminView.as_view()),
+    url(r'^admin/pictures/(?P<pk>\d+)/?$', PictureItemAdminView.as_view()),
+
+    url(r'^admin/picture_relationships/?$', PicturesRelationshipAdminView.as_view()),
+    url(r'^admin/picture_relationships/(?P<pk>\d+)/?$', PicturesRelationshipItemAdminView.as_view()),
 
     # url(r'^admin/', admin.site.urls),
 
