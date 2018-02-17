@@ -3,6 +3,7 @@ const adminTable = {
   template: require('./adminTable.html'),
   bindings: {
     list: '<',
+    instanceName: '<'
   },
   controller: AdminTableController
 };

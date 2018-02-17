@@ -14,8 +14,8 @@ class PicturesRelationshipSerializer(serializers.ModelSerializer):
 
 
 class PictureSerializer(serializers.ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
-    relationships = serializers.SerializerMethodField('add_relationships')
+    owner_id = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
+    picture_relationships = serializers.SerializerMethodField('add_relationships')
 
     def add_relationships(self, obj):
         picture_relationship = PicturesRelationship.objects.filter(picture=obj.id)
@@ -28,8 +28,8 @@ class PictureSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'path',
-            'relationships',
-            'owner',
+            'picture_relationships',
+            'owner_id',
             'is_deleted',
             'created_at',
             'updated_at'

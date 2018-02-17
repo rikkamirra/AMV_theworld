@@ -1,4 +1,8 @@
-<div class="small" ng-switch="$ctrl.type">
+<div class="small" ng-if="$ctrl.instanceName === 'id'">
+  <a href="[[$ctrl.redirect]]">[[ $ctrl.instance ]]</a>
+</div>
+
+<div ng-if="$ctrl.instanceName !== 'id'" class="small" ng-switch="$ctrl.type">
   <div ng-switch-when="string" ng-bind-html="$ctrl.instance"></div>
   <div ng-switch-when="long_string" ng-bind-html="$ctrl.instance"></div>
   <div ng-switch-when="number">[[ $ctrl.instance ]]</div>

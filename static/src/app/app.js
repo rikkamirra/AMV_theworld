@@ -4,6 +4,10 @@ import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import 'angular-ui-carousel';
 
+import 'angular-aria';
+import 'angular-messages';
+import 'angular-material';
+
 import 'angular-cookies';
 import 'angular-animate';
 import 'ng-file-upload';
@@ -32,6 +36,9 @@ angular.module('TWApp', [
   'ngCookies',
   'ngFileUpload',
   'cloudinary',
+  'ngAria',
+  'ngMessages',
+  'ngMaterial',
   HomeApp,
   CommonApp,
   AccountApp,

@@ -10,12 +10,15 @@ const adminInstanceView = {
 
 function AdminInstanceViewController($sce, AdminService) {
   this.$onInit = () => {
+    if (this.instanceName === 'id') {
+      this.redirect = `${location.href}/${this.instance}`;
+    }
     this.type = AdminService.getType(this.instance);
     if (this.type === 'string' || this.type === 'long_string') {
       this.instance = $sce.trustAsHtml(this.instance);
     }
     if (this.type === 'dict') {
-      this.url = `/admin/${this.instanceName}/${this.instance.id}`;
+      this.url = `/myadmin/${this.instanceName}/${this.instance.id}`;
     }
   };
 }

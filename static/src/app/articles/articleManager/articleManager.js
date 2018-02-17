@@ -50,12 +50,6 @@ function ArticleManagerController(ArticleService, UserService, $state, $scope, U
   this.showEditTools = () => {
     this.isEdit = true;
     let reload = false;
-    // this.authSaveStop = $interval(() => {
-    //   this.showAuthsaveMessage = true;
-    //   this.articleAction(reload).then(res => {
-    //     this.showAuthsaveMessage = false;
-    //   });
-    // }, 10000);
   };
 
   this.getArticleAction = () => {

@@ -88,7 +88,9 @@ function UserService($http, $cookies, $rootScope, $state) {
     },
 
     getUser(userId) {
-      if (this.user) userId = this.user.id;
+      if (this.user) {
+        userId = this.user.id;
+      }
       return $http({
         method: 'GET',
         url: `/account/${userId}`

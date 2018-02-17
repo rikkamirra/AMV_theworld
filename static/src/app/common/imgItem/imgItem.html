@@ -1,7 +1,7 @@
 <div class="img-item">
   <img src="[[ $ctrl.image.path ]]" height="300">
   <div class="img-item__text-container">
-    <a ng-repeat="relationship in $ctrl.image.relationships" href="[[ relationship.redirect ]]" class="img-item__text" ng-click="$ctrl.goTo(relationship)">
+    <a ng-repeat="relationship in $ctrl.image.picture_relationships" href="[[ relationship.redirect ]]" class="img-item__text" ng-click="$ctrl.goTo(relationship)">
       [[ relationship.instance_type ]] : [[ relationship.instance_id ]]
     </a>
   </div>

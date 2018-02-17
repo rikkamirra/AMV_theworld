@@ -6,10 +6,13 @@ function adminConfig($stateProvider) {
     url: '/:instanceName',
     parent: 'admin',
     params: {instanceName: ''},
-    template: '<admin-table list="ctrl.list"></admin-table>',
+    template: '<admin-table list="ctrl.list" instance-name="ctrl.instanceName"></admin-table>',
     resolve: {
       list: ['AdminService', '$stateParams', (AdminService, $stateParams) => {
         return AdminService.getList($stateParams.instanceName).then(res => res.data);
+      }],
+      instanceName: ['$stateParams', ($stateParams) => {
+        return $stateParams.instanceName;
       }]
     },
     controller: 'AdminController as ctrl'
