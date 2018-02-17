@@ -27,7 +27,7 @@
           >
         </textarea> -->
 
-        <text-editor ng-show="!$ctrl.showParsedBody" my-text="$ctrl.article.body"></text-editor>
+        <text-editor ng-show="!$ctrl.showParsedBody" my-text="$ctrl.article.body" add-image="$ctrl.addImage()"></text-editor>
 
         <div ng-show="$ctrl.showParsedBody" ng-bind-html="$ctrl.article.parsedBody"></div>
 

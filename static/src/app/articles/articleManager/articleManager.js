@@ -1,20 +1,27 @@
-import {
-  pick,
-  sortBy
-} from 'underscore';
+import { pick, sortBy } from "underscore";
 
 const articleManager = {
-  restrict: 'E',
-  template: require('./articleManager.html'),
+  restrict: "E",
+  template: require("./articleManager.html"),
   bindings: {
-    article: '<',
-    category: '<',
-    world: '<'
+    article: "<",
+    category: "<",
+    world: "<"
   },
   controller: ArticleManagerController
 };
 
-function ArticleManagerController(ArticleService, UserService, $state, $scope, Upload, $sce, ModalService, ConstructService, $interval) {
+function ArticleManagerController(
+  ArticleService,
+  UserService,
+  $state,
+  $scope,
+  Upload,
+  $sce,
+  ModalService,
+  ConstructService,
+  $interval
+) {
   this.$onInit = () => {
     if (!(this.world || this.category)) window.history.back();
 
@@ -24,21 +31,20 @@ function ArticleManagerController(ArticleService, UserService, $state, $scope, U
       this.article.parsedBody = $sce.trustAsHtml(this.article.body);
     }
 
-
     ArticleService.getArticlesByWorld(this.world.id).then(res => {
       this.allArticles = res.data;
     });
 
-    this.accessToChange = (UserService.getCurrentUser().id === this.world.author);
+    this.accessToChange = UserService.getCurrentUser().id === this.world.author;
   };
 
   this.$onDestroy = () => {
     if (this.authSaveStop) {
       $interval.cancel(this.authSaveStop);
     }
-  }
+  };
 
-  this.$onChanges = (obj) => {
+  this.$onChanges = obj => {
     this.isEdit = !(this.article && this.article.id);
   };
 
@@ -61,16 +67,18 @@ function ArticleManagerController(ArticleService, UserService, $state, $scope, U
   };
 
   this.articleAction = (reload = true) => {
-    return this.getArticleAction().call(this).then(res => {
-      if (reload) {
-        $state.reload();
-      }
-    });
+    return this.getArticleAction()
+      .call(this)
+      .then(res => {
+        if (reload) {
+          $state.reload();
+        }
+      });
   };
 
   this.saveArticle = () => {
     return ArticleService.createArticle(
-      Object.assign(pick(this.article, 'title', 'body'), {
+      Object.assign(pick(this.article, "title", "body"), {
         world: this.world.id,
         category: this.category.id
       }),
@@ -81,20 +89,20 @@ function ArticleManagerController(ArticleService, UserService, $state, $scope, U
   this.editArticle = () => {
     return ArticleService.updateArticle(
       this.article.id,
-      pick(this.article, 'title', 'body'),
+      pick(this.article, "title", "body"),
       this.world.is_private
     );
   };
 
   this.deleteArticle = () => {
     ArticleService.deleteArticle(this.article.id).then(res => {
-      $state.go('construct', {
+      $state.go("construct", {
         worldId: this.article.world.id
       });
     });
   };
 
-  this.addArticleToCategory = (article) => {
+  this.addArticleToCategory = article => {
     ArticleService.addArticleToCategory({
       article_id: article.id,
       category_id: this.category.id
@@ -107,11 +115,30 @@ function ArticleManagerController(ArticleService, UserService, $state, $scope, U
     this.comment.article_id = this.article.id;
     ArticleService.addComment(this.comment).then(res => {
       this.article.comments.push(res.data);
-      this.comment.text = '';
-    })
-  }
+      this.comment.text = "";
+    });
+  };
+
+  this.addImage = () => {
+    ModalService.addPicture({
+      instance_type: "article",
+      instance_id: this.article.id
+    }).result.then(picture => {
+      this.article.body += `<img src=${picture.path} width="600"></img>`
+    });
+  };
 }
 
-ArticleManagerController.$inject = ['ArticleService', 'UserService', '$state', '$scope', 'Upload', '$sce', 'ModalService', 'ConstructService', '$interval'];
+ArticleManagerController.$inject = [
+  "ArticleService",
+  "UserService",
+  "$state",
+  "$scope",
+  "Upload",
+  "$sce",
+  "ModalService",
+  "ConstructService",
+  "$interval"
+];
 
 export default articleManager;
