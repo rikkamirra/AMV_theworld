@@ -70,7 +70,7 @@ class Account(AbstractBaseUser):
 
 
 class PicturesRelationship(models.Model):
-    picture = models.ForeignKey('user.Picture')
+    picture = models.ForeignKey('user.Picture', on_delete=models.CASCADE)
     instance_type = models.CharField(max_length=16)
     instance_id = models.IntegerField()
     redirect = models.CharField(max_length=255, default="/")

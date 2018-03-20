@@ -4,3 +4,5 @@ static/dist/
 *.pyc
 
 static/src/app/common/RsaService.js
+
+*env

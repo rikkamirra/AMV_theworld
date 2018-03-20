@@ -26,7 +26,7 @@ from construct.world.view import get_full_world
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem, AccountList
-from chat.views import ChatRoomList, ChatRoomItem, MessageList
+# from chat.views import ChatRoomList, ChatRoomItem, MessageList
 
 from admin.views import ArticleAdminView, ArticleItemAdminView, CommentAdminView, CommentItemAdminView, WorldAdminView, WorldItemAdminView, CategoryAdminView, CategoryItemAdminView, AccountAdminView, AccountItemAdminView, PictureAdminView, PictureItemAdminView, PicturesRelationshipAdminView, PicturesRelationshipItemAdminView
 
@@ -40,9 +40,9 @@ urlpatterns = [
     url(r'^account/pictures', AccountPictureItem.as_view()),
     url(r'^accounts/$', AccountList.as_view()),
 
-    url(r'^chats/(?P<chatroom_id>[\d\w]+)/?$', ChatRoomItem.as_view()),
-    url(r'^chats/?$', ChatRoomList.as_view()),
-    url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
+    # url(r'^chats/(?P<chatroom_id>[\d\w]+)/?$', ChatRoomItem.as_view()),
+    # url(r'^chats/?$', ChatRoomList.as_view()),
+    # url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),

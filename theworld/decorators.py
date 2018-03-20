@@ -8,7 +8,7 @@ from articles.article.model import Article
 from user.models import Account, Picture
 # from user.serializers import AccountSerializer, PictureSerializer
 
-from chat.models import ChatRoom
+# from chat.models import ChatRoom
 
 from rest_framework.response import Response
 
