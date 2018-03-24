@@ -1,18 +1,3 @@
-"""theworld URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url
 
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -26,23 +11,19 @@ from construct.world.view import get_full_world
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
 from user.views import AccountPictureItem, AccountItem, AccountList
-# from chat.views import ChatRoomList, ChatRoomItem, MessageList
 
 from admin.views import ArticleAdminView, ArticleItemAdminView, CommentAdminView, CommentItemAdminView, WorldAdminView, WorldItemAdminView, CategoryAdminView, CategoryItemAdminView, AccountAdminView, AccountItemAdminView, PictureAdminView, PictureItemAdminView, PicturesRelationshipAdminView, PicturesRelationshipItemAdminView
 
 
 urlpatterns = [
+    url(r'^info/', userapp.get_info),
     url(r'^registration/', userapp.create_user),
     url(r'^login/', userapp.login_user),
     url(r'^logout/', userapp.logout_user),
-    url(r'^user/?$', userapp.get_info),
+    # url(r'^user/?$', userapp.get_info),
     url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
     url(r'^account/pictures', AccountPictureItem.as_view()),
     url(r'^accounts/$', AccountList.as_view()),
-
-    # url(r'^chats/(?P<chatroom_id>[\d\w]+)/?$', ChatRoomItem.as_view()),
-    # url(r'^chats/?$', ChatRoomList.as_view()),
-    # url(r'^messages/(?P<room_name>[\d\w]+)/?', MessageList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),
@@ -78,8 +59,6 @@ urlpatterns = [
 
     url(r'^admin/picture_relationships/?$', PicturesRelationshipAdminView.as_view()),
     url(r'^admin/picture_relationships/(?P<pk>\d+)/?$', PicturesRelationshipItemAdminView.as_view()),
-
-    # url(r'^admin/', admin.site.urls),
 
     url(r'^.*$', userapp.index),
 ]

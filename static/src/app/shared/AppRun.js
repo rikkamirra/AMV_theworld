@@ -1,9 +1,13 @@
 import $ from 'jquery';
 
 function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructService, CryptoService) {
-  if (_userId > 0) {
-    UserService.getUser(_userId);
-  }
+  $http.get('/info/').then(response => {
+      $cookies.put('csrftoken', response.headers('csrftoken'));
+      if (response.data) {
+        UserService.setUserData(response.data)
+      }
+  });
+
   CryptoService.getKey();
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {

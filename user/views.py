@@ -22,10 +22,7 @@ from rest_framework import status
 
 
 def index(request):
-    csrf_token = get_token(request)
-    response = render(request, 'index.html', { 'user_id': request.user.id })
-    response.set_cookie('csrftoken', csrf_token)
-    return response
+    return render(request, 'index.html')
 
 
 def create_user(request):
@@ -59,8 +56,14 @@ def login_user(request):
 
 
 def get_info(request):
-    account = AccountSerializer(request.user)
-    return JsonResponse(account.data, safe=False)
+    response = None
+    if request.user:
+        account = AccountSerializer(request.user)
+        response = JsonResponse(account.data, safe=False)
+    else:
+        response = JsonResponse()
+    response['csrftoken'] = get_token(request)
+    return response
 
 
 def logout_user(request):
