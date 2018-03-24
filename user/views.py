@@ -9,50 +9,29 @@ from construct.world.model import World
 from construct.world.serializer import WorldSerializer
 from construct.category.serializer import CategorySerializer
 
-from .serializers import AccountSerializer, PictureSerializer, PicturesRelationshipSerializer
+from .serializers import (
+    AccountSerializer,
+    PictureSerializer
+)
 
 from theworld.settings import STATIC_URL
 from django.contrib.auth import authenticate, login, logout
-import json
 from django.middleware.csrf import get_token
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
+from rest_framework import mixins
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly
+)
 
 
 def index(request):
     return render(request, 'index.html')
-
-
-def create_user(request):
-    try:
-        user = Account.objects.create(request.POST)
-    except Exception as e:
-        return JsonResponse([e.__str__(),], status=400, safe=False)
-
-    user = authenticate(username=request.POST['email'], password=request.POST['password'])
-    login(request, user)
-    serializer = AccountSerializer(user)
-    return JsonResponse(serializer.data)
-
-
-def login_user(request):
-    errors = []
-    if not request.POST.get('email', False):
-        errors.append('No email')
-    if not request.POST.get('password', False):
-        errors.append('No password')
-    if errors:
-        return JsonResponse(errors, status=409, safe=False)
-
-    user = authenticate(username=request.POST['email'], password=request.POST['password'])
-    if user:
-        login(request, user)
-        serializer = AccountSerializer(user)
-        return JsonResponse(serializer.data)
-    else:
-        return JsonResponse(['Invalid credentiald'], status=409, safe=False)
 
 
 def get_info(request):
@@ -66,45 +45,48 @@ def get_info(request):
     return response
 
 
-def logout_user(request):
-    logout(request)
-    return JsonResponse({})
+class RegistrationAPIView(generics.CreateAPIView):
+    queryset = Account.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = AccountSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+        login(self.request, serializer.instance)
 
 
-class AccountList(APIView):
-    def get(self, request):
-        return Response()
+class LoginAPIView(APIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    permission_classes = (AllowAny,)
 
     def post(self, request):
-        return Response()
+        errors = []
+        if not request.POST.get('email', False):
+            errors.append('No email')
+        if not request.POST.get('password', False):
+            errors.append('No password')
+        if errors:
+            return JsonResponse(errors, status=400, safe=False)
 
-
-class AccountItem(APIView):
-    def get(self, request, user_id):
-        account = AccountSerializer(request.user)
-        response = JsonResponse(account.data, safe=False)
-        return response
-
-    def post(self, request, user_id):
-        return Response()
-
-    def patch(self, request, user_id):
-        serializer = AccountSerializer(request.user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        user = authenticate(username=request.POST['email'], password=request.POST['password'])
+        if user:
+            login(request, user)
+            serializer = AccountSerializer(user)
+            return JsonResponse(serializer.data)
         else:
-            return Response(serializer.errors(), status=400)
+            return JsonResponse(['Invalid credentials'], status=400, safe=False)
+
+    def delete(self, request):
+        logout(request)
+        return JsonResponse({})
 
 
-    def delete(self, request, user_id):
-        return Response()
-
-
-class AccountList(APIView):
-    def get(self, request):
-        return Response(AccountSerializer(Account.objects.all(), many=True).data)
-
+class AccountItem(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class AccountPictureItem(APIView):

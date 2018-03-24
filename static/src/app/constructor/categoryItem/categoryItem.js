@@ -44,11 +44,13 @@ function CategoryItemController(ConstructService, ArticleService, UserService, $
   };
 
   this.addCategory = () => {
+    console.log('fggdgdft');
     ConstructService.createCategory({
       name: this.newCategoryName,
       world: this.world.id,
       parent_id: this.root.id
     }).then(res => {
+      console.log(res);
       this.children = res.data;
       this.config.isShowInput = false;
     });

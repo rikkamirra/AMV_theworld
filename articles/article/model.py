@@ -13,7 +13,7 @@ class ArticleManager(models.Manager):
 class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
-    world = models.ForeignKey('construct.World', on_delete=models.CASCADE, null=True)
+    world = models.ForeignKey('construct.World', on_delete=models.CASCADE, null=True, related_name='articles')
 
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

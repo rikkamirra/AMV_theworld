@@ -38,12 +38,6 @@ function ArticleManagerController(
     this.accessToChange = UserService.getCurrentUser().id === this.world.author;
   };
 
-  this.$onDestroy = () => {
-    if (this.authSaveStop) {
-      $interval.cancel(this.authSaveStop);
-    }
-  };
-
   this.$onChanges = obj => {
     this.isEdit = !(this.article && this.article.id);
   };

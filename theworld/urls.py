@@ -7,37 +7,36 @@ import user.views as userapp
 
 from construct.category.view import CategoryList, CategoryItem
 from construct.world.view import WorldItem, WorldList
-from construct.world.view import get_full_world
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
-from user.views import AccountPictureItem, AccountItem, AccountList
+from user.views import (
+    RegistrationAPIView,
+    LoginAPIView,
+    AccountPictureItem,
+    AccountItem
+)
 
-from admin.views import ArticleAdminView, ArticleItemAdminView, CommentAdminView, CommentItemAdminView, WorldAdminView, WorldItemAdminView, CategoryAdminView, CategoryItemAdminView, AccountAdminView, AccountItemAdminView, PictureAdminView, PictureItemAdminView, PicturesRelationshipAdminView, PicturesRelationshipItemAdminView
+from admin.views import *
 
 
 urlpatterns = [
     url(r'^info/', userapp.get_info),
-    url(r'^registration/', userapp.create_user),
-    url(r'^login/', userapp.login_user),
-    url(r'^logout/', userapp.logout_user),
-    # url(r'^user/?$', userapp.get_info),
-    url(r'^account/(?P<user_id>\d+)/?$', AccountItem.as_view()),
+    url(r'^registration/', RegistrationAPIView.as_view()),
+    url(r'^login/', LoginAPIView.as_view()),
+    url(r'^account/(?P<pk>\d+)/?$', AccountItem.as_view()),
     url(r'^account/pictures', AccountPictureItem.as_view()),
-    url(r'^accounts/$', AccountList.as_view()),
 
     url(r'^worlds/?$', WorldList.as_view()),
-    url(r'^worlds/(?P<world_id>\d+)/?$', WorldItem.as_view()),
+    url(r'^worlds/(?P<pk>\d+)/?$', WorldItem.as_view()),
     url(r'^worlds/categories/?$', CategoryList.as_view()),
-    url(r'^worlds/categories/(?P<category_id>\d+)/?$', CategoryItem.as_view()),
+    url(r'^worlds/categories/(?P<pk>\d+)/?$', CategoryItem.as_view()),
 
-    url(r'^articles/(?P<article_id>\d+)/?$', ArticleItem.as_view()),
+    url(r'^articles/(?P<pk>\d+)/?$', ArticleItem.as_view()),
     url(r'^articles/?', ArticleList.as_view()),
 
     url(r'^comments/?', CommentListView.as_view()),
 
     url(r'^articles/add_category', add_category),
-
-    url(r'^get_full_world/(?P<world_id>\d+)/?$', get_full_world),
 
     url(r'^admin/articles/?$', ArticleAdminView.as_view()),
     url(r'^admin/articles/(?P<pk>\d+)/?$', ArticleItemAdminView.as_view()),

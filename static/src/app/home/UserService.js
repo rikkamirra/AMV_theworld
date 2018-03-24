@@ -53,8 +53,8 @@ function UserService($http, $cookies, $rootScope, $state) {
 
     logout() {
       return $http({
-        method: 'GET',
-        url: 'logout/'
+        method: 'DELETE',
+        url: 'login/'
       }).then(res => {
         this.clearUserData();
         if ($state.current.name === 'account') {

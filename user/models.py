@@ -6,15 +6,7 @@ import re
 
 
 class AccountManager(BaseUserManager):
-    def create(self, kwargs):
-        if not kwargs.get('email'):
-            raise ValueError('Users must have a valid email address.')
-
-        if not kwargs.get('password'):
-            raise ValueError('Usre must have a valid password')
-
-        if not kwargs.get('username'):
-            raise ValueError('Users must have a valid username.')
+    def create(self, **kwargs):
 
         account = self.model(
             email=self.normalize_email(kwargs.get('email')), username=kwargs.get('username')
