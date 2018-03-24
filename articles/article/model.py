@@ -1,5 +1,5 @@
 from django.db import models
-
+from user.models import PicturesRelationship
 
 class ArticleManager(models.Manager):
     def clear(self):
@@ -23,6 +23,11 @@ class Article(models.Model):
 
     def get_comments(self):
         return Comment.objects.filter(article_id=self.id)
+
+    def delete(self):
+        picture_relationships = PicturesRelationship.objects.filter(instance_type='article', instance_id=self.id)
+        picture_relationships.delete()
+        super().delete()
 
     class Meta:
         ordering = ('title',)
