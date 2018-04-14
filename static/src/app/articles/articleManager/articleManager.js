@@ -118,7 +118,7 @@ function ArticleManagerController(
       instance_type: "article",
       instance_id: this.article.id
     }).result.then(picture => {
-      this.article.body += `<img src="${picture.path}" width="600"></img>`
+      this.article.body += `<img src="${picture.path}" class="article-img"></img>`
     });
   };
 }

@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="painter-tool">
+        <img
+          id="mount-img"
+          ng-click="$ctrl.selectBrush('mount-img')"
+          height="50"
+          src="http://res.cloudinary.com/drjvh4g6x/image/upload/v1523728123/11_hdrlwt.png"
+          >
+        </img>
+      </div>
+      <div class="painter-tool">
+        <img
+          id="pen-img"
+          ng-click="$ctrl.selectBrush('pen-img')"
+          height="50"
+          src="http://res.cloudinary.com/drjvh4g6x/image/upload/v1523730155/brush1s_spvlse.png"
+          >
+        </img>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <canvas
+        id="myCanvas"
+        height="[[ $ctrl.height ]]"
+        width="[[ $ctrl.width ]]"
+        style="border:1px solid #000000;"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <label for="select-painter-mode">Режим</label>
+  <select id="select-painter-mode" ng-model="$ctrl.mode">
+    <option ng-repeat="(k, v) in $ctrl.MODES" value="[[ v ]]">[[ k ]]</option>
+  </select>
+
+  <label for="select-pen-size">Размер</label>
+  <select id="select-pen-size" ng-model="$ctrl.settings.penSize">
+    <option ng-repeat="i in $ctrl.PEN_SIZE_RANGE" vakue=[[i]]>[[i]]</option>
+  </select>
+
+  <label for="select-pen-random">Разброс</label>
+  <select id="select-pen-random" ng-model="$ctrl.settings.random">
+    <option ng-repeat="i in $ctrl.PEN_SIZE_RANGE" vakue=[[i]]>[[i]]</option>
+  </select>
+
+  <label for="select-pen-random">Цвет</label>
+  <select id="select-pen-color" ng-model="$ctrl.settings.color">
+    <option ng-repeat="i in $ctrl.COLORS" vakue=[[i]]>[[i]]</option>
+  </select>
+
+  <button ng-click="$ctrl.fill()">Залить</button>
+  <button ng-click="$ctrl.back()">Назад</button>
+</div>
