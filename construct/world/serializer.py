@@ -8,6 +8,14 @@ from articles.comment.model import Comment
 from .model import World
 
 
+class WorldListSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
+
+    class Meta:
+        model = World
+        fields = ['id', 'name', 'author', 'picture', 'is_private', 'created_at', 'updated_at']
+
+
 class WorldSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=Account.objects)
     categories = serializers.SerializerMethodField('add_root_categories')
