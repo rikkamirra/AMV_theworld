@@ -36,11 +36,11 @@ def index(request):
 
 def get_info(request):
     response = None
-    if request.user:
+    if not request.user.is_anonymous:
         account = AccountSerializer(request.user)
         response = JsonResponse(account.data, safe=False)
     else:
-        response = JsonResponse()
+        response = JsonResponse({})
     response['csrftoken'] = get_token(request)
     return response
 
