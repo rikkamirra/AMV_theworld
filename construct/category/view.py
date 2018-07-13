@@ -15,17 +15,21 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from rest_framework import viewsets
+from rest_framework.decorators import action
+
 from theworld.decorators import set_instance
 
 
-class CategoryList(generics.ListCreateAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def filter_queryset(self, queryset):
         if self.request.GET.get('parent'):
-            return queryset.filter(parent_id=self.request.GET.get('parent'))
+            return queryset.filter(
+                parent_id=self.request.GET.get('parent'))
         else:
             return queryset
 
@@ -44,12 +48,6 @@ class CategoryList(generics.ListCreateAPIView):
             return Response(serialized_categories.data)
         return Response(serialize.errors, status=400)
 
-
-class CategoryItem(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
     def perform_destroy(self, instance):
         def _delete_category(category_id):
             category = Category.objects.get(pk=category_id)
@@ -62,3 +60,9 @@ class CategoryItem(generics.RetrieveUpdateDestroyAPIView):
         _delete_category(instance.id)
         Article.objects.clear()
         return Response({})
+
+    @action(methods=['GET'], detail=False)
+    def print_category(self, request, pk):
+        root_category = Category.objects.get(pk=pk)
+
+        return Response({'text': root_category.print_category()})

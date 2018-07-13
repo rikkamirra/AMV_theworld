@@ -1,5 +1,9 @@
+import re
+
 from django.db import models
+
 from user.models import PicturesRelationship
+
 
 class ArticleManager(models.Manager):
     def clear(self):
@@ -31,3 +35,7 @@ class Article(models.Model):
 
     class Meta:
         ordering = ('title',)
+
+    @property
+    def body_for_print(self):
+        return re.sub(r'<.*?>', '', self.body)

@@ -68,6 +68,13 @@ function ConstructService($http, UserService, ArticleService, $q) {
       });
     },
 
+    printCategory(categoryId) {
+      return $http({
+        method: 'GET',
+        url: `worlds/categories/${categoryId}/print`
+      });
+    },
+
     getWorld(world_id) {
       return $http({
         method: 'GET',
@@ -88,6 +95,19 @@ function ConstructService($http, UserService, ArticleService, $q) {
         url: 'worlds/categories',
         params: {parent: parentId}
       });
+    },
+
+    download(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
   }
 }

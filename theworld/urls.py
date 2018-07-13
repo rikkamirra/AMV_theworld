@@ -5,7 +5,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.contrib import admin
 import user.views as userapp
 
-from construct.category.view import CategoryList, CategoryItem
+# from construct.category.view import CategoryViewSet
+
+from construct.category.urls import urlpatterns as category_routes
+
 from construct.world.view import WorldItem, WorldList
 from articles.article.view import ArticleList, ArticleItem, add_category
 from articles.comment.view import CommentListView
@@ -19,7 +22,7 @@ from user.views import (
 from admin.views import *
 
 
-urlpatterns = [
+urlpatterns = category_routes + [
     url(r'^info/', userapp.get_info),
     url(r'^registration/', RegistrationAPIView.as_view()),
     url(r'^login/', LoginAPIView.as_view()),
@@ -28,8 +31,6 @@ urlpatterns = [
 
     url(r'^worlds/?$', WorldList.as_view()),
     url(r'^worlds/(?P<pk>\d+)/?$', WorldItem.as_view()),
-    url(r'^worlds/categories/?$', CategoryList.as_view()),
-    url(r'^worlds/categories/(?P<pk>\d+)/?$', CategoryItem.as_view()),
 
     url(r'^articles/(?P<pk>\d+)/?$', ArticleItem.as_view()),
     url(r'^articles/?', ArticleList.as_view()),
