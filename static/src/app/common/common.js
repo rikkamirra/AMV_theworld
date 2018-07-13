@@ -6,6 +6,7 @@ import cloudUpload from './cloudUpload/cloudUpload';
 import addPicture from './addPicture/addPicture';
 import imgItem from './imgItem/imgItem';
 import enterKey from './enterKey/enterKey';
+import confirmModal from './confirmModal/confirmModal';
 
 import 'html-text-editor';
 
@@ -19,6 +20,7 @@ angular.module(MODULE_NAME, ['HtmlTextEditor'])
 .component('addPicture', addPicture)
 .component('imgItem', imgItem)
 .component('enterKey', enterKey)
+.component('confirmModal', confirmModal)
 
 .filter('myDate', () => {
   return (input) => {

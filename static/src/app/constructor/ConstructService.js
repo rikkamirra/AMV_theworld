@@ -19,6 +19,13 @@ function ConstructService($http, UserService, ArticleService, $q) {
       }));
     },
 
+    deleteWorld(worldId) {
+      return $http({
+        method: 'DELETE',
+        url: `worlds/${worldId}`
+      });
+    },
+
     getAllWorlds() {
       return $http({
         method: 'GET',

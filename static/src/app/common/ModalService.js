@@ -14,6 +14,16 @@ function ModalService($uibModal) {
       });
     },
 
+    confirmModal(message) {
+      return $uibModal.open({
+        animation: true,
+        component: 'confirmModal',
+        resolve: {
+          message: () => message,
+        }
+      });
+    },
+
     addPicture({ instance_type = 'account', instance_id = 1 } = {}) {
       return $uibModal.open({
         animation: true,

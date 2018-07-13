@@ -4,7 +4,8 @@ function AppRun($rootScope, $state, $cookies, $http, UserService, ConstructServi
   $http.get('/info/').then(response => {
       $cookies.put('csrftoken', response.headers('csrftoken'));
       if (response.data) {
-        UserService.setUserData(response.data)
+        UserService.setUserData(response.data);
+        $rootScope.run = true;
       }
   });
 

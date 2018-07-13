@@ -1,5 +1,6 @@
 function RootController(UserService, $state, ModalService) {
   this.$onInit = () => {
+    
   };
 
   this.getUser = () => {

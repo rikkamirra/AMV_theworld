@@ -85,6 +85,14 @@ function WorldManagerController(ConstructService, UserService, ModalService, $st
     ModalService.editWorld(this.world.id).result.then(newWorldData => {
       this.world = newWorldData;
     });
+  };
+
+  this.deleteWorld = () => {
+    ModalService.confirmModal(`Вы уверены, что хотите удалить документ ${this.world.name}`).result.then(() => {
+      ConstructService.deleteWorld(this.world.id).then(() => {
+        $state.go('root');
+      });
+    });
   }
 }
 
